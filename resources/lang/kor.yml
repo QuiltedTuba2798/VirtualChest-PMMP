@@ -1,6 +1,8 @@
 ---
 prefix: "[VirtualChest] "
 
+chest-name: "{%0}님의 {%1}번째 가상 창고"
+
 command-generic-failure@in-game: "게임 내에서만 사용할 수 있습니다"
 command-generic-failure@permission : "이 명령을 사용할 수 있는 권한이 없습니다"
 command-generic-failure@invalid: '{%0}는 잘못된 값입니다'
@@ -12,9 +14,10 @@ command-vchest@description: "VirtualChest의 메인 커맨드"
 command-vchest@aliases: ["vc"]
 
 command-vchest-open: "open"
-command-vchest-open@usage: "/VChest Open <창고 번호>"
-command-vchest-open@failure: "{%0}는 잘못됐거나 등록되지 않은 창고 번호입니다"
-command-vchest-open@count: "{%0}개의 창고를 소유하고 있습니다."
+command-vchest-open@usage: "/VChest Open [창고 번호]"
+command-vchest-open@failure-none: "창고를 소유하고 있지 않습니다"
+command-vchest-open@failure-invalid: "{%0}는 잘못된 창고 번호입니다"
+command-vchest-open@count: "{%0}개의 창고를 소유하고 있습니다"
 command-vchest-open@aliases: ["o"]
 
 command-vchest-set: "set"

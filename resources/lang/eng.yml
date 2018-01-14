@@ -1,6 +1,8 @@
 ---
 prefix: "[VirtualChest] "
 
+chest-name: "{%0}'s {%1} th virtual chest"
+
 command-generic-failure@in-game: "Available in game only"
 command-generic-failure@permission : "You do not have permission to use this command"
 command-generic-failure@invalid : "{%0} is invalid value"
@@ -12,8 +14,9 @@ command-vchest@description: "Main command of VirtualChest"
 command-vchest@aliases: ["vc"]
 
 command-vchest-open: "open"
-command-vchest-open@usage: "/VChest Open <chest number>"
-command-vchest-open@failure: "{%0} is the wrong or unregistered chest number"
+command-vchest-open@usage: "/VChest Open [chest number]"
+command-vchest-open@failure-none: "You don't have chest"
+command-vchest-open@failure-invalid: "{%0} is invalid chest number"
 command-vchest-open@count: "You have {%0} chest"
 command-vchest-open@aliases: ["o"]
 
