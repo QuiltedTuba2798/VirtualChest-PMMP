@@ -4,9 +4,10 @@ namespace presentkim\virtualchest;
 
 use pocketmine\plugin\PluginBase;
 use presentkim\virtualchest\util\Translation;
+use presentkim\virtualchest\inventory\VirtualChestInventory;
 use presentkim\virtualchest\command\PoolCommand;
 use presentkim\virtualchest\command\subcommands\{
-  SetSubCommand, LangSubCommand, ReloadSubCommand, SaveSubCommand
+  SetSubCommand, OpenSubCommand, LangSubCommand, ReloadSubCommand, SaveSubCommand
 };
 
 class VirtualChestMain extends PluginBase{
@@ -33,6 +34,7 @@ class VirtualChestMain extends PluginBase{
             // create vchest PoolCommand
             $this->command = new PoolCommand($this, 'vchest');
             $this->command->createSubCommand(SetSubCommand::class);
+            $this->command->createSubCommand(OpenSubCommand::class);
             $this->command->createSubCommand(LangSubCommand::class);
             $this->command->createSubCommand(ReloadSubCommand::class);
             $this->command->createSubCommand(SaveSubCommand::class);
@@ -71,6 +73,9 @@ class VirtualChestMain extends PluginBase{
             Translation::load($langfilename);
         }
 
+        // reset virtual chest inventories
+        VirtualChestInventory::$vchests = [];
+
         // register prefix
         self::$prefix = Translation::translate('prefix');
 
@@ -94,6 +99,32 @@ class VirtualChestMain extends PluginBase{
         }
 
         // save config
+        $config = $this->getConfig();
+        foreach ($config->getAll() as $playerName => $data) {
+            $newData = [];
+            for ($index = 0; $index < $data[0]; $index++) {
+                if (isset(VirtualChestInventory::$vchests[$playerName][$index])) {
+                    $newData[$index] = [];
+                    /** @var VirtualChestInventory $inventory */
+                    $inventory = VirtualChestInventory::$vchests[$playerName][$index];
+                    for ($i = 0; $i < 27; $i++) {
+                        $item = $inventory->getItem($i);
+                        $newData[$index][$i] = [
+                          $item->getId(),
+                          $item->getDamage(),
+                          $item->getCount(),
+                          $item->getCompoundTag(),
+                        ];
+                    }
+                } elseif (isset($data[1][$index])) {
+                    $newData[$index] = $data[1][$index];
+                }
+            }
+            $config->set($playerName, [
+              $data[0],
+              $newData,
+            ]);
+        }
         $this->saveConfig();
 
         // save lang
