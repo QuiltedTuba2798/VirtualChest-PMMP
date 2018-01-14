@@ -35,11 +35,15 @@ class SetSubCommand extends SubCommand{
                 $count = toInt($args[1], null, function (int $i){
                     return $i > 0;
                 });
-                $config->set($playerName, [
-                  $count,
-                  $config->get($playerName)[1] ?? [],
-                ]);
-                $sender->sendMessage(Plugin::$prefix . $this->translate('success', $playerName, $count));
+                if ($count === null) {
+                    $sender->sendMessage(Plugin::$prefix . Translation::translate('command-generic-failure@invalid ', $args[1]));
+                } else {
+                    $config->set($playerName, [
+                      $count,
+                      $config->get($playerName)[1] ?? [],
+                    ]);
+                    $sender->sendMessage(Plugin::$prefix . $this->translate('success', $playerName, $count));
+                }
             }
             return true;
         }
