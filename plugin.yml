@@ -4,6 +4,7 @@ main:                   presentkim\virtualchest\VirtualChestMain
 version:                1.0.0
 api:                    [3.0.0, 3.0.0-ALPHA10]
 author:                 PresentKim
+website:                https://github.com/PMMPPlugin/VirtualChest
 
 permissions:
   vchest.cmd:
