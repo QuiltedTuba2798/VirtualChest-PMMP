@@ -42,7 +42,7 @@ class SetSubCommand extends SubCommand{
                       $count,
                       $config->get($playerName)[1] ?? [],
                     ]);
-                    $sender->sendMessage(Plugin::$prefix . $this->translate('success', $playerName, $count));
+                    $sender->sendMessage(Plugin::$prefix . $this->translate('success', $player === null ? $playerName : $player->getName(), $count));
                 }
             }
             return true;
