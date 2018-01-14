@@ -1,0 +1,28 @@
+---
+name:                   VirtualChest
+main:                   presentkim\virtualchest\VirtualChestMain
+version:                1.0.0
+api:                    [3.0.0, 3.0.0-ALPHA10]
+author:                 PresentKim
+
+permissions:
+  vchest.cmd:
+    description:        VirtualChest command
+    default:            true
+    children:
+      vchest.cmd.open:
+        description:    VirtualChest command - open
+        default:        true
+      vchest.cmd.set:
+        description:    VirtualChest command - set
+        default:        op
+      vchest.cmd.lang:
+        description:    VirtualChest command - lang
+        default:        op
+      vchest.cmd.reload:
+        description:    VirtualChest command - reload
+        default:        op
+      vchest.cmd.save:
+        description:    VirtualChest command - save
+        default:        op
+...
