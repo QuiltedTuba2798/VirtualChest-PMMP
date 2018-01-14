@@ -6,7 +6,7 @@ use pocketmine\plugin\PluginBase;
 use presentkim\virtualchest\util\Translation;
 use presentkim\virtualchest\command\PoolCommand;
 use presentkim\virtualchest\command\subcommands\{
-  LangSubCommand, ReloadSubCommand, SaveSubCommand
+  SetSubCommand, LangSubCommand, ReloadSubCommand, SaveSubCommand
 };
 
 class VirtualChestMain extends PluginBase{
@@ -32,6 +32,7 @@ class VirtualChestMain extends PluginBase{
 
             // create vchest PoolCommand
             $this->command = new PoolCommand($this, 'vchest');
+            $this->command->createSubCommand(SetSubCommand::class);
             $this->command->createSubCommand(LangSubCommand::class);
             $this->command->createSubCommand(ReloadSubCommand::class);
             $this->command->createSubCommand(SaveSubCommand::class);
