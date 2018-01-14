@@ -80,11 +80,6 @@ abstract class SubCommand{
         }
     }
 
-    /** @return string */
-    public function getUsage(){
-        return $this->usage;
-    }
-
     /**
      * @param string   $tag
      * @param string[] $params
