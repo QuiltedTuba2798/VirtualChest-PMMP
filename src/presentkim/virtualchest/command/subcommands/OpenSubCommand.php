@@ -2,6 +2,7 @@
 
 namespace presentkim\virtualchest\command\subcommands;
 
+use function is_array;
 use pocketmine\{
   item\ItemFactory, Player, command\CommandSender
 };
@@ -41,7 +42,15 @@ class OpenSubCommand extends SubCommand{
                         if (isset($data[1][$index]) && is_array($data[1][$index])) {
                             try{
                                 foreach ($data[1][$index] as $key => $value) {
-                                    $items[] = ItemFactory::get(...$value);
+                                    if (is_array($value)) {
+                                        $args = explode(':', $value[0]);
+                                        if (isset($value[1])) {
+                                            $args[] = $value[1];
+                                        }
+                                        $items[$key] = ItemFactory::get(...$args);
+                                    } else {
+                                        $items[$key] = ItemFactory::get(...explode(':', $value));
+                                    }
                                 }
                             } catch (\Error $e){
                                 $this->plugin->getLogger()->error($e);

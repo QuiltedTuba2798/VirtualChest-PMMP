@@ -2,6 +2,7 @@
 
 namespace presentkim\virtualchest;
 
+use function implode;
 use pocketmine\plugin\PluginBase;
 use presentkim\virtualchest\util\Translation;
 use presentkim\virtualchest\inventory\VirtualChestInventory;
@@ -109,12 +110,19 @@ class VirtualChestMain extends PluginBase{
                     $inventory = VirtualChestInventory::$vchests[$playerName][$index];
                     for ($i = 0; $i < 27; $i++) {
                         $item = $inventory->getItem($i);
-                        $newData[$index][$i] = [
-                          $item->getId(),
-                          $item->getDamage(),
-                          $item->getCount(),
-                          $item->getCompoundTag(),
-                        ];
+                        if (!$item->isNull()) {
+                            $newData[$index][$i] = implode(':', [
+                              $item->getId(),
+                              $item->getDamage(),
+                              $item->getCount(),
+                            ]);
+                            if (!empty($compountTag = $item->getCompoundTag())) {
+                                $newData[$index][$i] = [
+                                  $newData[$index][$i],
+                                  $compountTag,
+                                ];
+                            }
+                        }
                     }
                 } elseif (isset($data[1][$index])) {
                     $newData[$index] = $data[1][$index];
