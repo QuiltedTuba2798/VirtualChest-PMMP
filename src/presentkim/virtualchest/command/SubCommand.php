@@ -52,7 +52,7 @@ abstract class SubCommand{
      * @param String[]      $args
      */
     public function execute(CommandSender $sender, array $args){
-        if (!$sender->hasPermission("virtualchest.$this->strId.cmd")) {
+        if (!$this->checkPermission($sender)) {
             $sender->sendMessage(Plugin::$prefix . Translation::translate('command-generic-failure@permission'));
         } elseif (!$this->onCommand($sender, $args)) {
             $sender->sendMessage(Plugin::$prefix . $this->usage);
