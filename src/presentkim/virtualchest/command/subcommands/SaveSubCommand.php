@@ -15,7 +15,7 @@ class SaveSubCommand extends SubCommand{
 
     /**
      * @param CommandSender $sender
-     * @param array         $args
+     * @param String[]      $args
      *
      * @return bool
      */
