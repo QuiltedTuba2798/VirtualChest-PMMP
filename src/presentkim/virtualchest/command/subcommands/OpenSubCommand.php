@@ -2,7 +2,6 @@
 
 namespace presentkim\virtualchest\command\subcommands;
 
-use function is_array;
 use pocketmine\{
   Player, item\ItemFactory, command\CommandSender
 };
