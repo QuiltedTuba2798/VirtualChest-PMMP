@@ -2,8 +2,9 @@
 
 namespace presentkim\virtualchest\command\subcommands;
 
-use pocketmine\command\CommandSender;
-use pocketmine\Server;
+use pocketmine\{
+  Server, command\CommandSender
+};
 use presentkim\virtualchest\{
   command\PoolCommand, VirtualChestMain as Plugin, util\Translation, command\SubCommand
 };

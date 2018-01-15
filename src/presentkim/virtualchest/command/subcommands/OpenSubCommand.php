@@ -4,7 +4,7 @@ namespace presentkim\virtualchest\command\subcommands;
 
 use function is_array;
 use pocketmine\{
-  item\ItemFactory, Player, command\CommandSender
+  Player, item\ItemFactory, command\CommandSender
 };
 use presentkim\virtualchest\{
   command\PoolCommand, inventory\VirtualChestInventory, VirtualChestMain as Plugin, util\Translation, command\SubCommand
