@@ -14,6 +14,9 @@ class PoolCommand extends PluginCommand implements CommandExecutor{
     /** @var SubCommand[] */
     protected $subCommands = [];
 
+    /** @var \ReflectionProperty */
+    private $property = null;
+
     /** @var string */
     public $uname;
 
@@ -25,6 +28,10 @@ class PoolCommand extends PluginCommand implements CommandExecutor{
     public function __construct(Plugin $owner, string $name, SubCommand ...$subCommands){
         parent::__construct($name, $owner);
         $this->setExecutor($this);
+
+        $reflection = new \ReflectionClass(Command::class);
+        $this->property = $reflection->getProperty('name');
+        $this->property->setAccessible(true);
 
         $this->uname = $name;
         $this->setPermission("{$name}.cmd");
@@ -72,10 +79,7 @@ class PoolCommand extends PluginCommand implements CommandExecutor{
     }
 
     public function updateTranslation(){
-        $reflection = new \ReflectionClass(Command::class);
-        $property = $reflection->getProperty('name');
-        $property->setAccessible(true);
-        $property->setValue($this, Translation::translate("command-{$this->uname}"));
+        $this->property->setValue($this, Translation::translate("command-{$this->uname}"));
         $this->description = Translation::translate("command-{$this->uname}@description");
         $this->usageMessage = Translation::translate("command-{$this->uname}@usage");
         $aliases = Translation::getArray("command-{$this->uname}@aliases");
