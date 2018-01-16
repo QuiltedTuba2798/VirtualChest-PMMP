@@ -9,33 +9,35 @@ command-generic-failure@invalid : "{%0} is invalid value"
 command-generic-failure@invalid-player: "{%0} is invalid player name"
 
 command-vchest: "vchest"
-command-vchest@usage: /VChest <open | set | lang | reload | save>
+command-vchest@usage: /vchest <open | set | lang | reload | save>
 command-vchest@description: "Main command of VirtualChest"
 command-vchest@aliases: ["vc"]
 
 command-vchest-open: "open"
-command-vchest-open@usage: "/VChest Open [chest number]"
+command-vchest-open@usage: "/vchest Open [chest number]"
 command-vchest-open@failure-none: "You don't have chest"
 command-vchest-open@failure-invalid: "{%0} is invalid chest number"
 command-vchest-open@count: "You have {%0} chest"
 command-vchest-open@aliases: ["o"]
 
 command-vchest-set: "set"
-command-vchest-set@usage: "/VChest Set <player name> <chest count>"
+command-vchest-set@usage: "/vchest Set <player name> <chest count>"
 command-vchest-set@success: "{%0}'s chest count was setted to {%1}"
 command-vchest-set@aliases: ["s"]
 
 command-vchest-lang: "lang"
-command-vchest-lang@usage: "/VChest Lang <language prefix>"
+command-vchest-lang@usage: "/vchest Lang <language prefix>"
 command-vchest-lang@success: "{%0} language file was loaded"
 command-vchest-lang@failure: "{%0} is invalid language prefix"
 command-vchest-lang@aliases: ["language"]
 
 command-vchest-reload: "reload"
+command-vchest-reload@usage: "/vchest Reload"
 command-vchest-reload@success: "All data was reloaded"
 command-vchest-reload@aliases: ["rl"]
 
 command-vchest-save: "save"
+command-vchest-save@usage: "/vchest Save"
 command-vchest-save@success: "All data was saved"
 command-vchest-save@aliases: ["sv"]
 ...

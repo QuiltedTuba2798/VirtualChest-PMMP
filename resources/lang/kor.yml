@@ -9,33 +9,35 @@ command-generic-failure@invalid: '{%0}는 잘못된 값입니다'
 command-generic-failure@invalid-player: "{%0}는 잘못된 플레이어명입니다"
 
 command-vchest: "vchest"
-command-vchest@usage: /VChest <open | set | lang | reload | save>
+command-vchest@usage: /vchest <open | set | lang | reload | save>
 command-vchest@description: "VirtualChest의 메인 커맨드"
 command-vchest@aliases: ["vc"]
 
 command-vchest-open: "open"
-command-vchest-open@usage: "/VChest Open [창고 번호]"
+command-vchest-open@usage: "/vchest Open [창고 번호]"
 command-vchest-open@failure-none: "창고를 소유하고 있지 않습니다"
 command-vchest-open@failure-invalid: "{%0}는 잘못된 창고 번호입니다"
 command-vchest-open@count: "{%0}개의 창고를 소유하고 있습니다"
 command-vchest-open@aliases: ["o"]
 
 command-vchest-set: "set"
-command-vchest-set@usage: "/VChest Set <플레이어명> <창고 수>"
+command-vchest-set@usage: "/vchest Set <플레이어명> <창고 수>"
 command-vchest-set@success: "{%0}님의 창고가 {%1}개로 설정되었습니다"
 command-vchest-set@aliases: ["s"]
 
 command-vchest-lang: "lang"
-command-vchest-lang@usage: "/VChest Lang <언어명>"
+command-vchest-lang@usage: "/vchest Lang <언어명>"
 command-vchest-lang@success: "{%0}언어 파일을 불러왔습니다"
 command-vchest-lang@failure: "{%0}는 잘못된 언어명입니다"
 command-vchest-lang@aliases: ["language"]
 
 command-vchest-reload: "reload"
+command-vchest-reload@usage: "/vchest Reload"
 command-vchest-reload@success: "모든 데이터를 불러왔습니다"
 command-vchest-reload@aliases: ["rl"]
 
 command-vchest-save: "save"
+command-vchest-save@usage: "/vchest Save"
 command-vchest-save@success: "모든 데이터를 저장했습니다"
 command-vchest-save@aliases: ["sv"]
 ...
