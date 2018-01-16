@@ -20,6 +20,11 @@ command-vchest-open@failure-invalid: "{%0} is invalid chest number"
 command-vchest-open@count: "You have {%0} chest"
 command-vchest-open@aliases: ["o"]
 
+command-vchest-default: "default"
+command-vchest-default@usage: "/vchest Default <chest count>"
+command-vchest-default@success: "Default chest count was setted to {%0}"
+command-vchest-default@aliases: ["d"]
+
 command-vchest-set: "set"
 command-vchest-set@usage: "/vchest Set <player name> <chest count>"
 command-vchest-set@success: "{%0}'s chest count was setted to {%1}"

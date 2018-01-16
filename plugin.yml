@@ -14,6 +14,9 @@ permissions:
       vchest.cmd.open:
         description:    VirtualChest command - open
         default:        true
+      vchest.cmd.default:
+        description:    VirtualChest command - default
+        default:        op
       vchest.cmd.set:
         description:    VirtualChest command - set
         default:        op

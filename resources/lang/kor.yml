@@ -20,6 +20,11 @@ command-vchest-open@failure-invalid: "{%0}는 잘못된 창고 번호입니다"
 command-vchest-open@count: "{%0}개의 창고를 소유하고 있습니다"
 command-vchest-open@aliases: ["o"]
 
+command-vchest-default: "default"
+command-vchest-default@usage: "/vchest Default <창고 수>"
+command-vchest-default@success: "기본 창고 수가 {%0}로 설정되었습니다"
+command-vchest-default@aliases: ["d"]
+
 command-vchest-set: "set"
 command-vchest-set@usage: "/vchest Set <플레이어명> <창고 수>"
 command-vchest-set@success: "{%0}님의 창고가 {%1}개로 설정되었습니다"

@@ -7,7 +7,7 @@ use presentkim\virtualchest\util\Translation;
 use presentkim\virtualchest\inventory\VirtualChestInventory;
 use presentkim\virtualchest\command\PoolCommand;
 use presentkim\virtualchest\command\subcommands\{
-  SetSubCommand, OpenSubCommand, ViewSubCommand, LangSubCommand, ReloadSubCommand, SaveSubCommand
+  OpenSubCommand, DefaultSubCommand, SetSubCommand, ViewSubCommand, LangSubCommand, ReloadSubCommand, SaveSubCommand
 };
 
 class VirtualChestMain extends PluginBase{
@@ -79,8 +79,9 @@ class VirtualChestMain extends PluginBase{
     public function reloadCommand(){
         if ($this->command == null) {
             $this->command = new PoolCommand($this, 'vchest');
-            $this->command->createSubCommand(SetSubCommand::class);
             $this->command->createSubCommand(OpenSubCommand::class);
+            $this->command->createSubCommand(DefaultSubCommand::class);
+            $this->command->createSubCommand(SetSubCommand::class);
             $this->command->createSubCommand(ViewSubCommand::class);
             $this->command->createSubCommand(LangSubCommand::class);
             $this->command->createSubCommand(ReloadSubCommand::class);
