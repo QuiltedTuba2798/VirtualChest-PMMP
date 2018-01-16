@@ -24,8 +24,15 @@ class OpenSubCommand extends SubCommand{
     public function onCommand(CommandSender $sender, array $args){
         if ($sender instanceof Player) {
             $playerName = strtolower($sender->getName());
-            $datas = $this->plugin->getConfig()->get('playerData');
-            if (!isset($datas[$playerName]) || $datas[$playerName][0] <= 0) {
+
+            $config = $this->plugin->getConfig();
+
+            $datas = $config->get('playerData');
+            if (!isset($datas[$playerName]) && ($default = $config->get('default-count')) > 0) {
+                $datas[$playerName][0] = $default;
+                $config->set('playerData', $datas);
+            }
+            if ($datas[$playerName][0] <= 0) {
                 $sender->sendMessage(Plugin::$prefix . $this->translate('failure-none'));
             } else {
                 $number = isset($args[0]) ? strtolower($args[0]) : 1;
