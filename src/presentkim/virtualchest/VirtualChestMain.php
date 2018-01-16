@@ -31,6 +31,16 @@ class VirtualChestMain extends PluginBase{
             self::$instance = $this;
             $this->getServer()->getLoader()->loadClass('presentkim\virtualchest\util\Utils');
             Translation::loadFromResource($this->getResource('lang/eng.yml'), true);
+
+            if (file_exists($filename = "{$this->getDataFolder()}config.yml")) {
+                $oldConfig = yaml_parse(file_get_contents($filename));
+                if (!isset($oldConfig['playerData'])) {
+                    $newConfig = yaml_parse(stream_get_contents($this->getResource("config.yml")));
+                    $newConfig['playerData'] = $oldConfig;
+                    yaml_emit_file($filename, $newConfig, YAML_UTF8_ENCODING);
+                    $this->getLogger()->info('Converted old data');
+                }
+            }
         }
     }
 
