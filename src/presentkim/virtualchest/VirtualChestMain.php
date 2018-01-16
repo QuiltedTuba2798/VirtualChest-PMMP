@@ -28,10 +28,9 @@ class VirtualChestMain extends PluginBase{
 
     public function onLoad(){
         if (self::$instance === null) {
-            // register instance
             self::$instance = $this;
+            $this->getServer()->getLoader()->loadClass('presentkim\virtualchest\util\Utils');
 
-            // create vchest PoolCommand
             $this->command = new PoolCommand($this, 'vchest');
             $this->command->createSubCommand(SetSubCommand::class);
             $this->command->createSubCommand(OpenSubCommand::class);
@@ -39,17 +38,10 @@ class VirtualChestMain extends PluginBase{
             $this->command->createSubCommand(ReloadSubCommand::class);
             $this->command->createSubCommand(SaveSubCommand::class);
 
-            // load utils
-            $this->getServer()->getLoader()->loadClass('presentkim\virtualchest\util\Utils');
-
-            // load default lang
             Translation::loadFromResource($this->getResource('lang/eng.yml'), true);
         }
     }
 
-    /**
-     *
-     */
     public function onEnable(){
         $this->load();
     }
@@ -59,15 +51,15 @@ class VirtualChestMain extends PluginBase{
     }
 
     public function load(){
+        VirtualChestInventory::$vchests = [];
+
         $dataFolder = $this->getDataFolder();
         if (!file_exists($dataFolder)) {
             mkdir($dataFolder, 0777, true);
         }
 
-        // load config
         $this->reloadConfig();
 
-        // load lang
         $langfilename = $dataFolder . 'lang.yml';
         if (!file_exists($langfilename)) {
             $resource = $this->getResource('lang/eng.yml');
@@ -78,13 +70,7 @@ class VirtualChestMain extends PluginBase{
             Translation::load($langfilename);
         }
 
-        // reset virtual chest inventories
-        VirtualChestInventory::$vchests = [];
-
-        // register prefix
         self::$prefix = Translation::translate('prefix');
-
-        // update translation and register command
         $this->reloadCommand();
     }
 
@@ -103,7 +89,6 @@ class VirtualChestMain extends PluginBase{
             mkdir($dataFolder, 0777, true);
         }
 
-        // save config
         $config = $this->getConfig();
         foreach ($config->getAll() as $playerName => $data) {
             $newData = [];
