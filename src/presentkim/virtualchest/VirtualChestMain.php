@@ -31,13 +31,6 @@ class VirtualChestMain extends PluginBase{
             self::$instance = $this;
             $this->getServer()->getLoader()->loadClass('presentkim\virtualchest\util\Utils');
             Translation::loadFromResource($this->getResource('lang/eng.yml'), true);
-
-            $this->command = new PoolCommand($this, 'vchest');
-            $this->command->createSubCommand(SetSubCommand::class);
-            $this->command->createSubCommand(OpenSubCommand::class);
-            $this->command->createSubCommand(LangSubCommand::class);
-            $this->command->createSubCommand(ReloadSubCommand::class);
-            $this->command->createSubCommand(SaveSubCommand::class);
         }
     }
 
@@ -74,6 +67,14 @@ class VirtualChestMain extends PluginBase{
     }
 
     public function reloadCommand(){
+        if ($this->command == null) {
+            $this->command = new PoolCommand($this, 'vchest');
+            $this->command->createSubCommand(SetSubCommand::class);
+            $this->command->createSubCommand(OpenSubCommand::class);
+            $this->command->createSubCommand(LangSubCommand::class);
+            $this->command->createSubCommand(ReloadSubCommand::class);
+            $this->command->createSubCommand(SaveSubCommand::class);
+        }
         $this->command->updateTranslation();
         $this->command->updateSudCommandTranslation();
         if ($this->command->isRegistered()) {
