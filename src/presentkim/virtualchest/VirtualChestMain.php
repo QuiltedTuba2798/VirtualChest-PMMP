@@ -102,7 +102,8 @@ class VirtualChestMain extends PluginBase{
         }
 
         $config = $this->getConfig();
-        foreach ($config->getAll()['playerData'] as $playerName => $data) {
+        $datas = $config->get('playerData');
+        foreach ($datas as $playerName => $data) {
             $newData = [];
             for ($index = 0; $index < $data[0]; $index++) {
                 if (isset(VirtualChestInventory::$vchests[$playerName][$index])) {
@@ -129,11 +130,9 @@ class VirtualChestMain extends PluginBase{
                     $newData[$index] = $data[1][$index];
                 }
             }
-            $config->set($playerName, [
-              $data[0],
-              $newData,
-            ]);
+            $datas[$playerName][1] = $newData;
         }
+        $config->set('playerData', $datas);
         $this->saveConfig();
     }
 }
