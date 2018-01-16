@@ -6,7 +6,7 @@ use pocketmine\Player;
 use pocketmine\block\Block;
 use pocketmine\tile\Spawnable;
 use pocketmine\inventory\{
-  BaseInventory, CustomInventory
+  BaseInventory, CustomInventory, Inventory, InventoryHolder
 };
 use pocketmine\nbt\NetworkLittleEndianNBTStream;
 use pocketmine\nbt\tag\{
@@ -17,7 +17,7 @@ use pocketmine\network\mcpe\protocol\{
 };
 use presentkim\virtualchest\util\Translation;
 
-class VirtualChestInventory extends CustomInventory{
+class VirtualChestInventory extends CustomInventory implements InventoryHolder{
 
     /** @var NetworkLittleEndianNBTStream|null */
     private static $nbtWriter = null;
@@ -34,20 +34,20 @@ class VirtualChestInventory extends CustomInventory{
     /**
      * VirtualChestInventory constructor.
      *
-     * @param Player      $holder
+     * @param string      $ownerName
      * @param int         $num
      * @param array       $items
      * @param string|null $title
      */
-    public function __construct(Player $holder, int $num = 0, $items = [], string $title = null){
-        parent::__construct($holder, $items, 27, $title);
+    public function __construct(string $ownerName, int $num = 0, $items = [], string $title = null){
+        parent::__construct($this, $items, 27, $title);
 
         $this->nbt = new CompoundTag('', [
           new StringTag('id', 'Chest'),
           new IntTag('x', 0),
           new IntTag('y', 0),
           new IntTag('z', 0),
-          new StringTag('CustomName', Translation::translate('chest-name', $holder->getName(), $num)),
+          new StringTag('CustomName', Translation::translate('chest-name', $ownerName, $num)),
         ]);
 
         if (self::$nbtWriter === null) {
@@ -128,5 +128,10 @@ class VirtualChestInventory extends CustomInventory{
     /** @return int */
     public function getNetworkType() : int{
         return WindowTypes::CONTAINER;
+    }
+
+    /** @return Inventory */
+    public function getInventory(){
+        return $this;
     }
 }

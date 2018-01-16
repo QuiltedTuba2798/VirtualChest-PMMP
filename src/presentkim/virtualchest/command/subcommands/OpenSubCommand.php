@@ -55,7 +55,7 @@ class OpenSubCommand extends SubCommand{
                                 $this->plugin->getLogger()->error($e);
                             }
                         }
-                        VirtualChestInventory::$vchests[$playerName][$index] = new VirtualChestInventory($sender, $number, $items);
+                        VirtualChestInventory::$vchests[$playerName][$index] = new VirtualChestInventory($sender->getName(), $number, $items);
                     }
                     $sender->addWindow(VirtualChestInventory::$vchests[$playerName][$index]);
                 }
