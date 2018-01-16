@@ -25,6 +25,13 @@ command-vchest-set@usage: "/vchest Set <player name> <chest count>"
 command-vchest-set@success: "{%0}'s chest count was setted to {%1}"
 command-vchest-set@aliases: ["s"]
 
+command-vchest-view: "view"
+command-vchest-view@usage: "/vchest View <player name> [chest number]"
+command-vchest-view@failure-none: "{%0} don't have chest"
+command-vchest-view@failure-invalid: "{%0} is invalid chest number"
+command-vchest-view@count: "{%0} have {%1} chest"
+command-vchest-view@aliases: ["v"]
+
 command-vchest-lang: "lang"
 command-vchest-lang@usage: "/vchest Lang <language prefix>"
 command-vchest-lang@success: "{%0} language file was loaded"

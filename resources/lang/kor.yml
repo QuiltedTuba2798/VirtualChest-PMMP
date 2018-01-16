@@ -25,6 +25,13 @@ command-vchest-set@usage: "/vchest Set <플레이어명> <창고 수>"
 command-vchest-set@success: "{%0}님의 창고가 {%1}개로 설정되었습니다"
 command-vchest-set@aliases: ["s"]
 
+command-vchest-view: "view"
+command-vchest-view@usage: "/vchest View <플레이어명> [창고 번호]"
+command-vchest-view@failure-none: "{%0}님은 창고를 소유하고 있지 않습니다"
+command-vchest-view@failure-invalid: "{%0}는 잘못된 창고 번호입니다"
+command-vchest-view@count: "{%0}님은 {%1}개의 창고를 소유하고 있습니다"
+command-vchest-view@aliases: ["v"]
+
 command-vchest-lang: "lang"
 command-vchest-lang@usage: "/vchest Lang <언어명>"
 command-vchest-lang@success: "{%0}언어 파일을 불러왔습니다"
