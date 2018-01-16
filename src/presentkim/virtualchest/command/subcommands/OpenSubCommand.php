@@ -24,23 +24,23 @@ class OpenSubCommand extends SubCommand{
     public function onCommand(CommandSender $sender, array $args){
         if ($sender instanceof Player) {
             $playerName = strtolower($sender->getName());
-            $data = $this->plugin->getConfig()->get($playerName);
-            if ($data === false) {
+            $datas = $this->plugin->getConfig()->get('playerData');
+            if (!isset($datas[$playerName]) || $datas[$playerName][0] <= 0) {
                 $sender->sendMessage(Plugin::$prefix . $this->translate('failure-none'));
             } else {
                 $number = isset($args[0]) ? strtolower($args[0]) : 1;
-                if (!is_numeric($number) || ($index = (int) $number - 1) >= $data[0]) {
+                if (!is_numeric($number) || ($index = (int) $number - 1) >= $datas[$playerName][0]) {
                     $sender->sendMessage(Plugin::$prefix . $this->translate('failure-invalid', $number));
-                    $sender->sendMessage(Plugin::$prefix . $this->translate('count', $data[0]));
+                    $sender->sendMessage(Plugin::$prefix . $this->translate('count', $datas[$playerName][0]));
                 } else {
                     if (!isset(VirtualChestInventory::$vchests[$playerName][$index])) {
                         if (!isset(VirtualChestInventory::$vchests[$playerName])) {
                             VirtualChestInventory::$vchests[$playerName] = [];
                         }
                         $items = [];
-                        if (isset($data[1][$index]) && is_array($data[1][$index])) {
+                        if (isset($datas[$playerName][1][$index]) && is_array($datas[$playerName][1][$index])) {
                             try{
-                                foreach ($data[1][$index] as $key => $value) {
+                                foreach ($datas[$playerName][1][$index] as $key => $value) {
                                     if (is_array($value)) {
                                         $args = explode(':', $value[0]);
                                         if (isset($value[1])) {

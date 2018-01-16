@@ -91,7 +91,7 @@ class VirtualChestMain extends PluginBase{
         }
 
         $config = $this->getConfig();
-        foreach ($config->getAll() as $playerName => $data) {
+        foreach ($config->getAll()['playerData'] as $playerName => $data) {
             $newData = [];
             for ($index = 0; $index < $data[0]; $index++) {
                 if (isset(VirtualChestInventory::$vchests[$playerName][$index])) {

@@ -29,8 +29,8 @@ class SetSubCommand extends SubCommand{
             $config = $this->plugin->getConfig();
 
             $player = Server::getInstance()->getPlayerExact($playerName);
-            $exists = $config->exists($playerName);
-            if ($player === null && !$exists) {
+            $datas = $config->get('playerData');
+            if ($player === null && !isset($datas[$playerName])) {
                 $sender->sendMessage(Plugin::$prefix . Translation::translate('command-generic-failure@invalid-player', $args[0]));
             } else {
                 $count = toInt($args[1], null, function (int $i){
@@ -39,10 +39,11 @@ class SetSubCommand extends SubCommand{
                 if ($count === null) {
                     $sender->sendMessage(Plugin::$prefix . Translation::translate('command-generic-failure@invalid ', $args[1]));
                 } else {
-                    $config->set($playerName, [
+                    $datas[$playerName] = [
                       $count,
-                      $config->get($playerName)[1] ?? [],
-                    ]);
+                      $datas[$playerName][1] ?? [],
+                    ];
+                    $config->set('playerData', $datas);
                     $sender->sendMessage(Plugin::$prefix . $this->translate('success', $player === null ? $playerName : $player->getName(), $count));
                 }
             }

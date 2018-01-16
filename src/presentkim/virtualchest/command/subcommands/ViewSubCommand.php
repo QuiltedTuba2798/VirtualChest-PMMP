@@ -26,30 +26,27 @@ class ViewSubCommand extends SubCommand{
             if (isset($args[0])) {
                 $playerName = strtolower($args[0]);
 
-                $config = $this->plugin->getConfig();
-
                 $player = Server::getInstance()->getPlayerExact($playerName);
-                $exists = $config->exists($playerName);
-                if ($player === null && !$exists) {
+                $datas = $this->plugin->getConfig()->get('playerData');
+                if ($player === null && !isset($datas[$playerName])) {
                     $sender->sendMessage(Plugin::$prefix . Translation::translate('command-generic-failure@invalid-player', $args[0]));
                 } else {
-                    $data = $this->plugin->getConfig()->get($playerName);
-                    if ($data === false) {
+                    if (!isset($datas[$playerName]) || $datas[$playerName][0] <= 0) {
                         $sender->sendMessage(Plugin::$prefix . $this->translate('failure-none'));
                     } else {
                         $number = isset($args[1]) ? strtolower($args[1]) : 1;
-                        if (!is_numeric($number) || ($index = (int) $number - 1) >= $data[0]) {
+                        if (!is_numeric($number) || ($index = (int) $number - 1) >= $datas[$playerName][0]) {
                             $sender->sendMessage(Plugin::$prefix . $this->translate('failure-invalid', $number));
-                            $sender->sendMessage(Plugin::$prefix . $this->translate('count', $player === null ? $playerName : $player->getName(),$data[0]));
+                            $sender->sendMessage(Plugin::$prefix . $this->translate('count', $player === null ? $playerName : $player->getName(),$datas[$playerName][0]));
                         } else {
                             if (!isset(VirtualChestInventory::$vchests[$playerName][$index])) {
                                 if (!isset(VirtualChestInventory::$vchests[$playerName])) {
                                     VirtualChestInventory::$vchests[$playerName] = [];
                                 }
                                 $items = [];
-                                if (isset($data[1][$index]) && is_array($data[1][$index])) {
+                                if (isset($datas[$playerName][1][$index]) && is_array($datas[$playerName][1][$index])) {
                                     try{
-                                        foreach ($data[1][$index] as $key => $value) {
+                                        foreach ($datas[$playerName][1][$index] as $key => $value) {
                                             if (is_array($value)) {
                                                 $args = explode(':', $value[0]);
                                                 if (isset($value[1])) {
