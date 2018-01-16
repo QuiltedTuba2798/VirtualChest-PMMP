@@ -59,8 +59,10 @@ class VirtualChestInventory extends CustomInventory implements InventoryHolder{
     public function onOpen(Player $who) : void{
         BaseInventory::onOpen($who);
 
-        $this->vec = $who->floor();
-        $this->vec->y = 0;
+        $this->vec = $who->subtract(0, 3, 0)->floor();
+        if ($this->vec->y < 0) {
+            $this->vec->y = 0;
+        }
 
         $pk = new UpdateBlockPacket();
         $pk->blockId = Block::CHEST;
