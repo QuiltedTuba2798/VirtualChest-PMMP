@@ -37,7 +37,7 @@ class SetSubCommand extends SubCommand{
                     return $i > 0;
                 });
                 if ($count === null) {
-                    $sender->sendMessage(Plugin::$prefix . Translation::translate('command-generic-failure@invalid ', $args[1]));
+                    $sender->sendMessage(Plugin::$prefix . Translation::translate('command-generic-failure@invalid', $args[1]));
                 } else {
                     $datas[$playerName] = [
                       $count,
