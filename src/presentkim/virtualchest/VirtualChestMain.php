@@ -41,6 +41,9 @@ class VirtualChestMain extends PluginBase{
 
             // load utils
             $this->getServer()->getLoader()->loadClass('presentkim\virtualchest\util\Utils');
+
+            // load default lang
+            Translation::loadFromResource($this->getResource('lang/eng.yml'), true);
         }
     }
 
