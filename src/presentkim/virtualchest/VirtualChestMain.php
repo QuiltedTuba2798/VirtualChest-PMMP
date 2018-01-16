@@ -138,8 +138,5 @@ class VirtualChestMain extends PluginBase{
             ]);
         }
         $this->saveConfig();
-
-        // save lang
-        Translation::save("{$dataFolder}lang.yml");
     }
 }
