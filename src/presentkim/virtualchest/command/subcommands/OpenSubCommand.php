@@ -35,7 +35,7 @@ class OpenSubCommand extends SubCommand{
                 ];
                 $config->set('playerData', $datas);
             }
-            if ($datas[$playerName][0] <= 0) {
+            if (!isset($datas[$playerName]) || $datas[$playerName][0] <= 0) {
                 $sender->sendMessage(Plugin::$prefix . $this->translate('failure-none'));
             } else {
                 $number = isset($args[0]) ? strtolower($args[0]) : 1;
