@@ -29,7 +29,10 @@ class OpenSubCommand extends SubCommand{
 
             $datas = $config->get('playerData');
             if (!isset($datas[$playerName]) && ($default = $config->get('default-count')) > 0) {
-                $datas[$playerName][0] = $default;
+                $datas[$playerName] = [
+                  $default,
+                  [],
+                ];
                 $config->set('playerData', $datas);
             }
             if ($datas[$playerName][0] <= 0) {
