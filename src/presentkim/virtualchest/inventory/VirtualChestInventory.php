@@ -25,11 +25,11 @@ class VirtualChestInventory extends CustomInventory implements InventoryHolder{
     /** @var  self[][] */
     public static $vchests = [];
 
-    /** Vector3 */
-    private $vec;
-
     /** CompoundTag */
     private $nbt;
+
+    /** Vector3[] */
+    private $vectors = [];
 
     /**
      * VirtualChestInventory constructor.
@@ -59,29 +59,29 @@ class VirtualChestInventory extends CustomInventory implements InventoryHolder{
     public function onOpen(Player $who) : void{
         BaseInventory::onOpen($who);
 
-        $this->vec = $who->subtract(0, 3, 0)->floor();
-        if ($this->vec->y < 0) {
-            $this->vec->y = 0;
+        $this->vectors[$key = $who->getLowerCaseName()] = $who->subtract(0, 3, 0)->floor();
+        if ($this->vectors[$key]->y < 0) {
+            $this->vectors[$key]->y = 0;
         }
 
         $pk = new UpdateBlockPacket();
         $pk->blockId = Block::CHEST;
         $pk->blockData = 0;
-        $pk->x = $this->vec->x;
-        $pk->y = $this->vec->y;
-        $pk->z = $this->vec->z;
+        $pk->x = $this->vectors[$key]->x;
+        $pk->y = $this->vectors[$key]->y;
+        $pk->z = $this->vectors[$key]->z;
         $who->sendDataPacket($pk);
 
 
-        $this->nbt->setInt('x', $this->vec->x);
-        $this->nbt->setInt('y', $this->vec->y);
-        $this->nbt->setInt('z', $this->vec->z);
+        $this->nbt->setInt('x', $this->vectors[$key]->x);
+        $this->nbt->setInt('y', $this->vectors[$key]->y);
+        $this->nbt->setInt('z', $this->vectors[$key]->z);
         self::$nbtWriter->setData($this->nbt);
 
         $pk = new BlockEntityDataPacket();
-        $pk->x = $this->vec->x;
-        $pk->y = $this->vec->y;
-        $pk->z = $this->vec->z;
+        $pk->x = $this->vectors[$key]->x;
+        $pk->y = $this->vectors[$key]->y;
+        $pk->z = $this->vectors[$key]->z;
         $pk->namedtag = self::$nbtWriter->write();
         $who->sendDataPacket($pk);
 
@@ -89,9 +89,9 @@ class VirtualChestInventory extends CustomInventory implements InventoryHolder{
         $pk = new ContainerOpenPacket();
         $pk->type = WindowTypes::CONTAINER;
         $pk->entityUniqueId = -1;
-        $pk->x = $this->vec->x;
-        $pk->y = $this->vec->y;
-        $pk->z = $this->vec->z;
+        $pk->x = $this->vectors[$key]->x;
+        $pk->y = $this->vectors[$key]->y;
+        $pk->z = $this->vectors[$key]->z;
         $pk->windowId = $who->getWindowId($this);
         $who->sendDataPacket($pk);
 
@@ -101,20 +101,21 @@ class VirtualChestInventory extends CustomInventory implements InventoryHolder{
     public function onClose(Player $who) : void{
         BaseInventory::onClose($who);
 
-        $block = $who->getLevel()->getBlock($this->vec);
+        $block = $who->getLevel()->getBlock($this->vectors[$key = $who->getLowerCaseName()]);
 
         $pk = new UpdateBlockPacket();
-        $pk->x = $this->vec->x;
-        $pk->y = $this->vec->y;
-        $pk->z = $this->vec->z;
+        $pk->x = $this->vectors[$key]->x;
+        $pk->y = $this->vectors[$key]->y;
+        $pk->z = $this->vectors[$key]->z;
         $pk->blockId = $block->getId();
         $pk->blockData = $block->getDamage();
         $who->sendDataPacket($pk);
 
-        $tile = $who->getLevel()->getTile($this->vec);
+        $tile = $who->getLevel()->getTile($this->vectors[$key]);
         if ($tile instanceof Spawnable) {
             $who->sendDataPacket($tile->createSpawnPacket());
         }
+        unset($this->vectors[$key]);
     }
 
     /** @return string */
