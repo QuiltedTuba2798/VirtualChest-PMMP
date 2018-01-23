@@ -6,7 +6,7 @@ use pocketmine\Player;
 use pocketmine\block\Block;
 use pocketmine\tile\Spawnable;
 use pocketmine\inventory\{
-  BaseInventory, CustomInventory, Inventory, InventoryHolder
+  BaseInventory, CustomInventory
 };
 use pocketmine\nbt\NetworkLittleEndianNBTStream;
 use pocketmine\nbt\tag\{
@@ -17,7 +17,7 @@ use pocketmine\network\mcpe\protocol\{
 };
 use presentkim\virtualchest\util\Translation;
 
-class VirtualChestInventory extends CustomInventory implements InventoryHolder{
+class VirtualChestInventory extends CustomInventory{
 
     /** @var NetworkLittleEndianNBTStream|null */
     private static $nbtWriter = null;
@@ -40,7 +40,7 @@ class VirtualChestInventory extends CustomInventory implements InventoryHolder{
      * @param string|null $title
      */
     public function __construct(string $ownerName, int $num = 0, $items = [], string $title = null){
-        parent::__construct($this, $items, 27, $title);
+        parent::__construct(null, $items, 27, $title);
 
         $this->nbt = new CompoundTag('', [
           new StringTag('id', 'Chest'),
@@ -131,10 +131,5 @@ class VirtualChestInventory extends CustomInventory implements InventoryHolder{
     /** @return int */
     public function getNetworkType() : int{
         return WindowTypes::CONTAINER;
-    }
-
-    /** @return Inventory */
-    public function getInventory(){
-        return $this;
     }
 }
