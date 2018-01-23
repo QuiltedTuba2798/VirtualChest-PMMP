@@ -2,6 +2,7 @@
 
 namespace presentkim\virtualchest\inventory;
 
+use pocketmine\math\Vector3;
 use pocketmine\Player;
 use pocketmine\block\Block;
 use pocketmine\tile\Spawnable;
@@ -40,7 +41,7 @@ class VirtualChestInventory extends CustomInventory{
      * @param string|null $title
      */
     public function __construct(string $ownerName, int $num = 0, $items = [], string $title = null){
-        parent::__construct(null, $items, 27, $title);
+        parent::__construct(new Vector3(0, 0, 0), $items, 27, $title);
 
         $this->nbt = new CompoundTag('', [
           new StringTag('id', 'Chest'),
