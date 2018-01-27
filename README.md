@@ -11,7 +11,7 @@
 A plugin give virtual chest to player for PocketMine-MP
 
 ## Command
-Main command : `/vchest \<open | default | set | lang | reload | save\>`
+Main command : `/vchest <open | default | set | lang | reload | save>`
 
 | subcommand | arguments                        | description                 |
 | ---------- | -------------------------------- | --------------------------- |
