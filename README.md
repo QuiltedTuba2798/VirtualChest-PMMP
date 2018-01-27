@@ -45,18 +45,39 @@ Main command : `/vchest <open | default | set | lang | reload | save>`
 ## ChangeLog
 ### v1.0.0 [![Source](https://img.shields.io/badge/source-v1.0.0-blue.png?label=source)](https://github.com/PMMPPlugin/VirtualChest/tree/v1.0.0) [![Release](https://img.shields.io/github/downloads/PMMPPlugin/VirtualChest/v1.0.0/total.png?label=download&colorB=1fadad)](https://github.com/PMMPPlugin/VirtualChest/releases/v1.0.0)
 - First release
+  
+  
+---
 ### v1.0.1 [![Source](https://img.shields.io/badge/source-v1.0.1-blue.png?label=source)](https://github.com/PMMPPlugin/VirtualChest/tree/v1.0.1) [![Release](https://img.shields.io/github/downloads/PMMPPlugin/VirtualChest/v1.0.1/total.png?label=download&colorB=1fadad)](https://github.com/PMMPPlugin/VirtualChest/releases/v1.0.1)
 - \[Fixed\] main command config not work
+  
+  
+---
 ### v1.1.0 [![Source](https://img.shields.io/badge/source-v1.1.0-blue.png?label=source)](https://github.com/PMMPPlugin/VirtualChest/tree/v1.1.0) [![Release](https://img.shields.io/github/downloads/PMMPPlugin/VirtualChest/v1.1.0/total.png?label=download&colorB=1fadad)](https://github.com/PMMPPlugin/VirtualChest/releases/v1.1.0)
 - \[Changed\] translation method
+  
+  
+---
 ### v1.1.1 [![Source](https://img.shields.io/badge/source-v1.1.1-blue.png?label=source)](https://github.com/PMMPPlugin/VirtualChest/tree/v1.1.1) [![Release](https://img.shields.io/github/downloads/PMMPPlugin/VirtualChest/v1.1.1/total.png?label=download&colorB=1fadad)](https://github.com/PMMPPlugin/VirtualChest/releases/v1.1.1)
 - \[Added\] view sub command
+  
+  
+---
 ### v1.1.2 [![Source](https://img.shields.io/badge/source-v1.1.2-blue.png?label=source)](https://github.com/PMMPPlugin/VirtualChest/tree/v1.1.2) [![Release](https://img.shields.io/github/downloads/PMMPPlugin/VirtualChest/v1.1.2/total.png?label=download&colorB=1fadad)](https://github.com/PMMPPlugin/VirtualChest/releases/v1.1.2)
 - \[Fixed\] box closes as soon as it opens
+  
+  
+---
 ### v1.1.3 [![Source](https://img.shields.io/badge/source-v1.1.3-blue.png?label=source)](https://github.com/PMMPPlugin/VirtualChest/tree/v1.1.3) [![Release](https://img.shields.io/github/downloads/PMMPPlugin/VirtualChest/v1.1.3/total.png?label=download&colorB=1fadad)](https://github.com/PMMPPlugin/VirtualChest/releases/v1.1.3)
 - \[Changed\] config data structure
 - \[Added\] default sub command
+  
+  
+---
 ### v1.1.4 [![Source](https://img.shields.io/badge/source-v1.1.4-blue.png?label=source)](https://github.com/PMMPPlugin/VirtualChest/tree/v1.1.4) [![Release](https://img.shields.io/github/downloads/PMMPPlugin/VirtualChest/v1.1.4/total.png?label=download&colorB=1fadad)](https://github.com/PMMPPlugin/VirtualChest/releases/v1.1.4)
 - \[Fixed\] error occurs when opening the box when the default value is 0
+  
+  
+---
 ### v1.1.5 [![Source](https://img.shields.io/badge/source-v1.1.5-blue.png?label=source)](https://github.com/PMMPPlugin/VirtualChest/tree/v1.1.5) [![Release](https://img.shields.io/github/downloads/PMMPPlugin/VirtualChest/v1.1.5/total.png?label=download&colorB=1fadad)](https://github.com/PMMPPlugin/VirtualChest/releases/v1.1.5)
 - \[Changed\] inventory holder (according to https://github.com/pmmp/PocketMine-MP/commit/2fb580db26cb9335d38d38cba99864f54793cbf8)
