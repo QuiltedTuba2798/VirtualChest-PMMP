@@ -1,6 +1,6 @@
 [![Telegram](https://img.shields.io/badge/Telegram-PresentKim-blue.svg?logo=telegram)](https://t.me/PresentKim)
 
-[![icon/96x96](https://raw.githubusercontent.com/PMMPPlugin/VirtualChest/master/meta/icon/192x192.png)]()
+[![icon/192x192](meta/icon/192x192.png?raw=true)]()
 
 [![License](https://img.shields.io/github/license/PMMPPlugin/VirtualChest.svg?label=License)](LICENSE)
 [![Poggit](https://poggit.pmmp.io/ci.shield/PMMPPlugin/VirtualChest/VirtualChest)](https://poggit.pmmp.io/ci/PMMPPlugin/VirtualChest)
