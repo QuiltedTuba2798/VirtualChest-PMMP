@@ -7,7 +7,9 @@ use presentkim\virtualchest\VirtualChest as Plugin;
 use presentkim\virtualchest\command\{
   PoolCommand, SubCommand
 };
-use presentkim\virtualchest\util\Translation;
+use presentkim\virtualchest\util\{
+  Translation, Utils
+};
 
 class DefaultSubCommand extends SubCommand{
 
