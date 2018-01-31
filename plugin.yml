@@ -1,35 +1,36 @@
 ---
-name:                   VirtualChest
-main:                   presentkim\virtualchest\VirtualChest
-version:                1.1.5
-api:                    [3.0.0, 3.0.0-ALPHA10]
-author:                 PresentKim
-website:                https://github.com/PMMPPlugin/VirtualChest
+name:                      VirtualChest
+main:                      presentkim\virtualchest\VirtualChest
+version:                   1.1.5
+api:                       [3.0.0, 3.0.0-ALPHA10]
+author:                    PresentKim
+website:                   https://github.com/PMMPPlugin/VirtualChest
+description:               A plugin give virtual chest to player
 
 permissions:
   vchest.cmd:
-    description:        VirtualChest command
-    default:            true
+    description:           VirtualChest command
+    default:               true
     children:
       vchest.cmd.open:
-        description:    VirtualChest command - open
-        default:        true
+        description:       VirtualChest command - open
+        default:           true
       vchest.cmd.default:
-        description:    VirtualChest command - default
-        default:        op
+        description:       VirtualChest command - default
+        default:           op
       vchest.cmd.set:
-        description:    VirtualChest command - set
-        default:        op
+        description:       VirtualChest command - set
+        default:           op
       vchest.cmd.view:
-        description:    VirtualChest command - view
-        default:        op
+        description:       VirtualChest command - view
+        default:           op
       vchest.cmd.lang:
-        description:    VirtualChest command - lang
-        default:        op
+        description:       VirtualChest command - lang
+        default:           op
       vchest.cmd.reload:
-        description:    VirtualChest command - reload
-        default:        op
+        description:       VirtualChest command - reload
+        default:           op
       vchest.cmd.save:
-        description:    VirtualChest command - save
-        default:        op
+        description:       VirtualChest command - save
+        default:           op
 ...
