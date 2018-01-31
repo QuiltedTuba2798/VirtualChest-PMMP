@@ -29,7 +29,6 @@ class VirtualChestMain extends PluginBase{
     public function onLoad() : void{
         if (self::$instance === null) {
             self::$instance = $this;
-            $this->getServer()->getLoader()->loadClass('presentkim\virtualchest\util\Utils');
             Translation::loadFromResource($this->getResource('lang/eng.yml'), true);
 
             if (file_exists($filename = "{$this->getDataFolder()}config.yml")) {

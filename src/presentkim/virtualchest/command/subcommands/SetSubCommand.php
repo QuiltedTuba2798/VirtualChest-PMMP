@@ -6,9 +6,8 @@ use pocketmine\{
   Server, command\CommandSender
 };
 use presentkim\virtualchest\{
-  command\PoolCommand, VirtualChestMain as Plugin, util\Translation, command\SubCommand
+  command\PoolCommand, util\Utils, VirtualChestMain as Plugin, util\Translation, command\SubCommand
 };
-use function presentkim\virtualchest\util\toInt;
 
 class SetSubCommand extends SubCommand{
 
@@ -33,7 +32,7 @@ class SetSubCommand extends SubCommand{
             if ($player === null && !isset($datas[$playerName])) {
                 $sender->sendMessage(Plugin::$prefix . Translation::translate('command-generic-failure@invalid-player', $args[0]));
             } else {
-                $count = toInt($args[1], null, function (int $i){
+                $count = Utils::toInt($args[1], null, function (int $i){
                     return $i > 0;
                 });
                 if ($count === null) {
