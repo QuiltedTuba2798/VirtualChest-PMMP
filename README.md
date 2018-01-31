@@ -81,3 +81,10 @@ Main command : `/vchest <open | default | set | lang | reload | save>`
 ---
 ### v1.1.5 [![Source](https://img.shields.io/badge/source-v1.1.5-blue.png?label=source)](https://github.com/PMMPPlugin/VirtualChest/tree/v1.1.5) [![Release](https://img.shields.io/github/downloads/PMMPPlugin/VirtualChest/v1.1.5/total.png?label=download&colorB=1fadad)](https://github.com/PMMPPlugin/VirtualChest/releases/v1.1.5)
 - \[Changed\] inventory holder (according to https://github.com/pmmp/PocketMine-MP/commit/2fb580db26cb9335d38d38cba99864f54793cbf8)
+
+  
+---
+### v1.1.6 [![Source](https://img.shields.io/badge/source-v1.1.6-blue.png?label=source)](https://github.com/PMMPPlugin/VirtualChest/tree/v1.1.6) [![Release](https://img.shields.io/github/downloads/PMMPPlugin/VirtualChest/v1.1.6/total.png?label=download&colorB=1fadad)](https://github.com/PMMPPlugin/VirtualChest/releases/v1.1.6)
+- \[Changed\] Add return type hint
+- \[Fixed\] Violation of PSR-0
+- \[Changed\] Rename main class to VirtualChest
