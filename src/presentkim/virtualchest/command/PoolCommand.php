@@ -6,8 +6,8 @@ namespace presentkim\virtualchest\command;
 use pocketmine\command\{
   Command, CommandExecutor, CommandSender, PluginCommand
 };
-use presentkim\virtualchest\util\Translation;
 use presentkim\virtualchest\VirtualChest as Plugin;
+use presentkim\virtualchest\util\Translation;
 
 class PoolCommand extends PluginCommand implements CommandExecutor{
 

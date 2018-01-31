@@ -3,12 +3,12 @@
 namespace presentkim\virtualchest;
 
 use pocketmine\plugin\PluginBase;
-use presentkim\virtualchest\util\Translation;
-use presentkim\virtualchest\inventory\VirtualChestInventory;
 use presentkim\virtualchest\command\PoolCommand;
 use presentkim\virtualchest\command\subcommands\{
   OpenSubCommand, DefaultSubCommand, SetSubCommand, ViewSubCommand, LangSubCommand, ReloadSubCommand, SaveSubCommand
 };
+use presentkim\virtualchest\inventory\VirtualChestInventory;
+use presentkim\virtualchest\util\Translation;
 
 class VirtualChest extends PluginBase{
 

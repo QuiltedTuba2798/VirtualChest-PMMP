@@ -2,12 +2,15 @@
 
 namespace presentkim\virtualchest\command\subcommands;
 
-use pocketmine\{
-  Player, item\ItemFactory, command\CommandSender
+use pocketmine\Player;
+use pocketmine\command\CommandSender;
+use pocketmine\item\ItemFactory;
+use presentkim\virtualchest\VirtualChest as Plugin;
+use presentkim\virtualchest\command\{
+  PoolCommand, SubCommand
 };
-use presentkim\virtualchest\{
-  command\PoolCommand, inventory\VirtualChestInventory, VirtualChest as Plugin, util\Translation, command\SubCommand
-};
+use presentkim\virtualchest\inventory\VirtualChestInventory;
+use presentkim\virtualchest\util\Translation;
 
 class OpenSubCommand extends SubCommand{
 

@@ -3,8 +3,9 @@
 namespace presentkim\virtualchest\command;
 
 use pocketmine\command\CommandSender;
-use presentkim\virtualchest\{
-  util\Utils, VirtualChest as Plugin, util\Translation
+use presentkim\virtualchest\VirtualChest as Plugin;
+use presentkim\virtualchest\util\{
+  Translation, Utils
 };
 
 abstract class SubCommand{

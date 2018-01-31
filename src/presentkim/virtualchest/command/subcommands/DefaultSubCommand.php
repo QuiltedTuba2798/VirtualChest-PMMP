@@ -2,12 +2,12 @@
 
 namespace presentkim\virtualchest\command\subcommands;
 
-use pocketmine\{
-  Server, command\CommandSender
+use pocketmine\command\CommandSender;
+use presentkim\virtualchest\VirtualChest as Plugin;
+use presentkim\virtualchest\command\{
+  PoolCommand, SubCommand
 };
-use presentkim\virtualchest\{
-  command\PoolCommand, util\Utils, VirtualChest as Plugin, util\Translation, command\SubCommand
-};
+use presentkim\virtualchest\util\Translation;
 
 class DefaultSubCommand extends SubCommand{
 

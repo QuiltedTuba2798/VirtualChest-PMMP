@@ -2,13 +2,12 @@
 
 namespace presentkim\virtualchest\inventory;
 
-use pocketmine\math\Vector3;
 use pocketmine\Player;
 use pocketmine\block\Block;
-use pocketmine\tile\Spawnable;
 use pocketmine\inventory\{
   BaseInventory, CustomInventory
 };
+use pocketmine\math\Vector3;
 use pocketmine\nbt\NetworkLittleEndianNBTStream;
 use pocketmine\nbt\tag\{
   CompoundTag, IntTag, StringTag
@@ -16,6 +15,7 @@ use pocketmine\nbt\tag\{
 use pocketmine\network\mcpe\protocol\{
   types\WindowTypes, UpdateBlockPacket, ContainerOpenPacket, BlockEntityDataPacket
 };
+use pocketmine\tile\Spawnable;
 use presentkim\virtualchest\util\Translation;
 
 class VirtualChestInventory extends CustomInventory{
