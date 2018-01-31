@@ -22,11 +22,11 @@ class VirtualChestMain extends PluginBase{
     private $command;
 
     /** @return self */
-    public static function getInstance(){
+    public static function getInstance() : self{
         return self::$instance;
     }
 
-    public function onLoad(){
+    public function onLoad() : void{
         if (self::$instance === null) {
             self::$instance = $this;
             $this->getServer()->getLoader()->loadClass('presentkim\virtualchest\util\Utils');
@@ -44,15 +44,15 @@ class VirtualChestMain extends PluginBase{
         }
     }
 
-    public function onEnable(){
+    public function onEnable() : void{
         $this->load();
     }
 
-    public function onDisable(){
+    public function onDisable() : void{
         $this->save();
     }
 
-    public function load(){
+    public function load() : void{
         VirtualChestInventory::$vchests = [];
 
         $dataFolder = $this->getDataFolder();
@@ -76,7 +76,7 @@ class VirtualChestMain extends PluginBase{
         $this->reloadCommand();
     }
 
-    public function reloadCommand(){
+    public function reloadCommand() : void{
         if ($this->command == null) {
             $this->command = new PoolCommand($this, 'vchest');
             $this->command->createSubCommand(OpenSubCommand::class);
@@ -95,7 +95,7 @@ class VirtualChestMain extends PluginBase{
         $this->getServer()->getCommandMap()->register(strtolower($this->getName()), $this->command);
     }
 
-    public function save(){
+    public function save() : void{
         $dataFolder = $this->getDataFolder();
         if (!file_exists($dataFolder)) {
             mkdir($dataFolder, 0777, true);

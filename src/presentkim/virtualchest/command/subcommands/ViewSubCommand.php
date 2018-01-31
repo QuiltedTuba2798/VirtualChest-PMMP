@@ -21,7 +21,7 @@ class ViewSubCommand extends SubCommand{
      *
      * @return bool
      */
-    public function onCommand(CommandSender $sender, array $args){
+    public function onCommand(CommandSender $sender, array $args) : bool{
         if ($sender instanceof Player) {
             if (isset($args[0])) {
                 $playerName = strtolower($args[0]);
@@ -37,7 +37,7 @@ class ViewSubCommand extends SubCommand{
                         $number = isset($args[1]) ? strtolower($args[1]) : 1;
                         if (!is_numeric($number) || ($index = (int) $number - 1) >= $datas[$playerName][0]) {
                             $sender->sendMessage(Plugin::$prefix . $this->translate('failure-invalid', $number));
-                            $sender->sendMessage(Plugin::$prefix . $this->translate('count', $player === null ? $playerName : $player->getName(),$datas[$playerName][0]));
+                            $sender->sendMessage(Plugin::$prefix . $this->translate('count', $player === null ? $playerName : $player->getName(), $datas[$playerName][0]));
                         } else {
                             if (!isset(VirtualChestInventory::$vchests[$playerName][$index])) {
                                 if (!isset(VirtualChestInventory::$vchests[$playerName])) {
@@ -67,7 +67,7 @@ class ViewSubCommand extends SubCommand{
                         }
                     }
                 }
-            }else{
+            } else {
                 return false;
             }
         } else {

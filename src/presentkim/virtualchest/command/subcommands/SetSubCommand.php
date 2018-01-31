@@ -22,7 +22,7 @@ class SetSubCommand extends SubCommand{
      *
      * @return bool
      */
-    public function onCommand(CommandSender $sender, array $args){
+    public function onCommand(CommandSender $sender, array $args) : bool{
         if (isset($args[1])) {
             $playerName = strtolower($args[0]);
 

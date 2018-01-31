@@ -21,7 +21,7 @@ class OpenSubCommand extends SubCommand{
      *
      * @return bool
      */
-    public function onCommand(CommandSender $sender, array $args){
+    public function onCommand(CommandSender $sender, array $args) : bool{
         if ($sender instanceof Player) {
             $playerName = strtolower($sender->getName());
 
