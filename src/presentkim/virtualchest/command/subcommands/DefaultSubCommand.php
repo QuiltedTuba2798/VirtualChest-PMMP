@@ -6,7 +6,7 @@ use pocketmine\{
   Server, command\CommandSender
 };
 use presentkim\virtualchest\{
-  command\PoolCommand, util\Utils, VirtualChestMain as Plugin, util\Translation, command\SubCommand
+  command\PoolCommand, util\Utils, VirtualChest as Plugin, util\Translation, command\SubCommand
 };
 
 class DefaultSubCommand extends SubCommand{

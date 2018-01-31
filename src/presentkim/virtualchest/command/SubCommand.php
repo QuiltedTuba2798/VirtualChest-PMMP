@@ -4,7 +4,7 @@ namespace presentkim\virtualchest\command;
 
 use pocketmine\command\CommandSender;
 use presentkim\virtualchest\{
-  util\Utils, VirtualChestMain as Plugin, util\Translation
+  util\Utils, VirtualChest as Plugin, util\Translation
 };
 
 abstract class SubCommand{

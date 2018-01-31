@@ -4,7 +4,7 @@ namespace presentkim\virtualchest\command\subcommands;
 
 use pocketmine\command\CommandSender;
 use presentkim\virtualchest\{
-  command\PoolCommand, VirtualChestMain as Plugin, command\SubCommand
+  command\PoolCommand, VirtualChest as Plugin, command\SubCommand
 };
 
 class SaveSubCommand extends SubCommand{

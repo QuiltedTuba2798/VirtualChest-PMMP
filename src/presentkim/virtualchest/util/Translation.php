@@ -2,7 +2,7 @@
 
 namespace presentkim\virtualchest\util;
 
-use presentkim\virtualchest\VirtualChestMain as Plugin;
+use presentkim\virtualchest\VirtualChest as Plugin;
 
 class Translation{
 

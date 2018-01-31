@@ -7,7 +7,7 @@ use pocketmine\command\{
   Command, CommandExecutor, CommandSender, PluginCommand
 };
 use presentkim\virtualchest\util\Translation;
-use presentkim\virtualchest\VirtualChestMain as Plugin;
+use presentkim\virtualchest\VirtualChest as Plugin;
 
 class PoolCommand extends PluginCommand implements CommandExecutor{
 

@@ -10,7 +10,7 @@ use presentkim\virtualchest\command\subcommands\{
   OpenSubCommand, DefaultSubCommand, SetSubCommand, ViewSubCommand, LangSubCommand, ReloadSubCommand, SaveSubCommand
 };
 
-class VirtualChestMain extends PluginBase{
+class VirtualChest extends PluginBase{
 
     /** @var self */
     private static $instance = null;

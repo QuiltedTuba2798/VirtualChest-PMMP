@@ -6,7 +6,7 @@ use pocketmine\{
   Player, item\ItemFactory, command\CommandSender
 };
 use presentkim\virtualchest\{
-  command\PoolCommand, inventory\VirtualChestInventory, VirtualChestMain as Plugin, util\Translation, command\SubCommand
+  command\PoolCommand, inventory\VirtualChestInventory, VirtualChest as Plugin, util\Translation, command\SubCommand
 };
 
 class OpenSubCommand extends SubCommand{
