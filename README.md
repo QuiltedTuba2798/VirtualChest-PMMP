@@ -88,3 +88,11 @@ Main command : `/vchest <open | default | set | lang | reload | save>`
 - \[Changed\] Add return type hint
 - \[Fixed\] Violation of PSR-0
 - \[Changed\] Rename main class to VirtualChest
+  
+  
+---
+### v1.1.7 [![Source](https://img.shields.io/badge/source-v1.1.7-blue.png?label=source)](https://github.com/PMMPPlugin/VirtualChest/tree/v1.1.7) [![Release](https://img.shields.io/github/downloads/PMMPPlugin/VirtualChest/v1.1.7/total.png?label=download&colorB=1fadad)](https://github.com/PMMPPlugin/VirtualChest/releases/v1.1.7)
+- \[Added\] Add PluginCommand getter and setter
+- \[Added\] Add getters and setters to SubCommand
+- \[Fixed\] Add api 3.0.0-ALPHA11
+- \[Changed\] Show only subcommands that sender have permission to use
