@@ -134,4 +134,18 @@ class VirtualChest extends PluginBase{
         $config->set('playerData', $datas);
         $this->saveConfig();
     }
+
+    /**
+     * @param string $name = ''
+     *
+     * @return PoolCommand
+     */
+    public function getCommand(string $name = '') : PoolCommand{
+        return $this->command;
+    }
+
+    /** @param PoolCommand $command */
+    public function setCommand(PoolCommand $command) : void{
+        $this->command = $command;
+    }
 }
