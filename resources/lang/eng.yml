@@ -9,7 +9,8 @@ command-generic-failure@invalid : "{%0} is invalid value"
 command-generic-failure@invalid-player: "{%0} is invalid player name"
 
 command-vchest: "vchest"
-command-vchest@usage: /vchest <open | set | lang | reload | save>
+command-vchest@usage: "/vchest <{%0}>"
+command-vchest@usage-separator: " | "
 command-vchest@description: "Main command of VirtualChest"
 command-vchest@aliases: ["vc"]
 

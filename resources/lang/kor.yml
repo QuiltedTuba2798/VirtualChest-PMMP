@@ -9,7 +9,8 @@ command-generic-failure@invalid: '{%0}는 잘못된 값입니다'
 command-generic-failure@invalid-player: "{%0}는 잘못된 플레이어명입니다"
 
 command-vchest: "vchest"
-command-vchest@usage: /vchest <open | set | lang | reload | save>
+command-vchest@usage: "/vchest <{%0}>"
+command-vchest@usage-separator: " | "
 command-vchest@description: "VirtualChest의 메인 커맨드"
 command-vchest@aliases: ["vc"]
 
