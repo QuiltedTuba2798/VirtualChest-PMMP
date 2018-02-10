@@ -3,9 +3,10 @@
 namespace presentkim\virtualchest\container;
 
 use pocketmine\nbt\NBT;
-use pocketmine\nbt\tag\CompoundTag;
-use pocketmine\nbt\tag\IntTag;
-use pocketmine\nbt\tag\ListTag;
+use pocketmine\nbt\tag\{
+  CompoundTag, ListTag, IntTag
+};
+use presentkim\virtualchest\VirtualChest as Plugin;
 use presentkim\virtualchest\inventory\VirtualChestInventory;
 
 class VirtualChestContainer{
@@ -25,11 +26,18 @@ class VirtualChestContainer{
 
     /**
      * @param string $playerName
+     * @param bool   $load
      *
      * @return null|VirtualChestContainer
      */
-    public static function getContainer(string $playerName) : ?VirtualChestContainer{
-        return self::$containers[$playerName] ?? null;
+    public static function getContainer(string $playerName, bool $load = false) : ?VirtualChestContainer{
+        if (isset(self::$containers[$playerName])) {
+            return self::$containers[$playerName];
+        } elseif ($load) {
+            return Plugin::getInstance()->loadPlayerData($playerName);
+        } else {
+            return null;
+        }
     }
 
     /**
