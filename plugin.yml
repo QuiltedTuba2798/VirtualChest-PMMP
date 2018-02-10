@@ -6,6 +6,7 @@ api:                       [3.0.0, 3.0.0-ALPHA10, 3.0.0-ALPHA11]
 author:                    PresentKim
 website:                   https://github.com/PMMPPlugin/VirtualChest
 description:               A plugin give virtual chest to player
+softdepend:                [EconomyAPI, MathParserLib]
 
 permissions:
   vchest.cmd:
