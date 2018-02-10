@@ -10,6 +10,7 @@ use presentkim\virtualchest\VirtualChest as Plugin;
 use presentkim\virtualchest\command\{
   PoolCommand, SubCommand
 };
+use presentkim\virtualchest\container\VirtualChestContainer;
 use presentkim\virtualchest\util\Translation;
 
 class BuySubCommand extends SubCommand{
@@ -30,8 +31,8 @@ class BuySubCommand extends SubCommand{
     public function onCommand(CommandSender $sender, array $args) : bool{
         if ($sender instanceof Player) {
             $config = $this->plugin->getConfig();
-            $datas = $config->get('playerData');
-            $count = isset($datas[$playerName = $sender->getLowerCaseName()]) ? $datas[$playerName][0] : 0;
+            $container = VirtualChestContainer::getContainer($playerName = $sender->getLowerCaseName(), true);
+            $count = $container === null ? $config->get('default-count') : $container->getCount();
             if ($count >= (int) $config->get('max-count')) {
                 $sender->sendMessage(Plugin::$prefix . $this->translate('failure-max'));
                 return true;
@@ -51,11 +52,12 @@ class BuySubCommand extends SubCommand{
                         $sender->sendMessage(Plugin::$prefix . $this->translate('failure-money', $myMoney));
                     } else {
                         $economyAPI->reduceMoney($playerName, $price);
-                        $datas[$playerName] = [
-                          $count + 1,
-                          $datas[$playerName][1] ?? [],
-                        ];
-                        $config->set('playerData', $datas);
+                        if ($container === null) {
+                            $container = new VirtualChestContainer($playerName, $count + 1);
+                            VirtualChestContainer::setContainer($playerName, $container);
+                        } else {
+                            $container->setCount($count + 1);
+                        }
                         $sender->sendMessage(Plugin::$prefix . $this->translate('success', $myMoney - $price));
                     }
                 }

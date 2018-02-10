@@ -2,11 +2,15 @@
 
 namespace presentkim\virtualchest\command\subcommands;
 
-use pocketmine\{
-  Server, command\CommandSender
+use pocketmine\Server;
+use pocketmine\command\CommandSender;
+use presentkim\virtualchest\VirtualChest as Plugin;
+use presentkim\virtualchest\command\{
+  PoolCommand, SubCommand
 };
-use presentkim\virtualchest\{
-  command\PoolCommand, util\Utils, VirtualChest as Plugin, util\Translation, command\SubCommand
+use presentkim\virtualchest\container\VirtualChestContainer;
+use presentkim\virtualchest\util\{
+  Translation, Utils
 };
 
 class SetSubCommand extends SubCommand{
@@ -23,13 +27,14 @@ class SetSubCommand extends SubCommand{
      */
     public function onCommand(CommandSender $sender, array $args) : bool{
         if (isset($args[1])) {
-            $playerName = strtolower($args[0]);
-
-            $config = $this->plugin->getConfig();
-
-            $player = Server::getInstance()->getPlayerExact($playerName);
-            $datas = $config->get('playerData');
-            if ($player === null && !isset($datas[$playerName])) {
+            $container = VirtualChestContainer::getContainer($playerName = strtolower($args[0]), true);
+            if ($container === null) {
+                $player = Server::getInstance()->getPlayer($playerName);
+                if ($player !== null) {
+                    $container = VirtualChestContainer::getContainer($playerName = $player->getLowerCaseName(), true);
+                }
+            }
+            if ($container === null) {
                 $sender->sendMessage(Plugin::$prefix . Translation::translate('command-generic-failure@invalid-player', $args[0]));
             } else {
                 $count = Utils::toInt($args[1], null, function (int $i){
@@ -38,12 +43,8 @@ class SetSubCommand extends SubCommand{
                 if ($count === null) {
                     $sender->sendMessage(Plugin::$prefix . Translation::translate('command-generic-failure@invalid', $args[1]));
                 } else {
-                    $datas[$playerName] = [
-                      $count,
-                      $datas[$playerName][1] ?? [],
-                    ];
-                    $config->set('playerData', $datas);
-                    $sender->sendMessage(Plugin::$prefix . $this->translate('success', $player === null ? $playerName : $player->getName(), $count));
+                    $container->setCount($count);
+                    $sender->sendMessage(Plugin::$prefix . $this->translate('success', $playerName, $count));
                 }
             }
             return true;
