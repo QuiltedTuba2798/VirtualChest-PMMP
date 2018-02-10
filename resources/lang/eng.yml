@@ -1,7 +1,7 @@
 ---
 prefix: "[VirtualChest] "
 
-chest-name: "{%0}'s {%1} th virtual chest"
+chest-name: "{%0}'s {%1}th virtual chest"
 
 command-generic-failure@in-game: "Available in game only"
 command-generic-failure@permission : "You do not have permission to use this command"
