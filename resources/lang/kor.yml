@@ -21,6 +21,11 @@ command-vchest-open@failure-invalid: "{%0}는 잘못된 창고 번호입니다"
 command-vchest-open@count: "{%0}개의 창고를 소유하고 있습니다"
 command-vchest-open@aliases: ["o"]
 
+command-vchest-price: "price"
+command-vchest-price@usage: "/vchest Price <창고 가격>"
+command-vchest-price@success: "창고 가격이 {%0}로 설정되었습니다"
+command-vchest-price@aliases: ["p"]
+
 command-vchest-max: "max"
 command-vchest-max@usage: "/vchest Max <창고 수>"
 command-vchest-max@success: "최대 창고 수가 {%0}로 설정되었습니다"

@@ -21,6 +21,11 @@ command-vchest-open@failure-invalid: "{%0} is invalid chest number"
 command-vchest-open@count: "You have {%0} chest"
 command-vchest-open@aliases: ["o"]
 
+command-vchest-price: "price"
+command-vchest-price@usage: "/vchest Price <chest price>"
+command-vchest-price@success: "Chest price was setted to {%0}"
+command-vchest-price@aliases: ["p"]
+
 command-vchest-max: "max"
 command-vchest-max@usage: "/vchest Max <chest count>"
 command-vchest-max@success: "Maximum number of chest was setted to {%0}"

@@ -16,6 +16,9 @@ permissions:
       vchest.cmd.open:
         description:       VirtualChest command - open
         default:           true
+      vchest.cmd.price:
+        description:       VirtualChest command - price
+        default:           op
       vchest.cmd.max:
         description:       VirtualChest command - max
         default:           op

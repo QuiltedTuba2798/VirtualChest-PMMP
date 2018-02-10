@@ -1,5 +1,6 @@
 ---
 default-count: 0
 max-count: 0
+price: -1
 playerData: []
 ...
