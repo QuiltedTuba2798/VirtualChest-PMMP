@@ -2,6 +2,7 @@
 
 namespace presentkim\virtualchest;
 
+use pocketmine\item\ItemFactory;
 use pocketmine\nbt\BigEndianNBTStream;
 use pocketmine\plugin\PluginBase;
 use onebone\economyapi\EconomyAPI;
@@ -33,6 +34,58 @@ class VirtualChest extends PluginBase{
         if (self::$instance === null) {
             self::$instance = $this;
             Translation::loadFromResource($this->getResource('lang/eng.yml'), true);
+
+            if (file_exists($filename = "{$this->getDataFolder()}config.yml")) {
+                $oldConfig = yaml_parse(file_get_contents($filename));
+                if (isset($oldConfig['playerData'])) {
+                    $this->getLogger()->alert('Convert old player data to nbt (' . count($oldConfig['playerData']) . ' items)');
+
+                    if (!file_exists($dataFolder = $this->getDataFolder())) {
+                        mkdir($dataFolder, 0777, true);
+                    }
+                    if (!file_exists($playerDataFolder = "{$dataFolder}players\\")) {
+                        mkdir($playerDataFolder, 0777, true);
+                    }
+
+                    foreach ($oldConfig['playerData'] as $playerName => $playerData) {
+                        try{
+                            $this->getLogger()->debug("Start convert {$playerName}'s data");
+                            $count = $playerData[0];
+                            $chests = [];
+                            foreach ($playerData[1] as $index => $itemDatas) {
+                                $items = [];
+                                foreach ($itemDatas as $slot => $itemData) {
+                                    try{
+                                        if (is_array($itemData)) {
+                                            $args = explode(':', $itemData[0]);
+                                            if (isset($value[1])) {
+                                                $args[] = $itemData[1];
+                                            }
+                                            $items[$slot] = ItemFactory::get(...$args);
+                                        } else {
+                                            $items[$slot] = ItemFactory::get(...explode(':', $itemData));
+                                        }
+                                    } catch (\Error $e){
+                                        $this->getLogger()->error($e);
+                                    }
+                                }
+                                $chests[$index] = new VirtualChestInventory($playerName, $index + 1, $items);
+                            }
+                            $container = new VirtualChestContainer($playerName, $count, $chests);
+                            $nbtStream = new BigEndianNBTStream();
+                            $nbtStream->setData($container->nbtSerialize($playerName));
+
+                            file_put_contents($file = "{$playerDataFolder}{$playerName}.dat", $nbtStream->writeCompressed());
+                            $this->getLogger()->debug("Succeed convert {$playerName}'s data");
+                        } catch (\Throwable $e){
+                            $this->getLogger()->error($e->getMessage());
+                            $this->getLogger()->warning("Error occurred saving {$playerName}'s data");
+                        }
+                    }
+                    unset($oldConfig['playerData']);
+                    yaml_emit_file($filename, $oldConfig, YAML_UTF8_ENCODING);
+                }
+            }
         }
     }
 
@@ -45,8 +98,6 @@ class VirtualChest extends PluginBase{
     }
 
     public function load() : void{
-        VirtualChestInventory::$vchests = [];
-
         $dataFolder = $this->getDataFolder();
         if (!file_exists($dataFolder)) {
             mkdir($dataFolder, 0777, true);
