@@ -10,18 +10,34 @@
 
 A plugin give virtual chest to player for PocketMine-MP
 
+## Softdepend
+- [EconomyAPI](https://github.com/onebone/EconomyS) : For buy chest
+- [MathParserLib](https://github.com/PMMPPlugin/MathParserLib) : For calculate chest price
+
+
+
 ## Command
-Main command : `/vchest <open | default | set | lang | reload | save>`
+Main command : `/vchest <open | buy | price | max | default | set | view | lang | reload | save>`
 
 | subcommand | arguments                        | description                 |
 | ---------- | -------------------------------- | --------------------------- |
 | Open       | \[chest number\]                 | Open my virtual chest       |
-| Set        | \<player name\> \<chest count\>  | Set player's chest count    |
+| *Buy       |                                  | Buy chest                   |
+| *Price     | \<chest price\>                  | Set chest's price           |
+| *Max       | \<chest count\>                  | Set max chest count         |
 | Default    | \<chest count\>                  | Set default chest count     |
+| Set        | \<player name\> \<chest count\>  | Set player's chest count    |
 | View       | \<player name\> \[chest number\] | Open player's virtual chest |
 | Lang       | \<language prefix\>              | Load default lang file      |
 | Reload     |                                  | Reload all data             |
 | Save       |                                  | Save all data               |
+Buy,Price,Max sub command require [EconomyAPI](https://github.com/onebone/EconomyS) plugin.  
+When price bigget than zero, player can buy chest (default = -1)
+
+When you have [MathParserLib](https://github.com/PMMPPlugin/MathParserLib) plugin, You can use formula on price.  
+For example:  
+`Price : ChestCount * 10000` : `/vhest price c*1000`  
+`Price : ChestCount^2 * 10000` : `/vhest price c^2*1000`  
 
 
 
@@ -32,13 +48,15 @@ Main command : `/vchest <open | default | set | lang | reload | save>`
 | vchest.cmd         | USER     | main command       |
 |                    |          |                    |
 | vchest.cmd.open    | USER     | open subcommand    |
-| vchest.cmd.set     | OP       | set  subcommand    |
+| vchest.cmd.buy     | USER     | buy subcommand     |
+| vchest.cmd.price   | OP       | price subcommand   |
+| vchest.cmd.max     | OP       | max subcommand     |
 | vchest.cmd.default | OP       | default subcommand |
+| vchest.cmd.set     | OP       | set subcommand     |
 | vchest.cmd.view    | OP       | view subcommand    |
 | vchest.cmd.lang    | OP       | lang subcommand    |
 | vchest.cmd.reload  | OP       | reload subcommand  |
 | vchest.cmd.save    | OP       | save subcommand    |
-
 
 
 
@@ -96,3 +114,12 @@ Main command : `/vchest <open | default | set | lang | reload | save>`
 - \[Added\] Add getters and setters to SubCommand
 - \[Fixed\] Add api 3.0.0-ALPHA11
 - \[Changed\] Show only subcommands that sender have permission to use
+  
+  
+---
+### v1.1.8 [![Source](https://img.shields.io/badge/source-v1.1.8-blue.png?label=source)](https://github.com/PMMPPlugin/VirtualChest/tree/v1.1.8) [![Release](https://img.shields.io/github/downloads/PMMPPlugin/VirtualChest/v1.1.8/total.png?label=download&colorB=1fadad)](https://github.com/PMMPPlugin/VirtualChest/releases/v1.1.8)
+- \[Changed\] Change player data structure (save nbt file)
+- \[Added\] Add max sub command
+- \[Added\] Add price sub command
+- \[Added\] Add buy sub command
+- \[Fixed\] Can't set player's chest count to zero
