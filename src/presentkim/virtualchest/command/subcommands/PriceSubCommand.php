@@ -3,6 +3,7 @@
 namespace presentkim\virtualchest\command\subcommands;
 
 use pocketmine\command\CommandSender;
+use presentkim\mathparser\MathParser;
 use presentkim\virtualchest\VirtualChest as Plugin;
 use presentkim\virtualchest\command\{
   PoolCommand, SubCommand
@@ -25,9 +26,22 @@ class PriceSubCommand extends SubCommand{
      */
     public function onCommand(CommandSender $sender, array $args) : bool{
         if (isset($args[0])) {
-            $price = Utils::toInt($args[0], null, function (int $i){
-                return $i >= -1;
-            });
+            if (class_exists(MathParser::class)) {
+                try{
+                    $price = implode(' ', $args);
+                    MathParser::parse($price, [
+                      'c' => 1, //count
+                      'm' => 1, //money
+                    ]);
+                } catch (\Exception $exception){
+                    $price = null;
+                    $this->plugin->getLogger()->critical("{$exception->getMessage()}. Call in price sub command");
+                }
+            } else {
+                $price = Utils::toInt($args[0], null, function (int $i){
+                    return $i >= -1;
+                });
+            }
             if ($price === null) {
                 $sender->sendMessage(Plugin::$prefix . Translation::translate('command-generic-failure@invalid', $args[0]));
             } else {
