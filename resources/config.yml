@@ -1,4 +1,5 @@
 ---
 default-count: 0
+max-count: 0
 playerData: []
 ...
