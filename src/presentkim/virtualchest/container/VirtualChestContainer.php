@@ -119,7 +119,7 @@ class VirtualChestContainer{
         if (isset($this->chests[$index])) {
             return $this->chests[$index];
         } elseif ($this->count > $index) {
-            $this->chests[$index] = new VirtualChestInventory($this->playerName, $index);
+            $this->chests[$index] = new VirtualChestInventory($this->playerName, $index + 1);
             return $this->chests[$index];
         } else {
             return null;
