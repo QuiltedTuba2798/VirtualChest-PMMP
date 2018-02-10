@@ -29,7 +29,7 @@ class DefaultSubCommand extends SubCommand{
                 return $i > 0;
             });
             if ($count === null) {
-                $sender->sendMessage(Plugin::$prefix . Translation::translate('command-generic-failure@invalid', $args[1]));
+                $sender->sendMessage(Plugin::$prefix . Translation::translate('command-generic-failure@invalid', $args[0]));
             } else {
                 $this->plugin->getConfig()->set('default-count', $count);
                 $sender->sendMessage(Plugin::$prefix . $this->translate('success', $count));
