@@ -47,11 +47,11 @@ class ViewSubCommand extends SubCommand{
                 if ($container === null) {
                     $sender->sendMessage(Plugin::$prefix . Translation::translate('command-generic-failure@invalid-player', $args[0]));
                 } else {
-                    $number = isset($args[0]) ? strtolower($args[0]) : 1;
+                    $number = isset($args[1]) ? strtolower($args[1]) : 1;
                     $count = $container->getCount();
                     if (!is_numeric($number) || $number > $count) {
                         $sender->sendMessage(Plugin::$prefix . $this->translate('failure-invalid', $number));
-                        $sender->sendMessage(Plugin::$prefix . $this->translate('count', $number));
+                        $sender->sendMessage(Plugin::$prefix . $this->translate('count', $playerName, $count));
                     } else {
                         $sender->addWindow($container->getChest($number - 1));
                     }
