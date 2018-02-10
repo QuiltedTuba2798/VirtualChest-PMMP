@@ -178,4 +178,26 @@ class VirtualChest extends PluginBase{
     public function setCommand(PoolCommand $command) : void{
         $this->command = $command;
     }
+
+    /**
+     * @param string $playerName
+     *
+     * @return null|VirtualChestContainer
+     */
+    public function loadPlayerData(string $playerName) : ?VirtualChestContainer{
+        if (file_exists($file = "{$this->getDataFolder()}players\\{$playerName}.dat")) {
+            try{
+                $nbtStream = new BigEndianNBTStream();
+                $nbtStream->readCompressed(file_get_contents($file));
+
+                $container = VirtualChestContainer::nbtDeserialize($playerName, $nbtStream->getData());
+                VirtualChestContainer::setContainer($playerName, $container);
+
+                return $container;
+            } catch (\Throwable $e){
+                $this->getLogger()->critical($e->getMessage());
+            }
+        }
+        return null;
+    }
 }
