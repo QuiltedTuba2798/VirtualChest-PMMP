@@ -89,10 +89,12 @@ class VirtualChestContainer{
     public function setCount(int $count) : void{
         if ($this->count > $count) {
             for ($i = $count; $i < $this->count; ++$i) {
-                foreach ($this->chests[$i]->getViewers() as $key => $who) {
-                    $this->chests[$i]->close($who);
+                if (isset($this->chests[$i])) {
+                    foreach ($this->chests[$i]->getViewers() as $key => $who) {
+                        $this->chests[$i]->close($who);
+                    }
+                    unset($this->chests[$i]);
                 }
-                unset($this->chests[$i]);
             }
         }
         $this->count = $count;
