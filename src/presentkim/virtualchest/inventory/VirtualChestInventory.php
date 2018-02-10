@@ -26,9 +26,6 @@ class VirtualChestInventory extends CustomInventory{
     /** @var NetworkLittleEndianNBTStream|null */
     private static $nbtWriter = null;
 
-    /** @var self[][] */
-    public static $vchests = [];
-
     /** CompoundTag */
     private $nbt;
 
