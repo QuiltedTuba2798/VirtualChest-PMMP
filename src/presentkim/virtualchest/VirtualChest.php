@@ -6,7 +6,7 @@ use pocketmine\plugin\PluginBase;
 use onebone\economyapi\EconomyAPI;
 use presentkim\virtualchest\command\PoolCommand;
 use presentkim\virtualchest\command\subcommands\{
-  OpenSubCommand, PriceSubCommand, MaxSubCommand, DefaultSubCommand, SetSubCommand, ViewSubCommand, LangSubCommand, ReloadSubCommand, SaveSubCommand
+  OpenSubCommand, BuySubCommand, PriceSubCommand, MaxSubCommand, DefaultSubCommand, SetSubCommand, ViewSubCommand, LangSubCommand, ReloadSubCommand, SaveSubCommand
 };
 use presentkim\virtualchest\inventory\VirtualChestInventory;
 use presentkim\virtualchest\util\Translation;
@@ -81,6 +81,7 @@ class VirtualChest extends PluginBase{
             $this->command = new PoolCommand($this, 'vchest');
             $this->command->createSubCommand(OpenSubCommand::class);
             if (class_exists(EconomyAPI::class)) {
+                $this->command->createSubCommand(BuySubCommand::class);
                 $this->command->createSubCommand(PriceSubCommand::class);
                 $this->command->createSubCommand(MaxSubCommand::class);
             }

@@ -21,6 +21,15 @@ command-vchest-open@failure-invalid: "{%0}는 잘못된 창고 번호입니다"
 command-vchest-open@count: "{%0}개의 창고를 소유하고 있습니다"
 command-vchest-open@aliases: ["o"]
 
+command-vchest-buy: "buy"
+command-vchest-buy@usage: "/vchest Buy"
+command-vchest-buy@check: "창고는 {%0}원입니다. 구입하려면 명령어를 다시 입력해주세요"
+command-vchest-buy@success: "창고를 구매했습니다. 소유금 : {%0}원"
+command-vchest-buy@failure-max: "이미 최대 개수의 창고를 가지고있습니다"
+command-vchest-buy@failure-prevent: "창고를 구매할 수 없습니다"
+command-vchest-buy@failure-money: "돈이 부족합니다. 소유금 : {%0}원"
+command-vchest-buy@aliases: ["b"]
+
 command-vchest-price: "price"
 command-vchest-price@usage: "/vchest Price <창고 가격>"
 command-vchest-price@success: "창고 가격이 {%0}로 설정되었습니다"

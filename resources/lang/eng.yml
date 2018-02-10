@@ -21,6 +21,15 @@ command-vchest-open@failure-invalid: "{%0} is invalid chest number"
 command-vchest-open@count: "You have {%0} chest"
 command-vchest-open@aliases: ["o"]
 
+command-vchest-buy: "buy"
+command-vchest-buy@usage: "/vchest Buy"
+command-vchest-buy@check: "The chest is ${%0}. Please enter command again to buy"
+command-vchest-buy@success: "You bought a chest. You have : ${%0}"
+command-vchest-buy@failure-max: "You already have the maximum number"
+command-vchest-buy@failure-prevent: "You can't buy chest"
+command-vchest-buy@failure-money: "You don't have enough money. You have : ${%0}"
+command-vchest-buy@aliases: ["b"]
+
 command-vchest-price: "price"
 command-vchest-price@usage: "/vchest Price <chest price>"
 command-vchest-price@success: "Chest price was setted to {%0}"

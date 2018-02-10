@@ -16,6 +16,9 @@ permissions:
       vchest.cmd.open:
         description:       VirtualChest command - open
         default:           true
+      vchest.cmd.buy:
+        description:       VirtualChest command - buy
+        default:           true
       vchest.cmd.price:
         description:       VirtualChest command - price
         default:           op
