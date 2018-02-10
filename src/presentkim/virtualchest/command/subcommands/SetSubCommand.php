@@ -33,7 +33,7 @@ class SetSubCommand extends SubCommand{
                 $sender->sendMessage(Plugin::$prefix . Translation::translate('command-generic-failure@invalid-player', $args[0]));
             } else {
                 $count = Utils::toInt($args[1], null, function (int $i){
-                    return $i > 0;
+                    return $i >= 0;
                 });
                 if ($count === null) {
                     $sender->sendMessage(Plugin::$prefix . Translation::translate('command-generic-failure@invalid', $args[1]));
