@@ -9,6 +9,15 @@
 
 
 A plugin give virtual chest to player for PocketMine-MP
+ 
+When price bigget than zero, player can buy chest (default = -1)
+
+When you have [MathParserLib](https://github.com/PMMPPlugin/MathParserLib) plugin, You can use formula on price.  
+For example:  
+`Price : ChestCount * 10000` : `/vhest price c*1000`  
+`Price : ChestCount^2 * 10000` : `/vhest price c^2*1000`  
+
+
 
 ## Softdepend
 - [EconomyAPI](https://github.com/onebone/EconomyS) : For buy chest
@@ -30,15 +39,9 @@ Main command : `/vchest <open | buy | price | max | default | set | view | lang 
 | View       | \<player name\> \[chest number\] | Open player's virtual chest |
 | Lang       | \<language prefix\>              | Load default lang file      |
 | Reload     |                                  | Reload all data             |
-| Save       |                                  | Save all data               |
-Buy,Price,Max sub command require [EconomyAPI](https://github.com/onebone/EconomyS) plugin.  
-When price bigget than zero, player can buy chest (default = -1)
+| Save       |                                  | Save all data               |  
 
-When you have [MathParserLib](https://github.com/PMMPPlugin/MathParserLib) plugin, You can use formula on price.  
-For example:  
-`Price : ChestCount * 10000` : `/vhest price c*1000`  
-`Price : ChestCount^2 * 10000` : `/vhest price c^2*1000`  
-
+* buy,price,max sub command require [EconomyAPI](https://github.com/onebone/EconomyS) plugin. 
 
 
 
