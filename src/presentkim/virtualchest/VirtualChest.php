@@ -2,12 +2,14 @@
 
 namespace presentkim\virtualchest;
 
+use pocketmine\nbt\BigEndianNBTStream;
 use pocketmine\plugin\PluginBase;
 use onebone\economyapi\EconomyAPI;
 use presentkim\virtualchest\command\PoolCommand;
 use presentkim\virtualchest\command\subcommands\{
   OpenSubCommand, BuySubCommand, PriceSubCommand, MaxSubCommand, DefaultSubCommand, SetSubCommand, ViewSubCommand, LangSubCommand, ReloadSubCommand, SaveSubCommand
 };
+use presentkim\virtualchest\container\VirtualChestContainer;
 use presentkim\virtualchest\inventory\VirtualChestInventory;
 use presentkim\virtualchest\util\Translation;
 
@@ -48,6 +50,9 @@ class VirtualChest extends PluginBase{
         $dataFolder = $this->getDataFolder();
         if (!file_exists($dataFolder)) {
             mkdir($dataFolder, 0777, true);
+        }
+        if (!file_exists($playerDataFolder = "{$dataFolder}players\\")) {
+            mkdir($playerDataFolder, 0777, true);
         }
 
         $this->reloadConfig();
@@ -96,39 +101,17 @@ class VirtualChest extends PluginBase{
             mkdir($dataFolder, 0777, true);
         }
 
-        $config = $this->getConfig();
-        $datas = $config->get('playerData');
-        foreach ($datas as $playerName => $data) {
-            $newData = [];
-            for ($index = 0; $index < $data[0]; $index++) {
-                if (isset(VirtualChestInventory::$vchests[$playerName][$index])) {
-                    $newData[$index] = [];
-                    /** @var VirtualChestInventory $inventory */
-                    $inventory = VirtualChestInventory::$vchests[$playerName][$index];
-                    for ($i = 0; $i < 27; $i++) {
-                        $item = $inventory->getItem($i);
-                        if (!$item->isNull()) {
-                            $newData[$index][$i] = implode(':', [
-                              $item->getId(),
-                              $item->getDamage(),
-                              $item->getCount(),
-                            ]);
-                            if (!empty($compountTag = $item->getCompoundTag())) {
-                                $newData[$index][$i] = [
-                                  $newData[$index][$i],
-                                  $compountTag,
-                                ];
-                            }
-                        }
-                    }
-                } elseif (isset($data[1][$index])) {
-                    $newData[$index] = $data[1][$index];
-                }
-            }
-            $datas[$playerName][1] = $newData;
-        }
-        $config->set('playerData', $datas);
         $this->saveConfig();
+
+        if (!file_exists($playerDataFolder = "{$dataFolder}players\\")) {
+            mkdir($playerDataFolder, 0777, true);
+        }
+        foreach (VirtualChestContainer::getContainers() as $playerName => $container) {
+            $nbtStream = new BigEndianNBTStream();
+            $nbtStream->setData($container->nbtSerialize($playerName));
+
+            file_put_contents($file = "{$playerDataFolder}{$playerName}.dat", $nbtStream->writeCompressed());
+        }
     }
 
     /**
