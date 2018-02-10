@@ -7,10 +7,13 @@ use pocketmine\block\Block;
 use pocketmine\inventory\{
   BaseInventory, CustomInventory
 };
+use pocketmine\item\Item;
 use pocketmine\math\Vector3;
-use pocketmine\nbt\NetworkLittleEndianNBTStream;
+use pocketmine\nbt\{
+  NBT, NetworkLittleEndianNBTStream
+};
 use pocketmine\nbt\tag\{
-  CompoundTag, IntTag, StringTag
+  CompoundTag, IntTag, ListTag, StringTag
 };
 use pocketmine\network\mcpe\protocol\{
   types\WindowTypes, UpdateBlockPacket, ContainerOpenPacket, BlockEntityDataPacket
@@ -23,7 +26,7 @@ class VirtualChestInventory extends CustomInventory{
     /** @var NetworkLittleEndianNBTStream|null */
     private static $nbtWriter = null;
 
-    /** @var  self[][] */
+    /** @var self[][] */
     public static $vchests = [];
 
     /** CompoundTag */
@@ -132,5 +135,22 @@ class VirtualChestInventory extends CustomInventory{
     /** @return int */
     public function getNetworkType() : int{
         return WindowTypes::CONTAINER;
+    }
+
+
+    /**
+     * @param string $tagName
+     *
+     * @return ListTag
+     */
+    public function nbtSerialize(string $tagName = 'Inventory') : ListTag{
+        $tag = new ListTag($tagName, [], NBT::TAG_Compound);
+        for ($slot = 0; $slot < 27; ++$slot) {
+            $item = $this->getItem($slot);
+            if (!$item->isNull()) {
+                $inventoryTag[$slot] = $item->nbtSerialize($slot);
+            }
+        }
+        return $tag;
     }
 }
