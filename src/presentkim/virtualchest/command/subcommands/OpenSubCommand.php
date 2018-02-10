@@ -40,7 +40,7 @@ class OpenSubCommand extends SubCommand{
             $count = $container->getCount();
             if (!is_numeric($number) || $number > $count) {
                 $sender->sendMessage(Plugin::$prefix . $this->translate('failure-invalid', $number));
-                $sender->sendMessage(Plugin::$prefix . $this->translate('count', $number));
+                $sender->sendMessage(Plugin::$prefix . $this->translate('count', $count));
             } else {
                 $sender->addWindow($container->getChest($number - 1));
             }
