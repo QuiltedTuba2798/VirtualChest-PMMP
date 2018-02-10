@@ -137,7 +137,6 @@ class VirtualChestInventory extends CustomInventory{
         return WindowTypes::CONTAINER;
     }
 
-
     /**
      * @param string $tagName
      *
@@ -152,5 +151,20 @@ class VirtualChestInventory extends CustomInventory{
             }
         }
         return $tag;
+    }
+
+    /**
+     * @param string  $playerName
+     * @param int     $num
+     * @param ListTag $tag
+     *
+     * @return VirtualChestInventory
+     */
+    public static function nbtDeserialize(string $playerName, int $num, ListTag $tag) : VirtualChestInventory{
+        $inventory = new VirtualChestInventory($playerName, $num);
+        foreach ($tag as $i => $item) {
+            $inventory->setItem($item->getByte("Slot"), Item::nbtDeserialize($item));
+        }
+        return $inventory;
     }
 }
