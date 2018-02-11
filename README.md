@@ -126,3 +126,8 @@ Main command : `/vchest <open | buy | price | max | default | set | view | lang 
 - \[Added\] Add price sub command
 - \[Added\] Add buy sub command
 - \[Fixed\] Can't set player's chest count to zero
+  
+  
+---
+### v1.1.9 [![Source](https://img.shields.io/badge/source-v1.1.9-blue.png?label=source)](https://github.com/PMMPPlugin/VirtualChest/tree/v1.1.9) [![Release](https://img.shields.io/github/downloads/PMMPPlugin/VirtualChest/v1.1.9/total.png?label=download&colorB=1fadad)](https://github.com/PMMPPlugin/VirtualChest/releases/v1.1.9)
+- \[Fixed\] DIRECTORY_SEPARATOR error
