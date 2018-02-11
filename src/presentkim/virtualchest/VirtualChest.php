@@ -2,6 +2,7 @@
 
 namespace presentkim\virtualchest;
 
+use const DIRECTORY_SEPARATOR;
 use pocketmine\item\ItemFactory;
 use pocketmine\nbt\BigEndianNBTStream;
 use pocketmine\plugin\PluginBase;
@@ -43,7 +44,7 @@ class VirtualChest extends PluginBase{
                     if (!file_exists($dataFolder = $this->getDataFolder())) {
                         mkdir($dataFolder, 0777, true);
                     }
-                    if (!file_exists($playerDataFolder = "{$dataFolder}players\\")) {
+                    if (!file_exists($playerDataFolder = "{$dataFolder}players")) {
                         mkdir($playerDataFolder, 0777, true);
                     }
 
@@ -102,7 +103,7 @@ class VirtualChest extends PluginBase{
         if (!file_exists($dataFolder)) {
             mkdir($dataFolder, 0777, true);
         }
-        if (!file_exists($playerDataFolder = "{$dataFolder}players\\")) {
+        if (!file_exists($playerDataFolder = "{$dataFolder}players/")) {
             mkdir($playerDataFolder, 0777, true);
         }
 
@@ -154,7 +155,7 @@ class VirtualChest extends PluginBase{
 
         $this->saveConfig();
 
-        if (!file_exists($playerDataFolder = "{$dataFolder}players\\")) {
+        if (!file_exists($playerDataFolder = "{$dataFolder}players/")) {
             mkdir($playerDataFolder, 0777, true);
         }
         foreach (VirtualChestContainer::getContainers() as $playerName => $container) {
@@ -185,7 +186,7 @@ class VirtualChest extends PluginBase{
      * @return null|VirtualChestContainer
      */
     public function loadPlayerData(string $playerName) : ?VirtualChestContainer{
-        if (file_exists($file = "{$this->getDataFolder()}players\\{$playerName}.dat")) {
+        if (file_exists($file = "{$this->getDataFolder()}players/{$playerName}.dat")) {
             try{
                 $nbtStream = new BigEndianNBTStream();
                 $nbtStream->readCompressed(file_get_contents($file));
