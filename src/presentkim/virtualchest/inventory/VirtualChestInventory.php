@@ -77,13 +77,12 @@ class VirtualChestInventory extends CustomInventory{
         $this->nbt->setInt('x', $this->vectors[$key]->x);
         $this->nbt->setInt('y', $this->vectors[$key]->y);
         $this->nbt->setInt('z', $this->vectors[$key]->z);
-        self::$nbtWriter->setData($this->nbt);
 
         $pk = new BlockEntityDataPacket();
         $pk->x = $this->vectors[$key]->x;
         $pk->y = $this->vectors[$key]->y;
         $pk->z = $this->vectors[$key]->z;
-        $pk->namedtag = self::$nbtWriter->write();
+        $pk->namedtag = self::$nbtWriter->write($this->nbt);
         $who->sendDataPacket($pk);
 
 
