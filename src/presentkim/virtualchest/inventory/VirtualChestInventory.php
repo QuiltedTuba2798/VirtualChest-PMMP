@@ -136,7 +136,7 @@ class VirtualChestInventory extends CustomInventory{
         for ($slot = 0; $slot < 27; ++$slot) {
             $item = $this->getItem($slot);
             if (!$item->isNull()) {
-                $tag[$slot] = $item->nbtSerialize($slot);
+                $tag->push($item->nbtSerialize($slot));
             }
         }
         return $tag;

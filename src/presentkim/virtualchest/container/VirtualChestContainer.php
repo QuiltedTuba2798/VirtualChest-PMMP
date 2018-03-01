@@ -147,9 +147,7 @@ class VirtualChestContainer{
     public function nbtSerialize(string $tagName = 'Container') : CompoundTag{
         $chestsTag = new ListTag('Chests', [], NBT::TAG_List);
         foreach ($this->chests as $index => $chest) {
-            if (!empty($chest->getContents())) {
-                $chestsTag[$index] = $chest->nbtSerialize($index);
-            }
+            $chestsTag->push($chest->nbtSerialize($index));
         }
         return new CompoundTag($tagName, [
           new IntTag('Count', $this->count),
@@ -165,6 +163,7 @@ class VirtualChestContainer{
      */
     public static function nbtDeserialize(string $playerName, CompoundTag $tag) : VirtualChestContainer{
         $container = new VirtualChestContainer($playerName, $tag->getInt('Count'));
+        /** @var ListTag $chestTag */
         foreach ($tag->getListTag('Chests') as $i => $chestTag) {
             $container->setChest($i, VirtualChestInventory::nbtDeserialize($playerName, $i, $chestTag));
         }
