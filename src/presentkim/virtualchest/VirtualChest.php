@@ -132,13 +132,13 @@ class VirtualChest extends PluginBase{
         if (file_exists($file = "{$this->getDataFolder()}players/{$playerName}.dat")) {
             try{
                 $namedTag = (new BigEndianNBTStream())->readCompressed(file_get_contents($file));
-                if (!($namedTag instanceof CompoundTag)) {
-                    throw new \RuntimeException("Invalid data found in \"{$playerName}.dat\", expected " . CompoundTag::class . ", got " . (is_object($namedTag) ? get_class($namedTag) : gettype($namedTag)));
+                if ($namedTag instanceof CompoundTag) {
+                    $container = VirtualChestContainer::nbtDeserialize($playerName, $namedTag);
+                    VirtualChestContainer::setContainer($playerName, $container);
+                    return $container;
+                } else {
+                    $this->getLogger()->critical("Invalid data found in \"{$playerName}.dat\", expected " . CompoundTag::class . ", got " . (is_object($namedTag) ? get_class($namedTag) : gettype($namedTag)));
                 }
-                $container = VirtualChestContainer::nbtDeserialize($playerName, $namedTag);
-                VirtualChestContainer::setContainer($playerName, $container);
-
-                return $container;
             } catch (\Throwable $e){
                 $this->getLogger()->critical($e->getMessage());
             }
