@@ -2,9 +2,8 @@
 
 namespace presentkim\virtualchest;
 
-use const DIRECTORY_SEPARATOR;
-use pocketmine\item\ItemFactory;
 use pocketmine\nbt\BigEndianNBTStream;
+use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\plugin\PluginBase;
 use onebone\economyapi\EconomyAPI;
 use presentkim\virtualchest\command\PoolCommand;
@@ -12,7 +11,6 @@ use presentkim\virtualchest\command\subcommands\{
   OpenSubCommand, BuySubCommand, PriceSubCommand, MaxSubCommand, DefaultSubCommand, SetSubCommand, ViewSubCommand, LangSubCommand, ReloadSubCommand, SaveSubCommand
 };
 use presentkim\virtualchest\container\VirtualChestContainer;
-use presentkim\virtualchest\inventory\VirtualChestInventory;
 use presentkim\virtualchest\util\Translation;
 
 class VirtualChest extends PluginBase{
@@ -107,10 +105,7 @@ class VirtualChest extends PluginBase{
             mkdir($playerDataFolder, 0777, true);
         }
         foreach (VirtualChestContainer::getContainers() as $playerName => $container) {
-            $nbtStream = new BigEndianNBTStream();
-            $nbtStream->setData($container->nbtSerialize($playerName));
-
-            file_put_contents($file = "{$playerDataFolder}{$playerName}.dat", $nbtStream->writeCompressed());
+            file_put_contents($file = "{$playerDataFolder}{$playerName}.dat", (new BigEndianNBTStream())->writeCompressed($container->nbtSerialize($playerName)));
         }
     }
 
@@ -136,10 +131,11 @@ class VirtualChest extends PluginBase{
     public function loadPlayerData(string $playerName) : ?VirtualChestContainer{
         if (file_exists($file = "{$this->getDataFolder()}players/{$playerName}.dat")) {
             try{
-                $nbtStream = new BigEndianNBTStream();
-                $nbtStream->readCompressed(file_get_contents($file));
-
-                $container = VirtualChestContainer::nbtDeserialize($playerName, $nbtStream->getData());
+                $namedTag = (new BigEndianNBTStream())->readCompressed(file_get_contents($file));
+                if (!($namedTag instanceof CompoundTag)) {
+                    throw new \RuntimeException("Invalid data found in \"{$playerName}.dat\", expected " . CompoundTag::class . ", got " . (is_object($namedTag) ? get_class($namedTag) : gettype($namedTag)));
+                }
+                $container = VirtualChestContainer::nbtDeserialize($playerName, $namedTag);
                 VirtualChestContainer::setContainer($playerName, $container);
 
                 return $container;
