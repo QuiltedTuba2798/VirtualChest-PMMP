@@ -23,9 +23,6 @@ use presentkim\virtualchest\util\Translation;
 
 class VirtualChestInventory extends CustomInventory{
 
-    /** @var NetworkLittleEndianNBTStream|null */
-    private static $nbtWriter = null;
-
     /** CompoundTag */
     private $nbt;
 
@@ -50,10 +47,6 @@ class VirtualChestInventory extends CustomInventory{
           new IntTag('z', 0),
           new StringTag('CustomName', Translation::translate('chest-name', $ownerName, $num)),
         ]);
-
-        if (self::$nbtWriter === null) {
-            self::$nbtWriter = new NetworkLittleEndianNBTStream();
-        }
     }
 
     /** @param Player $who */
@@ -82,7 +75,7 @@ class VirtualChestInventory extends CustomInventory{
         $pk->x = $this->vectors[$key]->x;
         $pk->y = $this->vectors[$key]->y;
         $pk->z = $this->vectors[$key]->z;
-        $pk->namedtag = self::$nbtWriter->write($this->nbt);
+        $pk->namedtag = (new NetworkLittleEndianNBTStream())->write($this->nbt);
         $who->sendDataPacket($pk);
 
 
@@ -158,8 +151,9 @@ class VirtualChestInventory extends CustomInventory{
      */
     public static function nbtDeserialize(string $playerName, int $num, ListTag $tag) : VirtualChestInventory{
         $inventory = new VirtualChestInventory($playerName, $num);
-        foreach ($tag as $i => $item) {
-            $inventory->setItem($item->getByte("Slot"), Item::nbtDeserialize($item));
+        /** @var CompoundTag $itemTag */
+        foreach ($tag as $i => $itemTag) {
+            $inventory->setItem($itemTag->getByte("Slot"), Item::nbtDeserialize($itemTag));
         }
         return $inventory;
     }
