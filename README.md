@@ -16,15 +16,15 @@ When you have [MathParserLib](https://github.com/PMMPPlugin/MathParserLib) plugi
 For example:  
 `Price : ChestCount * 10000` : `/vhest price c*1000`  
 `Price : ChestCount^2 * 10000` : `/vhest price c^2*1000`  
-
-
-
+  
+<br/><br/>
+  
 ## Softdepend
 - [EconomyAPI](https://github.com/onebone/EconomyS) : For buy chest
 - [MathParserLib](https://github.com/PMMPPlugin/MathParserLib) : For calculate chest price
-
-
-
+  
+<br/><br/>
+  
 ## Command
 Main command : `/vchest <open | buy | price | max | default | set | view | lang | reload | save>`
 
@@ -42,9 +42,9 @@ Main command : `/vchest <open | buy | price | max | default | set | view | lang 
 | Save       |                                  | Save all data               |  
 
 * buy,price,max sub command require [EconomyAPI](https://github.com/onebone/EconomyS) plugin. 
-
-
-
+  
+<br/><br/>
+  
 ## Permission
 | permission         | default  | description        |
 | ------------------ | -------- | ------------------ |
@@ -60,9 +60,14 @@ Main command : `/vchest <open | buy | price | max | default | set | view | lang 
 | vchest.cmd.lang    | OP       | lang subcommand    |
 | vchest.cmd.reload  | OP       | reload subcommand  |
 | vchest.cmd.save    | OP       | save subcommand    |
-
-
-
+  
+<br/><br/>
+  
+## Required API
+- PocketMine-MP : higher than [Build #745](https://jenkins.pmmp.io/job/PocketMine-MP/745)
+  
+<br/><br/>
+  
 ## ChangeLog
 ### v1.0.0 [![Source](https://img.shields.io/badge/source-v1.0.0-blue.png?label=source)](https://github.com/PMMPPlugin/VirtualChest/tree/v1.0.0) [![Release](https://img.shields.io/github/downloads/PMMPPlugin/VirtualChest/v1.0.0/total.png?label=download&colorB=1fadad)](https://github.com/PMMPPlugin/VirtualChest/releases/v1.0.0)
 - First release
