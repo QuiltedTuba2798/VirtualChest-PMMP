@@ -15,7 +15,7 @@ use presentkim\virtualchest\util\Translation;
 
 class VirtualChest extends PluginBase{
 
-    /** @var self */
+    /** @var VirtualChest */
     private static $instance = null;
 
     /** @var string */
@@ -24,8 +24,8 @@ class VirtualChest extends PluginBase{
     /** @var PoolCommand */
     private $command;
 
-    /** @return self */
-    public static function getInstance() : self{
+    /** @return VirtualChest */
+    public static function getInstance() : VirtualChest{
         return self::$instance;
     }
 
