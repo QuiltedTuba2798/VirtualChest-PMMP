@@ -35,7 +35,7 @@ class ViewSubCommand extends SubCommand{
                     }
                 }
                 if ($container === null) {
-                    $defaultCount = $this->plugin->getConfig()->get('default-count');
+                    $defaultCount = (int) $this->plugin->getConfig()->get('default-count');
                     if ($defaultCount < 1) {
                         $sender->sendMessage($this->translate('failure.none'));
                         return true;
