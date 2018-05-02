@@ -77,7 +77,7 @@ class PoolCommand extends PluginCommand implements CommandExecutor{
                     $subCommands[] = $subCommand->getLabel();
                 }
             }
-            return $this->getPlugin()->getLanguage()->translate("commands.{$this->uname}.usage", implode($this->getPlugin()->getLanguage()->translate("commands.{$this->uname}.usage.separator"), $subCommands));
+            return $this->getPlugin()->getLanguage()->translate("commands.{$this->uname}.usage", [implode($this->getPlugin()->getLanguage()->translate("commands.{$this->uname}.usage.separator"), $subCommands)]);
         }
     }
 

@@ -45,7 +45,7 @@ class PriceSubCommand extends SubCommand{
                 $sender->sendMessage($this->plugin->getLanguage()->translate('commands.generic.player.notFound', [$args[0]]));
             } else {
                 $this->plugin->getConfig()->set('price', $price);
-                $sender->sendMessage($this->translate('success', $price));
+                $sender->sendMessage($this->translate('success', (string) $price));
             }
             return true;
         } else {
