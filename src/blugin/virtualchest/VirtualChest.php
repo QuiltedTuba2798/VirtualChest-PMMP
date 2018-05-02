@@ -13,26 +13,25 @@ use blugin\virtualchest\command\subcommands\{
   OpenSubCommand, BuySubCommand, PriceSubCommand, MaxSubCommand, DefaultSubCommand, SetSubCommand, ViewSubCommand
 };
 use blugin\virtualchest\container\VirtualChestContainer;
-use blugin\virtualchest\util\Translation;
 
 class VirtualChest extends PluginBase{
 
     /** @var VirtualChest */
     private static $instance = null;
 
-    /** @var PoolCommand */
-    private $command;
-
     /** @return VirtualChest */
     public static function getInstance() : VirtualChest{
         return self::$instance;
     }
 
+    /** @var PoolCommand */
+    private $command;
+
+    /** @var PluginLang */
+    private $language;
+
     public function onLoad() : void{
-        if (self::$instance === null) {
-            self::$instance = $this;
-            Translation::loadFromResource($this->getResource('lang/eng.yml'), true);
-        }
+        self::$instance = $this;
     }
 
     public function onEnable() : void{
@@ -51,19 +50,8 @@ class VirtualChest extends PluginBase{
         if (!file_exists($playerDataFolder = "{$dataFolder}players/")) {
             mkdir($playerDataFolder, 0777, true);
         }
-
+        $this->language = new PluginLang($this);
         $this->reloadConfig();
-
-        $langfilename = $dataFolder . 'lang.yml';
-        if (!file_exists($langfilename)) {
-            $resource = $this->getResource('lang/eng.yml');
-            fwrite($fp = fopen("{$dataFolder}lang.yml", "wb"), $contents = stream_get_contents($resource));
-            fclose($fp);
-            Translation::loadFromContents($contents);
-        } else {
-            Translation::load($langfilename);
-        }
-
         $this->reloadCommand();
     }
 
@@ -105,20 +93,6 @@ class VirtualChest extends PluginBase{
     }
 
     /**
-     * @param string $name = ''
-     *
-     * @return PoolCommand
-     */
-    public function getCommand(string $name = '') : PoolCommand{
-        return $this->command;
-    }
-
-    /** @param PoolCommand $command */
-    public function setCommand(PoolCommand $command) : void{
-        $this->command = $command;
-    }
-
-    /**
      * @param string $playerName
      *
      * @return null|VirtualChestContainer
@@ -139,5 +113,33 @@ class VirtualChest extends PluginBase{
             }
         }
         return null;
+    }
+
+    /**
+     * @param string $name = ''
+     *
+     * @return PluginCommand
+     */
+    public function getCommand(string $name = '') : PluginCommand{
+        return $this->command;
+    }
+
+    /**
+     * @return PluginLang
+     */
+    public function getLanguage() : PluginLang{
+        return $this->language;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSourceFolder() : string{
+        $pharPath = \Phar::running();
+        if (empty($pharPath)) {
+            return dirname(__FILE__, 4) . DIRECTORY_SEPARATOR;
+        } else {
+            return $pharPath . DIRECTORY_SEPARATOR;
+        }
     }
 }

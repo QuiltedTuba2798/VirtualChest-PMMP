@@ -8,12 +8,10 @@ use pocketmine\Player;
 use pocketmine\command\CommandSender;
 use onebone\economyapi\EconomyAPI;
 use blugin\mathparser\MathParser;
-use blugin\virtualchest\VirtualChest;
 use blugin\virtualchest\command\{
   PoolCommand, SubCommand
 };
 use blugin\virtualchest\container\VirtualChestContainer;
-use blugin\virtualchest\util\Translation;
 
 class BuySubCommand extends SubCommand{
 
@@ -36,22 +34,22 @@ class BuySubCommand extends SubCommand{
             $container = VirtualChestContainer::getContainer($playerName = $sender->getLowerCaseName(), true);
             $count = $container === null ? $config->get('default-count') : $container->getCount();
             if ($count >= (int) $config->get('max-count')) {
-                $sender->sendMessage($this->translate('failure-max'));
+                $sender->sendMessage($this->translate('failure.max'));
                 return true;
             } else {
                 $economyAPI = EconomyAPI::getInstance();
-                $myMoney = $economyAPI->myMoney($playerName);
+                $myMoney = (int) $economyAPI->myMoney($playerName);
                 $price = $this->getPrice($count, $myMoney);
                 if ($price === null) {
-                    $sender->sendMessage($this->translate('failure-prevent'));
+                    $sender->sendMessage($this->translate('failure.prevent'));
                     return true;
                 } elseif (!isset($this->checked[$playerName]) || (time() - $this->checked[$playerName]) > 10) {
                     $this->checked[$playerName] = time();
-                    $sender->sendMessage($this->translate('check', $price));
+                    $sender->sendMessage($this->translate('check', (string) $price));
                 } else {
                     unset($this->checked[$playerName]);
                     if ($myMoney < $price) {
-                        $sender->sendMessage($this->translate('failure-money', $myMoney));
+                        $sender->sendMessage($this->translate('failure.money', (string) $myMoney));
                     } else {
                         $economyAPI->reduceMoney($playerName, $price);
                         if ($container === null) {
@@ -60,12 +58,12 @@ class BuySubCommand extends SubCommand{
                         } else {
                             $container->setCount($count + 1);
                         }
-                        $sender->sendMessage($this->translate('success', $myMoney - $price));
+                        $sender->sendMessage($this->translate('success', (string) ($myMoney - $price)));
                     }
                 }
             }
         } else {
-            $sender->sendMessage(Translation::translate('command-generic-failure@in-game'));
+            $sender->sendMessage($this->plugin->getLanguage()->translate('commands.generic.onlyPlayer'));
         }
         return true;
     }

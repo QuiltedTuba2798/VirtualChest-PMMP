@@ -7,9 +7,7 @@ namespace blugin\virtualchest\command;
 use pocketmine\Server;
 use pocketmine\command\CommandSender;
 use blugin\virtualchest\VirtualChest;
-use blugin\virtualchest\util\{
-  Translation, Utils
-};
+use blugin\virtualchest\util\Utils;
 
 abstract class SubCommand{
 
@@ -44,7 +42,7 @@ abstract class SubCommand{
         $this->owner = $owner;
         $this->plugin = $owner->getPlugin();
 
-        $this->strId = "command-{$owner->uname}-{$label}";
+        $this->strId = "commands.{$owner->uname}.{$label}";
         $this->permission = "{$owner->uname}.cmd.{$label}";
 
         $this->updateTranslation();
@@ -56,7 +54,7 @@ abstract class SubCommand{
      */
     public function execute(CommandSender $sender, array $args) : void{
         if (!$this->checkPermission($sender)) {
-            $sender->sendMessage(Translation::translate('command-generic-failure@permission'));
+            $sender->sendMessage($this->plugin->getLanguage()->translate('commands.generic.permission'));
         } elseif (!$this->onCommand($sender, $args)) {
             $sender->sendMessage(Server::getInstance()->getLanguage()->translateString("commands.generic.usage", [$this->usage]));
         }
@@ -90,7 +88,7 @@ abstract class SubCommand{
      * @return string
      */
     public function translate(string $tag, string ...$params) : string{
-        return Translation::translate("{$this->strId}@{$tag}", ...$params);
+        return $this->plugin->getLanguage()->translate("{$this->strId}.{$tag}", $params);
     }
 
     /**
@@ -103,8 +101,8 @@ abstract class SubCommand{
     }
 
     public function updateTranslation() : void{
-        $this->label = Translation::translate($this->strId);
-        $this->aliases = Translation::getArray("{$this->strId}@aliases");
+        $this->label = $this->plugin->getLanguage()->translate($this->strId);
+        $this->aliases = $this->plugin->getLanguage()->getArray("{$this->strId}.aliases");
         $this->usage = $this->translate('usage');
     }
 

@@ -9,7 +9,6 @@ use pocketmine\command\{
   Command, PluginCommand, CommandExecutor, CommandSender, ConsoleCommandSender
 };
 use blugin\virtualchest\VirtualChest;
-use blugin\virtualchest\util\Translation;
 
 class PoolCommand extends PluginCommand implements CommandExecutor{
 
@@ -79,7 +78,7 @@ class PoolCommand extends PluginCommand implements CommandExecutor{
                     $subCommands[] = $subCommand->getLabel();
                 }
             }
-            return Translation::translate("command-{$this->uname}@usage", implode(Translation::translate("command-{$this->uname}@usage-separator"), $subCommands));
+            return $this->getPlugin()->getLanguage()->translate("commands.{$this->uname}.usage", implode($this->getPlugin()->getLanguage()->translate("commands.{$this->uname}.usage.separator"), $subCommands));
         }
     }
 
@@ -99,10 +98,10 @@ class PoolCommand extends PluginCommand implements CommandExecutor{
     }
 
     public function updateTranslation() : void{
-        $this->property->setValue($this, Translation::translate("command-{$this->uname}"));
-        $this->description = Translation::translate("command-{$this->uname}@description");
+        $this->property->setValue($this, $this->getPlugin()->getLanguage()->translate("commands.{$this->uname}"));
+        $this->description = $this->getPlugin()->getLanguage()->translate("commands.{$this->uname}.description");
         $this->usageMessage = $this->getUsage(new ConsoleCommandSender());
-        $aliases = Translation::getArray("command-{$this->uname}@aliases");
+        $aliases = $this->getPlugin()->getLanguage()->getArray("commands.{$this->uname}.aliases");
         if (is_array($aliases)) {
             $this->setAliases($aliases);
         }

@@ -21,7 +21,7 @@ use pocketmine\network\mcpe\protocol\{
   types\WindowTypes, UpdateBlockPacket, ContainerOpenPacket, BlockEntityDataPacket
 };
 use pocketmine\tile\Spawnable;
-use blugin\virtualchest\util\Translation;
+use blugin\startkit\StartKit;
 
 class VirtualChestInventory extends CustomInventory{
 
@@ -47,7 +47,7 @@ class VirtualChestInventory extends CustomInventory{
           new IntTag('x', 0),
           new IntTag('y', 0),
           new IntTag('z', 0),
-          new StringTag('CustomName', Translation::translate('chest-name', $ownerName, $num)),
+          new StringTag('CustomName', StartKit::getInstance()->getLanguage()->translate('vchest.name', $ownerName, $num)),
         ]);
     }
 

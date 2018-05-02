@@ -7,12 +7,10 @@ namespace blugin\virtualchest\command\subcommands;
 use pocketmine\Player;
 use pocketmine\Server;
 use pocketmine\command\CommandSender;
-use blugin\virtualchest\VirtualChest;
 use blugin\virtualchest\command\{
   PoolCommand, SubCommand
 };
 use blugin\virtualchest\container\VirtualChestContainer;
-use blugin\virtualchest\util\Translation;
 
 class ViewSubCommand extends SubCommand{
 
@@ -39,7 +37,7 @@ class ViewSubCommand extends SubCommand{
                 if ($container === null) {
                     $defaultCount = $this->plugin->getConfig()->get('default-count');
                     if ($defaultCount < 1) {
-                        $sender->sendMessage($this->translate('failure-none'));
+                        $sender->sendMessage($this->translate('failure.none'));
                         return true;
                     } else {
                         $container = new VirtualChestContainer($playerName, $defaultCount);
@@ -47,13 +45,13 @@ class ViewSubCommand extends SubCommand{
                     }
                 }
                 if ($container === null) {
-                    $sender->sendMessage(Translation::translate('command-generic-failure@invalid-player', $args[0]));
+                    $sender->sendMessage($this->plugin->getLanguage()->translate('commands.generic.player.notFound-player', [$args[0]]));
                 } else {
                     $number = isset($args[1]) ? strtolower($args[1]) : 1;
                     $count = $container->getCount();
                     if (!is_numeric($number) || $number > $count) {
-                        $sender->sendMessage($this->translate('failure-invalid', $number));
-                        $sender->sendMessage($this->translate('count', $playerName, $count));
+                        $sender->sendMessage($this->translate('failure.invalid', $number));
+                        $sender->sendMessage($this->translate('count', $playerName, (string) $count));
                     } else {
                         $sender->addWindow($container->getChest($number - 1));
                     }
@@ -62,7 +60,7 @@ class ViewSubCommand extends SubCommand{
                 return false;
             }
         } else {
-            $sender->sendMessage(Translation::translate('command-generic-failure@in-game'));
+            $sender->sendMessage($this->plugin->getLanguage()->translate('commands.generic.onlyPlayer'));
         }
         return true;
     }

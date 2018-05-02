@@ -6,13 +6,10 @@ namespace blugin\virtualchest\command\subcommands;
 
 use pocketmine\command\CommandSender;
 use blugin\mathparser\MathParser;
-use blugin\virtualchest\VirtualChest;
 use blugin\virtualchest\command\{
   PoolCommand, SubCommand
 };
-use blugin\virtualchest\util\{
-  Translation, Utils
-};
+use blugin\virtualchest\util\Utils;
 
 class PriceSubCommand extends SubCommand{
 
@@ -45,7 +42,7 @@ class PriceSubCommand extends SubCommand{
                 });
             }
             if ($price === null) {
-                $sender->sendMessage(Translation::translate('command-generic-failure@invalid', $args[0]));
+                $sender->sendMessage($this->plugin->getLanguage()->translate('commands.generic.player.notFound', [$args[0]]));
             } else {
                 $this->plugin->getConfig()->set('price', $price);
                 $sender->sendMessage($this->translate('success', $price));
