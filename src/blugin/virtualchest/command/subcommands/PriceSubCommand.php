@@ -9,7 +9,6 @@ use blugin\mathparser\MathParser;
 use blugin\virtualchest\command\{
   PoolCommand, SubCommand
 };
-use blugin\virtualchest\util\Utils;
 
 class PriceSubCommand extends SubCommand{
 
@@ -25,6 +24,7 @@ class PriceSubCommand extends SubCommand{
      */
     public function onCommand(CommandSender $sender, array $args) : bool{
         if (isset($args[0])) {
+            $price = null;
             if (class_exists(MathParser::class)) {
                 try{
                     $price = implode(' ', $args);
@@ -33,16 +33,19 @@ class PriceSubCommand extends SubCommand{
                       'm' => 1, //money
                     ]);
                 } catch (\Exception $exception){
-                    $price = null;
                     $this->plugin->getLogger()->critical("{$exception->getMessage()}. Call in price sub command");
                 }
             } else {
-                $price = Utils::toInt($args[0], null, function (int $i){
-                    return $i >= -1;
-                });
+                if (!is_numeric($args[0])) {
+                    $sender->sendMessage($this->plugin->getLanguage()->translate('commands.generic.num.notNumber', [$args[0]]));
+                } elseif(((int) $args[0]) < -1) {
+                    $sender->sendMessage($this->plugin->getLanguage()->translate('commands.generic.num.tooSmall', [$args[0], -1]));
+                } else {
+                    $price = (string) ((int) $args[0]);
+                }
             }
             if ($price === null) {
-                $sender->sendMessage($this->plugin->getLanguage()->translate('commands.generic.invalid', [$args[0]]));
+                $sender->sendMessage($this->plugin->getLanguage()->translate('commands.generic.num.notNumber', [$args[0]]));
             } else {
                 $this->plugin->getConfig()->set('price', $price);
                 $sender->sendMessage($this->translate('success', (string) $price));

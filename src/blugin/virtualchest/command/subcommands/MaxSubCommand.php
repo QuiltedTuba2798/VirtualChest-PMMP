@@ -8,7 +8,6 @@ use pocketmine\command\CommandSender;
 use blugin\virtualchest\command\{
   PoolCommand, SubCommand
 };
-use blugin\virtualchest\util\Utils;
 
 class MaxSubCommand extends SubCommand{
 
@@ -24,14 +23,16 @@ class MaxSubCommand extends SubCommand{
      */
     public function onCommand(CommandSender $sender, array $args) : bool{
         if (isset($args[0])) {
-            $count = Utils::toInt($args[0], null, function (int $i){
-                return $i > 0;
-            });
-            if ($count === null) {
-                $sender->sendMessage($this->plugin->getLanguage()->translate('commands.generic.invalid', [$args[0]]));
+            if (!is_numeric($args[0])) {
+                $sender->sendMessage($this->plugin->getLanguage()->translate('commands.generic.num.notNumber', [$args[0]]));
             } else {
-                $this->plugin->getConfig()->set('max-count', $count);
-                $sender->sendMessage($this->translate('success', (string) $count));
+                $count = (int) $args[0];
+                if($count < 0){
+                    $sender->sendMessage($this->plugin->getLanguage()->translate('commands.generic.num.tooSmall', [$args[0], 0]));
+                } else {
+                    $this->plugin->getConfig()->set('max-count', $count);
+                    $sender->sendMessage($this->translate('success', (string) $count));
+                }
             }
             return true;
         }
