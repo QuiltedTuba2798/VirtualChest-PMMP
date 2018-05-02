@@ -35,9 +35,6 @@ Main command : `/vchest <open | buy | price | max | default | set | view | lang 
 | Default    | \<chest count\>                  | Set default chest count     |
 | Set        | \<player name\> \<chest count\>  | Set player's chest count    |
 | View       | \<player name\> \[chest number\] | Open player's virtual chest |
-| Lang       | \<language prefix\>              | Load default lang file      |
-| Reload     |                                  | Reload all data             |
-| Save       |                                  | Save all data               |  
 
 * buy,price,max sub command require [EconomyAPI](https://github.com/onebone/EconomyS) plugin. 
   
@@ -55,9 +52,6 @@ Main command : `/vchest <open | buy | price | max | default | set | view | lang 
 | vchest.cmd.default | OP       | default subcommand |
 | vchest.cmd.set     | OP       | set subcommand     |
 | vchest.cmd.view    | OP       | view subcommand    |
-| vchest.cmd.lang    | OP       | lang subcommand    |
-| vchest.cmd.reload  | OP       | reload subcommand  |
-| vchest.cmd.save    | OP       | save subcommand    |
   
 <br/><br/>
   

@@ -8,7 +8,7 @@ use pocketmine\plugin\PluginBase;
 use onebone\economyapi\EconomyAPI;
 use blugin\virtualchest\command\PoolCommand;
 use blugin\virtualchest\command\subcommands\{
-  OpenSubCommand, BuySubCommand, PriceSubCommand, MaxSubCommand, DefaultSubCommand, SetSubCommand, ViewSubCommand, LangSubCommand, ReloadSubCommand, SaveSubCommand
+  OpenSubCommand, BuySubCommand, PriceSubCommand, MaxSubCommand, DefaultSubCommand, SetSubCommand, ViewSubCommand
 };
 use blugin\virtualchest\container\VirtualChestContainer;
 use blugin\virtualchest\util\Translation;
@@ -77,9 +77,6 @@ class VirtualChest extends PluginBase{
             $this->command->createSubCommand(DefaultSubCommand::class);
             $this->command->createSubCommand(SetSubCommand::class);
             $this->command->createSubCommand(ViewSubCommand::class);
-            $this->command->createSubCommand(LangSubCommand::class);
-            $this->command->createSubCommand(ReloadSubCommand::class);
-            $this->command->createSubCommand(SaveSubCommand::class);
         }
         $this->command->updateTranslation();
         $this->command->updateSudCommandTranslation();

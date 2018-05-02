@@ -34,13 +34,4 @@ permissions:
       vchest.cmd.view:
         description:       VirtualChest command - view
         default:           op
-      vchest.cmd.lang:
-        description:       VirtualChest command - lang
-        default:           op
-      vchest.cmd.reload:
-        description:       VirtualChest command - reload
-        default:           op
-      vchest.cmd.save:
-        description:       VirtualChest command - save
-        default:           op
 ...

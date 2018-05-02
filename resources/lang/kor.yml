@@ -54,20 +54,4 @@ command-vchest-view@failure-none: "{%0}님은 창고를 소유하고 있지 않�
 command-vchest-view@failure-invalid: "{%0}는 잘못된 창고 번호입니다"
 command-vchest-view@count: "{%0}님은 {%1}개의 창고를 소유하고 있습니다"
 command-vchest-view@aliases: ["v"]
-
-command-vchest-lang: "lang"
-command-vchest-lang@usage: "/vchest Lang <언어명>"
-command-vchest-lang@success: "{%0}언어 파일을 불러왔습니다"
-command-vchest-lang@failure: "{%0}는 잘못된 언어명입니다"
-command-vchest-lang@aliases: ["language"]
-
-command-vchest-reload: "reload"
-command-vchest-reload@usage: "/vchest Reload"
-command-vchest-reload@success: "모든 데이터를 불러왔습니다"
-command-vchest-reload@aliases: ["rl"]
-
-command-vchest-save: "save"
-command-vchest-save@usage: "/vchest Save"
-command-vchest-save@success: "모든 데이터를 저장했습니다"
-command-vchest-save@aliases: ["sv"]
 ...
