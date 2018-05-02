@@ -34,13 +34,13 @@ class SetSubCommand extends SubCommand{
                 }
             }
             if ($container === null) {
-                $sender->sendMessage($this->plugin->getLanguage()->translate('commands.generic.player.notFound-player', [$args[0]]));
+                $sender->sendMessage($this->plugin->getLanguage()->translate('commands.generic.player.notFound', [$args[0]]));
             } else {
                 $count = Utils::toInt($args[1], null, function (int $i){
                     return $i >= 0;
                 });
                 if ($count === null) {
-                    $sender->sendMessage($this->plugin->getLanguage()->translate('commands.generic.player.notFound', [$args[1]]));
+                    $sender->sendMessage($this->plugin->getLanguage()->translate('commands.generic.invalid', [$args[1]]));
                 } else {
                     $container->setCount($count);
                     $sender->sendMessage($this->translate('success', $playerName, (string) $count));

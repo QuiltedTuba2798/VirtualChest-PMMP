@@ -42,7 +42,7 @@ class PriceSubCommand extends SubCommand{
                 });
             }
             if ($price === null) {
-                $sender->sendMessage($this->plugin->getLanguage()->translate('commands.generic.player.notFound', [$args[0]]));
+                $sender->sendMessage($this->plugin->getLanguage()->translate('commands.generic.invalid', [$args[0]]));
             } else {
                 $this->plugin->getConfig()->set('price', $price);
                 $sender->sendMessage($this->translate('success', (string) $price));

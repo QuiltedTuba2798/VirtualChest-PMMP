@@ -45,7 +45,7 @@ class ViewSubCommand extends SubCommand{
                     }
                 }
                 if ($container === null) {
-                    $sender->sendMessage($this->plugin->getLanguage()->translate('commands.generic.player.notFound-player', [$args[0]]));
+                    $sender->sendMessage($this->plugin->getLanguage()->translate('commands.generic.player.notFound', [$args[0]]));
                 } else {
                     $number = isset($args[1]) ? strtolower($args[1]) : 1;
                     $count = $container->getCount();

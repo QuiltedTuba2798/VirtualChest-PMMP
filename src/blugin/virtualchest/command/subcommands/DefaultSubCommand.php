@@ -28,7 +28,7 @@ class DefaultSubCommand extends SubCommand{
                 return $i > 0;
             });
             if ($count === null) {
-                $sender->sendMessage($this->plugin->getLanguage()->translate('commands.generic.player.notFound', [$args[0]]));
+                $sender->sendMessage($this->plugin->getLanguage()->translate('commands.generic.invalid', [$args[0]]));
             } else {
                 $this->plugin->getConfig()->set('default-count', $count);
                 $sender->sendMessage($this->translate('success', (string) $count));
