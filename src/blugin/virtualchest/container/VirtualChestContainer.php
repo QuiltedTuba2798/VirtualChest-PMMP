@@ -11,7 +11,7 @@ use blugin\virtualchest\inventory\VirtualChestInventory;
 
 class VirtualChestContainer{
 
-    /** @var self[] */
+    /** @var VirtualChestContainer[] */
     private static $containers = [];
 
     /** @return VirtualChestContainer[] */
