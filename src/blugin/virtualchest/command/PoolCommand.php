@@ -15,9 +15,6 @@ class PoolCommand extends PluginCommand implements CommandExecutor{
     /** @var SubCommand[] */
     protected $subCommands = [];
 
-    /** @var \ReflectionProperty */
-    private $property = null;
-
     /** @var string */
     public $uname;
 
@@ -27,16 +24,18 @@ class PoolCommand extends PluginCommand implements CommandExecutor{
      * @param SubCommand[] $subCommands
      */
     public function __construct(VirtualChest $owner, string $name, SubCommand ...$subCommands){
-        parent::__construct($name, $owner);
+        parent::__construct($owner->getLanguage()->translate("commands.{$name}"), $owner);
         $this->setExecutor($this);
-
-        $reflection = new \ReflectionClass(Command::class);
-        $this->property = $reflection->getProperty('name');
-        $this->property->setAccessible(true);
 
         $this->uname = $name;
         $this->setPermission("{$name}.cmd");
-        $this->updateTranslation();
+
+        $this->description = $owner->getLanguage()->translate("commands.{$this->uname}.description");
+        $this->usageMessage = $this->getUsage(new ConsoleCommandSender());
+        $aliases = $owner->getLanguage()->getArray("commands.{$this->uname}.aliases");
+        if (is_array($aliases)) {
+            $this->setAliases($aliases);
+        }
 
         $this->subCommands = $subCommands;
     }
@@ -95,21 +94,5 @@ class PoolCommand extends PluginCommand implements CommandExecutor{
     /** @param SubCommand::class $subCommandClass */
     public function createSubCommand($subCommandClass) : void{
         $this->subCommands[] = new $subCommandClass($this);
-    }
-
-    public function updateTranslation() : void{
-        $this->property->setValue($this, $this->getPlugin()->getLanguage()->translate("commands.{$this->uname}"));
-        $this->description = $this->getPlugin()->getLanguage()->translate("commands.{$this->uname}.description");
-        $this->usageMessage = $this->getUsage(new ConsoleCommandSender());
-        $aliases = $this->getPlugin()->getLanguage()->getArray("commands.{$this->uname}.aliases");
-        if (is_array($aliases)) {
-            $this->setAliases($aliases);
-        }
-    }
-
-    public function updateSudCommandTranslation() : void{
-        foreach ($this->subCommands as $key => $value) {
-            $value->updateTranslation();
-        }
     }
 }

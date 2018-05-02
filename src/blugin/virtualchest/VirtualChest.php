@@ -69,8 +69,6 @@ class VirtualChest extends PluginBase{
             $this->command->createSubCommand(SetSubCommand::class);
             $this->command->createSubCommand(ViewSubCommand::class);
         }
-        $this->command->updateTranslation();
-        $this->command->updateSudCommandTranslation();
         if ($this->command->isRegistered()) {
             $this->getServer()->getCommandMap()->unregister($this->command);
         }
