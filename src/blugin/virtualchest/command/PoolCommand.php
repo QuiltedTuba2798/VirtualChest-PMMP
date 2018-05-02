@@ -6,7 +6,7 @@ namespace blugin\virtualchest\command;
 use pocketmine\command\{
   Command, PluginCommand, CommandExecutor, CommandSender, ConsoleCommandSender
 };
-use blugin\virtualchest\VirtualChest as Plugin;
+use blugin\virtualchest\VirtualChest;
 use blugin\virtualchest\util\Translation;
 
 class PoolCommand extends PluginCommand implements CommandExecutor{
@@ -21,11 +21,11 @@ class PoolCommand extends PluginCommand implements CommandExecutor{
     public $uname;
 
     /**
-     * @param Plugin       $owner
+     * @param VirtualChest $owner
      * @param string       $name
      * @param SubCommand[] $subCommands
      */
-    public function __construct(Plugin $owner, string $name, SubCommand ...$subCommands){
+    public function __construct(VirtualChest $owner, string $name, SubCommand ...$subCommands){
         parent::__construct($name, $owner);
         $this->setExecutor($this);
 

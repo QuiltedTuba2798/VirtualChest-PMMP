@@ -3,7 +3,7 @@
 namespace blugin\virtualchest\command\subcommands;
 
 use pocketmine\command\CommandSender;
-use blugin\virtualchest\VirtualChest as Plugin;
+use blugin\virtualchest\VirtualChest;
 use blugin\virtualchest\command\{
   PoolCommand, SubCommand
 };
@@ -22,7 +22,7 @@ class ReloadSubCommand extends SubCommand{
      */
     public function onCommand(CommandSender $sender, array $args) : bool{
         $this->plugin->load();
-        $sender->sendMessage(Plugin::$prefix . $this->translate('success'));
+        $sender->sendMessage(VirtualChest::$prefix . $this->translate('success'));
 
         return true;
     }

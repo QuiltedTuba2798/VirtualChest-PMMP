@@ -4,7 +4,7 @@ namespace blugin\virtualchest\command;
 
 use pocketmine\Server;
 use pocketmine\command\CommandSender;
-use blugin\virtualchest\VirtualChest as Plugin;
+use blugin\virtualchest\VirtualChest;
 use blugin\virtualchest\util\{
   Translation, Utils
 };
@@ -14,7 +14,7 @@ abstract class SubCommand{
     /** @var PoolCommand */
     protected $owner;
 
-    /** @var Plugin */
+    /** @var VirtualChest */
     protected $plugin;
 
     /** @var string */
@@ -54,7 +54,7 @@ abstract class SubCommand{
      */
     public function execute(CommandSender $sender, array $args) : void{
         if (!$this->checkPermission($sender)) {
-            $sender->sendMessage(Plugin::$prefix . Translation::translate('command-generic-failure@permission'));
+            $sender->sendMessage(VirtualChest::$prefix . Translation::translate('command-generic-failure@permission'));
         } elseif (!$this->onCommand($sender, $args)) {
             $sender->sendMessage(Server::getInstance()->getLanguage()->translateString("commands.generic.usage", [$this->usage]));
         }

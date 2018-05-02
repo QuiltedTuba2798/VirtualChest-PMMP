@@ -6,7 +6,7 @@ use pocketmine\nbt\NBT;
 use pocketmine\nbt\tag\{
   CompoundTag, ListTag, IntTag
 };
-use blugin\virtualchest\VirtualChest as Plugin;
+use blugin\virtualchest\VirtualChest;
 use blugin\virtualchest\inventory\VirtualChestInventory;
 
 class VirtualChestContainer{
@@ -34,7 +34,7 @@ class VirtualChestContainer{
         if (isset(self::$containers[$playerName])) {
             return self::$containers[$playerName];
         } elseif ($load) {
-            return Plugin::getInstance()->loadPlayerData($playerName);
+            return VirtualChest::getInstance()->loadPlayerData($playerName);
         } else {
             return null;
         }

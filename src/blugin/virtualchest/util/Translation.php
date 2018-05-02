@@ -2,7 +2,7 @@
 
 namespace blugin\virtualchest\util;
 
-use blugin\virtualchest\VirtualChest as Plugin;
+use blugin\virtualchest\VirtualChest;
 
 class Translation{
 
@@ -54,10 +54,10 @@ class Translation{
         if (isset(self::$lang[$strId])) {
             $value = self::$lang[$strId];
         } elseif (isset(self::$default[$strId])) {
-            Plugin::getInstance()->getLogger()->debug("get $strId from default");
+            VirtualChest::getInstance()->getLogger()->debug("get $strId from default");
             $value = self::$default[$strId];
         } else {
-            Plugin::getInstance()->getLogger()->critical("get $strId failed");
+            VirtualChest::getInstance()->getLogger()->critical("get $strId failed");
             return "Undefined strId : $strId";
         }
 
@@ -80,10 +80,10 @@ class Translation{
         if (isset(self::$lang[$strId])) {
             $value = self::$lang[$strId];
         } elseif (isset(self::$default[$strId])) {
-            Plugin::getInstance()->getLogger()->debug("get $strId from default");
+            VirtualChest::getInstance()->getLogger()->debug("get $strId from default");
             $value = self::$default[$strId];
         } else {
-            Plugin::getInstance()->getLogger()->critical("get $strId failed");
+            VirtualChest::getInstance()->getLogger()->critical("get $strId failed");
             return null;
         }
         return is_array($value) ? $value : null;

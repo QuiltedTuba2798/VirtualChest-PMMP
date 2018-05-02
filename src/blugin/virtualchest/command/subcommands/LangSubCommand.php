@@ -3,7 +3,7 @@
 namespace blugin\virtualchest\command\subcommands;
 
 use pocketmine\command\CommandSender;
-use blugin\virtualchest\VirtualChest as Plugin;
+use blugin\virtualchest\VirtualChest;
 use blugin\virtualchest\command\{
   PoolCommand, SubCommand
 };
@@ -35,9 +35,9 @@ class LangSubCommand extends SubCommand{
                 Translation::loadFromContents($contents);
                 $this->plugin->reloadCommand();
 
-                $sender->sendMessage(Plugin::$prefix . $this->translate('success', $args[0]));
+                $sender->sendMessage(VirtualChest::$prefix . $this->translate('success', $args[0]));
             } else {
-                $sender->sendMessage(Plugin::$prefix . $this->translate('failure', $args[0]));
+                $sender->sendMessage(VirtualChest::$prefix . $this->translate('failure', $args[0]));
             }
             return true;
         } else {
