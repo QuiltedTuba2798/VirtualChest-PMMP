@@ -36,14 +36,6 @@ class VirtualChest extends PluginBase{
     }
 
     public function onEnable() : void{
-        $this->load();
-    }
-
-    public function onDisable() : void{
-        $this->save();
-    }
-
-    public function load() : void{
         $dataFolder = $this->getDataFolder();
         if (!file_exists($dataFolder)) {
             mkdir($dataFolder, 0777, true);
@@ -53,10 +45,7 @@ class VirtualChest extends PluginBase{
         }
         $this->language = new PluginLang($this);
         $this->reloadConfig();
-        $this->reloadCommand();
-    }
 
-    public function reloadCommand() : void{
         if ($this->command == null) {
             $this->command = new PoolCommand($this, 'vchest');
             $this->command->createSubCommand(OpenSubCommand::class);
@@ -75,12 +64,11 @@ class VirtualChest extends PluginBase{
         $this->getServer()->getCommandMap()->register(strtolower($this->getName()), $this->command);
     }
 
-    public function save() : void{
+    public function onDisable() : void{
         $dataFolder = $this->getDataFolder();
         if (!file_exists($dataFolder)) {
             mkdir($dataFolder, 0777, true);
         }
-
         $this->saveConfig();
 
         if (!file_exists($playerDataFolder = "{$dataFolder}players/")) {
