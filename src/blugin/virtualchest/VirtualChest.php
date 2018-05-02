@@ -105,9 +105,9 @@ class VirtualChest extends PluginBase{
     /**
      * @param string $name = ''
      *
-     * @return PluginCommand
+     * @return PoolCommand
      */
-    public function getCommand(string $name = '') : PluginCommand{
+    public function getCommand(string $name = '') : PoolCommand{
         return $this->command;
     }
 
