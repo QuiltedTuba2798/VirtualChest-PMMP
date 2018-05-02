@@ -1,20 +1,20 @@
 <?php
 
-namespace presentkim\virtualchest\command\subcommands;
+namespace blugin\virtualchest\command\subcommands;
 
 use pocketmine\command\CommandSender;
-use presentkim\virtualchest\VirtualChest as Plugin;
-use presentkim\virtualchest\command\{
+use blugin\virtualchest\VirtualChest as Plugin;
+use blugin\virtualchest\command\{
   PoolCommand, SubCommand
 };
-use presentkim\virtualchest\util\{
+use blugin\virtualchest\util\{
   Translation, Utils
 };
 
-class MaxSubCommand extends SubCommand{
+class DefaultSubCommand extends SubCommand{
 
     public function __construct(PoolCommand $owner){
-        parent::__construct($owner, 'max');
+        parent::__construct($owner, 'default');
     }
 
     /**
@@ -31,7 +31,7 @@ class MaxSubCommand extends SubCommand{
             if ($count === null) {
                 $sender->sendMessage(Plugin::$prefix . Translation::translate('command-generic-failure@invalid', $args[0]));
             } else {
-                $this->plugin->getConfig()->set('max-count', $count);
+                $this->plugin->getConfig()->set('default-count', $count);
                 $sender->sendMessage(Plugin::$prefix . $this->translate('success', $count));
             }
             return true;

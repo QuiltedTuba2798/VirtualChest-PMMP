@@ -1,15 +1,15 @@
 <?php
 
-namespace presentkim\virtualchest\command\subcommands;
+namespace blugin\virtualchest\command\subcommands;
 
 use pocketmine\Server;
 use pocketmine\command\CommandSender;
-use presentkim\virtualchest\VirtualChest as Plugin;
-use presentkim\virtualchest\command\{
+use blugin\virtualchest\VirtualChest as Plugin;
+use blugin\virtualchest\command\{
   PoolCommand, SubCommand
 };
-use presentkim\virtualchest\container\VirtualChestContainer;
-use presentkim\virtualchest\util\{
+use blugin\virtualchest\container\VirtualChestContainer;
+use blugin\virtualchest\util\{
   Translation, Utils
 };
 

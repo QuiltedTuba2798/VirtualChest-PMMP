@@ -1,10 +1,10 @@
 ---
 name:                      VirtualChest
-main:                      presentkim\virtualchest\VirtualChest
+main:                      blugin\virtualchest\VirtualChest
 version:                   1.1.10
 api:                       [3.0.0, 3.0.0-ALPHA11]
 author:                    PresentKim
-website:                   https://github.com/PMMPPlugin/VirtualChest
+website:                   https://github.com/Blugin/VirtualChest-PMMP
 description:               A plugin give virtual chest to player
 softdepend:                [EconomyAPI, MathParserLib]
 

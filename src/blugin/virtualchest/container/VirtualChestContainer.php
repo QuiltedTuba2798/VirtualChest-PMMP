@@ -1,13 +1,13 @@
 <?php
 
-namespace presentkim\virtualchest\container;
+namespace blugin\virtualchest\container;
 
 use pocketmine\nbt\NBT;
 use pocketmine\nbt\tag\{
   CompoundTag, ListTag, IntTag
 };
-use presentkim\virtualchest\VirtualChest as Plugin;
-use presentkim\virtualchest\inventory\VirtualChestInventory;
+use blugin\virtualchest\VirtualChest as Plugin;
+use blugin\virtualchest\inventory\VirtualChestInventory;
 
 class VirtualChestContainer{
 

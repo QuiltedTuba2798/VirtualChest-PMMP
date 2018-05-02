@@ -1,6 +1,6 @@
 <?php
 
-namespace presentkim\virtualchest\inventory;
+namespace blugin\virtualchest\inventory;
 
 use pocketmine\Player;
 use pocketmine\block\Block;
@@ -19,7 +19,7 @@ use pocketmine\network\mcpe\protocol\{
   types\WindowTypes, UpdateBlockPacket, ContainerOpenPacket, BlockEntityDataPacket
 };
 use pocketmine\tile\Spawnable;
-use presentkim\virtualchest\util\Translation;
+use blugin\virtualchest\util\Translation;
 
 class VirtualChestInventory extends CustomInventory{
 

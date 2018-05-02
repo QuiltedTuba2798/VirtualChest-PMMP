@@ -1,8 +1,8 @@
 <?php
 
-namespace presentkim\virtualchest\util;
+namespace blugin\virtualchest\util;
 
-use presentkim\virtualchest\VirtualChest as Plugin;
+use blugin\virtualchest\VirtualChest as Plugin;
 
 class Translation{
 

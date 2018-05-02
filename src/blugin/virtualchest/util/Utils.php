@@ -1,6 +1,6 @@
 <?php
 
-namespace presentkim\virtualchest\util;
+namespace blugin\virtualchest\util;
 
 class Utils{
 

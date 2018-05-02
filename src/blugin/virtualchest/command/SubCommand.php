@@ -1,11 +1,11 @@
 <?php
 
-namespace presentkim\virtualchest\command;
+namespace blugin\virtualchest\command;
 
 use pocketmine\Server;
 use pocketmine\command\CommandSender;
-use presentkim\virtualchest\VirtualChest as Plugin;
-use presentkim\virtualchest\util\{
+use blugin\virtualchest\VirtualChest as Plugin;
+use blugin\virtualchest\util\{
   Translation, Utils
 };
 

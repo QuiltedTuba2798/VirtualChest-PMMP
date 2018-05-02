@@ -1,13 +1,13 @@
 <?php
 
-namespace presentkim\virtualchest\command;
+namespace blugin\virtualchest\command;
 
 
 use pocketmine\command\{
   Command, PluginCommand, CommandExecutor, CommandSender, ConsoleCommandSender
 };
-use presentkim\virtualchest\VirtualChest as Plugin;
-use presentkim\virtualchest\util\Translation;
+use blugin\virtualchest\VirtualChest as Plugin;
+use blugin\virtualchest\util\Translation;
 
 class PoolCommand extends PluginCommand implements CommandExecutor{
 
