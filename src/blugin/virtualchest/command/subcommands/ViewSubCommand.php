@@ -37,7 +37,7 @@ class ViewSubCommand extends SubCommand{
                 if ($container === null) {
                     $defaultCount = $this->plugin->getConfig()->get('default-count');
                     if ($defaultCount < 1) {
-                        $sender->sendMessage(VirtualChest::$prefix . $this->translate('failure-none'));
+                        $sender->sendMessage($this->translate('failure-none'));
                         return true;
                     } else {
                         $container = new VirtualChestContainer($playerName, $defaultCount);
@@ -45,13 +45,13 @@ class ViewSubCommand extends SubCommand{
                     }
                 }
                 if ($container === null) {
-                    $sender->sendMessage(VirtualChest::$prefix . Translation::translate('command-generic-failure@invalid-player', $args[0]));
+                    $sender->sendMessage(Translation::translate('command-generic-failure@invalid-player', $args[0]));
                 } else {
                     $number = isset($args[1]) ? strtolower($args[1]) : 1;
                     $count = $container->getCount();
                     if (!is_numeric($number) || $number > $count) {
-                        $sender->sendMessage(VirtualChest::$prefix . $this->translate('failure-invalid', $number));
-                        $sender->sendMessage(VirtualChest::$prefix . $this->translate('count', $playerName, $count));
+                        $sender->sendMessage($this->translate('failure-invalid', $number));
+                        $sender->sendMessage($this->translate('count', $playerName, $count));
                     } else {
                         $sender->addWindow($container->getChest($number - 1));
                     }
@@ -60,7 +60,7 @@ class ViewSubCommand extends SubCommand{
                 return false;
             }
         } else {
-            $sender->sendMessage(VirtualChest::$prefix . Translation::translate('command-generic-failure@in-game'));
+            $sender->sendMessage(Translation::translate('command-generic-failure@in-game'));
         }
         return true;
     }

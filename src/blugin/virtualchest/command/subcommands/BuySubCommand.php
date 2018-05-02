@@ -34,22 +34,22 @@ class BuySubCommand extends SubCommand{
             $container = VirtualChestContainer::getContainer($playerName = $sender->getLowerCaseName(), true);
             $count = $container === null ? $config->get('default-count') : $container->getCount();
             if ($count >= (int) $config->get('max-count')) {
-                $sender->sendMessage(VirtualChest::$prefix . $this->translate('failure-max'));
+                $sender->sendMessage($this->translate('failure-max'));
                 return true;
             } else {
                 $economyAPI = EconomyAPI::getInstance();
                 $myMoney = $economyAPI->myMoney($playerName);
                 $price = $this->getPrice($count, $myMoney);
                 if ($price === null) {
-                    $sender->sendMessage(VirtualChest::$prefix . $this->translate('failure-prevent'));
+                    $sender->sendMessage($this->translate('failure-prevent'));
                     return true;
                 } elseif (!isset($this->checked[$playerName]) || (time() - $this->checked[$playerName]) > 10) {
                     $this->checked[$playerName] = time();
-                    $sender->sendMessage(VirtualChest::$prefix . $this->translate('check', $price));
+                    $sender->sendMessage($this->translate('check', $price));
                 } else {
                     unset($this->checked[$playerName]);
                     if ($myMoney < $price) {
-                        $sender->sendMessage(VirtualChest::$prefix . $this->translate('failure-money', $myMoney));
+                        $sender->sendMessage($this->translate('failure-money', $myMoney));
                     } else {
                         $economyAPI->reduceMoney($playerName, $price);
                         if ($container === null) {
@@ -58,12 +58,12 @@ class BuySubCommand extends SubCommand{
                         } else {
                             $container->setCount($count + 1);
                         }
-                        $sender->sendMessage(VirtualChest::$prefix . $this->translate('success', $myMoney - $price));
+                        $sender->sendMessage($this->translate('success', $myMoney - $price));
                     }
                 }
             }
         } else {
-            $sender->sendMessage(VirtualChest::$prefix . Translation::translate('command-generic-failure@in-game'));
+            $sender->sendMessage(Translation::translate('command-generic-failure@in-game'));
         }
         return true;
     }

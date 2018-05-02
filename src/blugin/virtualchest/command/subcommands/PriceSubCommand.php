@@ -43,10 +43,10 @@ class PriceSubCommand extends SubCommand{
                 });
             }
             if ($price === null) {
-                $sender->sendMessage(VirtualChest::$prefix . Translation::translate('command-generic-failure@invalid', $args[0]));
+                $sender->sendMessage(Translation::translate('command-generic-failure@invalid', $args[0]));
             } else {
                 $this->plugin->getConfig()->set('price', $price);
-                $sender->sendMessage(VirtualChest::$prefix . $this->translate('success', $price));
+                $sender->sendMessage($this->translate('success', $price));
             }
             return true;
         } else {

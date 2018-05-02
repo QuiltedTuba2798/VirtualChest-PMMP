@@ -35,9 +35,9 @@ class LangSubCommand extends SubCommand{
                 Translation::loadFromContents($contents);
                 $this->plugin->reloadCommand();
 
-                $sender->sendMessage(VirtualChest::$prefix . $this->translate('success', $args[0]));
+                $sender->sendMessage($this->translate('success', $args[0]));
             } else {
-                $sender->sendMessage(VirtualChest::$prefix . $this->translate('failure', $args[0]));
+                $sender->sendMessage($this->translate('failure', $args[0]));
             }
             return true;
         } else {

@@ -29,10 +29,10 @@ class MaxSubCommand extends SubCommand{
                 return $i > 0;
             });
             if ($count === null) {
-                $sender->sendMessage(VirtualChest::$prefix . Translation::translate('command-generic-failure@invalid', $args[0]));
+                $sender->sendMessage(Translation::translate('command-generic-failure@invalid', $args[0]));
             } else {
                 $this->plugin->getConfig()->set('max-count', $count);
-                $sender->sendMessage(VirtualChest::$prefix . $this->translate('success', $count));
+                $sender->sendMessage($this->translate('success', $count));
             }
             return true;
         }

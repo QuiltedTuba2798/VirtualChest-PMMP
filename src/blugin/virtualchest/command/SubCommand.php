@@ -54,7 +54,7 @@ abstract class SubCommand{
      */
     public function execute(CommandSender $sender, array $args) : void{
         if (!$this->checkPermission($sender)) {
-            $sender->sendMessage(VirtualChest::$prefix . Translation::translate('command-generic-failure@permission'));
+            $sender->sendMessage(Translation::translate('command-generic-failure@permission'));
         } elseif (!$this->onCommand($sender, $args)) {
             $sender->sendMessage(Server::getInstance()->getLanguage()->translateString("commands.generic.usage", [$this->usage]));
         }

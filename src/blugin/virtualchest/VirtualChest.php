@@ -18,9 +18,6 @@ class VirtualChest extends PluginBase{
     /** @var VirtualChest */
     private static $instance = null;
 
-    /** @var string */
-    public static $prefix = '';
-
     /** @var PoolCommand */
     private $command;
 
@@ -65,7 +62,6 @@ class VirtualChest extends PluginBase{
             Translation::load($langfilename);
         }
 
-        self::$prefix = Translation::translate('prefix');
         $this->reloadCommand();
     }
 

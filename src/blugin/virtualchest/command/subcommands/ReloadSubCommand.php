@@ -22,7 +22,7 @@ class ReloadSubCommand extends SubCommand{
      */
     public function onCommand(CommandSender $sender, array $args) : bool{
         $this->plugin->load();
-        $sender->sendMessage(VirtualChest::$prefix . $this->translate('success'));
+        $sender->sendMessage($this->translate('success'));
 
         return true;
     }

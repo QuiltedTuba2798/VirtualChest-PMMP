@@ -1,6 +1,4 @@
 ---
-prefix: "[VirtualChest] "
-
 chest-name: "{%0}'s {%1}th virtual chest"
 
 command-generic-failure@in-game: "Available in game only"

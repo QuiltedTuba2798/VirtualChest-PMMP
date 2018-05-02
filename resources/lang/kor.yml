@@ -1,6 +1,4 @@
 ---
-prefix: "[VirtualChest] "
-
 chest-name: "{%0}님의 {%1}번째 가상 창고"
 
 command-generic-failure@in-game: "게임 내에서만 사용할 수 있습니다"

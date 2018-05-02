@@ -35,16 +35,16 @@ class SetSubCommand extends SubCommand{
                 }
             }
             if ($container === null) {
-                $sender->sendMessage(VirtualChest::$prefix . Translation::translate('command-generic-failure@invalid-player', $args[0]));
+                $sender->sendMessage(Translation::translate('command-generic-failure@invalid-player', $args[0]));
             } else {
                 $count = Utils::toInt($args[1], null, function (int $i){
                     return $i >= 0;
                 });
                 if ($count === null) {
-                    $sender->sendMessage(VirtualChest::$prefix . Translation::translate('command-generic-failure@invalid', $args[1]));
+                    $sender->sendMessage(Translation::translate('command-generic-failure@invalid', $args[1]));
                 } else {
                     $container->setCount($count);
-                    $sender->sendMessage(VirtualChest::$prefix . $this->translate('success', $playerName, $count));
+                    $sender->sendMessage($this->translate('success', $playerName, $count));
                 }
             }
             return true;

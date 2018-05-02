@@ -22,7 +22,7 @@ class SaveSubCommand extends SubCommand{
      */
     public function onCommand(CommandSender $sender, array $args) : bool{
         $this->plugin->save();
-        $sender->sendMessage(VirtualChest::$prefix . $this->translate('success'));
+        $sender->sendMessage($this->translate('success'));
 
         return true;
     }
