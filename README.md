@@ -31,10 +31,10 @@ Main command : `/vchest <open | buy | price | max | default | set | view | lang 
 * When you have [MathParserLib](https://github.com/PMMPPlugin/MathParserLib) plugin, You can use formula on price. 
     * For example:
    
-| You want                       | command                 |
-| :----------------------------- | :---------------------- |
-| `Price : ChestCount * 10000`   | `/vhest price c*1000`   |
-| `Price : ChestCount^2 * 10000` | `/vhest price c^2*1000` |
+| You want                       | command                  |
+| :----------------------------- | :----------------------- |
+| `Price : ChestCount * 10000`   | `/vchest price c*1000`   |
+| `Price : ChestCount^2 * 10000` | `/vchest price c^2*1000` |
   
 <br/><br/>
   
