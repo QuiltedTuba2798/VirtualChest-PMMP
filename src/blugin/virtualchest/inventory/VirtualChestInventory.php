@@ -6,7 +6,7 @@ namespace blugin\virtualchest\inventory;
 
 use pocketmine\Player;
 use pocketmine\block\{
-    Block, BlockFactory
+  Block, BlockFactory
 };
 use pocketmine\inventory\{
   BaseInventory, CustomInventory
@@ -23,7 +23,7 @@ use pocketmine\network\mcpe\protocol\{
   types\WindowTypes, UpdateBlockPacket, ContainerOpenPacket, BlockEntityDataPacket
 };
 use pocketmine\tile\Spawnable;
-use blugin\startkit\StartKit;
+use blugin\virtualchest\VirtualChest;
 
 class VirtualChestInventory extends CustomInventory{
 
@@ -49,7 +49,10 @@ class VirtualChestInventory extends CustomInventory{
           new IntTag('x', 0),
           new IntTag('y', 0),
           new IntTag('z', 0),
-          new StringTag('CustomName', StartKit::getInstance()->getLanguage()->translate('vchest.name', $ownerName, $num)),
+          new StringTag('CustomName', VirtualChest::getInstance()->getLanguage()->translate('vchest.name', [
+            $ownerName,
+            $num,
+          ])),
         ]);
     }
 
