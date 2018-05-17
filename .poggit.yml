@@ -4,7 +4,7 @@ branches:
 - master
 
 projects:
-  VirtualChest-PMMP:
+  VirtualChest:
     path: ""
     icon: assets/icon/512x512.png
 ...
