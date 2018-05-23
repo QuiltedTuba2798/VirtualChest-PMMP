@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace blugin\virtualchest;
+namespace kim\present\virtualchest;
 
 use pocketmine\nbt\BigEndianNBTStream;
 use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\plugin\PluginBase;
 use onebone\economyapi\EconomyAPI;
-use blugin\virtualchest\command\PoolCommand;
-use blugin\virtualchest\command\subcommands\{
+use kim\present\virtualchest\command\PoolCommand;
+use kim\present\virtualchest\command\subcommands\{
   OpenSubCommand, BuySubCommand, PriceSubCommand, MaxSubCommand, DefaultSubCommand, SetSubCommand, ViewSubCommand
 };
-use blugin\virtualchest\container\VirtualChestContainer;
-use blugin\virtualchest\lang\PluginLang;
+use kim\present\virtualchest\container\VirtualChestContainer;
+use kim\present\virtualchest\lang\PluginLang;
 
 class VirtualChest extends PluginBase{
 

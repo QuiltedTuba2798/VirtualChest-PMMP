@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace blugin\virtualchest\util;
+namespace kim\present\virtualchest\util;
 
 class Utils{
 

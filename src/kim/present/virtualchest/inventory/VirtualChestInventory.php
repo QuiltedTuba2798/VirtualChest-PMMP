@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace blugin\virtualchest\inventory;
+namespace kim\present\virtualchest\inventory;
 
 use pocketmine\Player;
 use pocketmine\block\{
@@ -23,7 +23,7 @@ use pocketmine\network\mcpe\protocol\{
   types\WindowTypes, UpdateBlockPacket, ContainerOpenPacket, BlockEntityDataPacket
 };
 use pocketmine\tile\Spawnable;
-use blugin\virtualchest\VirtualChest;
+use kim\present\virtualchest\VirtualChest;
 
 class VirtualChestInventory extends CustomInventory{
 

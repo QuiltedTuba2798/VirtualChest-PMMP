@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace blugin\virtualchest\command;
+namespace kim\present\virtualchest\command;
 
 
 use pocketmine\command\{
   Command, PluginCommand, CommandExecutor, CommandSender, ConsoleCommandSender
 };
-use blugin\virtualchest\VirtualChest;
+use kim\present\virtualchest\VirtualChest;
 
 class PoolCommand extends PluginCommand implements CommandExecutor{
 

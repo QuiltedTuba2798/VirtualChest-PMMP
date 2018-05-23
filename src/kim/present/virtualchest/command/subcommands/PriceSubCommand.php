@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace blugin\virtualchest\command\subcommands;
+namespace kim\present\virtualchest\command\subcommands;
 
 use pocketmine\command\CommandSender;
-use blugin\mathparser\MathParser;
-use blugin\virtualchest\command\{
+use kim\present\mathparser\MathParser;
+use kim\present\virtualchest\command\{
   PoolCommand, SubCommand
 };
 
