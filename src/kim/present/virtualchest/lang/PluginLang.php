@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace blugin\virtualchest\lang;
+namespace kim\present\virtualchest\lang;
 
-use blugin\virtualchest\VirtualChest;
+use kim\present\virtualchest\VirtualChest;
 
 class PluginLang{
 

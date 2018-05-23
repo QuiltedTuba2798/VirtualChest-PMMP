@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace blugin\virtualchest\container;
+namespace kim\present\virtualchest\container;
 
 use pocketmine\nbt\NBT;
 use pocketmine\nbt\tag\{
   CompoundTag, ListTag, IntTag
 };
-use blugin\virtualchest\VirtualChest;
-use blugin\virtualchest\inventory\VirtualChestInventory;
+use kim\present\virtualchest\VirtualChest;
+use kim\present\virtualchest\inventory\VirtualChestInventory;
 
 class VirtualChestContainer{
 

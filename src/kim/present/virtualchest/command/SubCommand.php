@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace blugin\virtualchest\command;
+namespace kim\present\virtualchest\command;
 
 use pocketmine\Server;
 use pocketmine\command\CommandSender;
-use blugin\virtualchest\VirtualChest;
-use blugin\virtualchest\util\Utils;
+use kim\present\virtualchest\VirtualChest;
+use kim\present\virtualchest\util\Utils;
 
 abstract class SubCommand{
 
