@@ -1,0 +1,11 @@
+--- # Poggit-CI Manifest. Open the CI at https://poggit.pmmp.io/ci/PresentKim/VirtualChest-PMMP/VirtualChest
+
+branches:
+- master
+
+projects:
+  VirtualChest:
+    projectId: 1827
+    path: ""
+    icon: assets/icon/512x512.png
+...
