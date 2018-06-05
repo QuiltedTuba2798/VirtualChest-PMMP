@@ -1,7 +1,7 @@
-# VirtualChest [![license](https://img.shields.io/github/license/Blugin/VirtualChest-PMMP.svg?label=License)](LICENSE)
+# VirtualChest [![license](https://img.shields.io/github/license/PresentKim/VirtualChest-PMMP.svg?label=License)](LICENSE)
 <img src="./assets/icon/index.svg" height="256" width="256">  
 
-[![release](https://img.shields.io/github/release/Blugin/VirtualChest-PMMP.svg?label=Release)](https://github.com/Blugin/VirtualChest-PMMP/releases/latest) [![download](https://img.shields.io/github/downloads/Blugin/VirtualChest-PMMP/total.svg?label=Download)](https://github.com/Blugin/VirtualChest-PMMP/releases/latest)
+[![release](https://img.shields.io/github/release/PresentKim/VirtualChest-PMMP.svg?label=Release)](https://github.com/PresentKim/VirtualChest-PMMP/releases/latest) [![download](https://img.shields.io/github/downloads/PresentKim/VirtualChest-PMMP/total.svg?label=Download)](https://github.com/PresentKim/VirtualChest-PMMP/releases/latest)
 
 
 A plugin give virtual chest to player for PocketMine-MP
