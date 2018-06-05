@@ -1,37 +1,37 @@
 ---
-name:                      VirtualChest
-main:                      kim\present\virtualchest\VirtualChest
-version:                   1.1.11
-api:                       [3.0.0-ALPHA12]
-author:                    PresentKim
-website:                   https://github.com/PresentKim/VirtualChest-PMMP
-description:              Give virtual chest to player
-softdepend:               [EconomyAPI, MathParserLib]
+name: VirtualChest
+main: kim\present\virtualchest\VirtualChest
+version: 1.1.11
+api: [3.0.0-ALPHA12]
+author: PresentKim
+website: https://github.com/PresentKim/VirtualChest-PMMP
+description: Give virtual chest to player
+softdepend: [EconomyAPI, MathParserLib]
 
 permissions:
   vchest.cmd:
-    description:           VirtualChest command
-    default:               true
+    description: VirtualChest command
+    default: true
     children:
       vchest.cmd.open:
-        description:       VirtualChest command - open
-        default:           true
+        description: VirtualChest command - open
+        default: true
       vchest.cmd.buy:
-        description:       VirtualChest command - buy
-        default:           true
+        description: VirtualChest command - buy
+        default: true
       vchest.cmd.price:
-        description:       VirtualChest command - price
-        default:           op
+        description: VirtualChest command - price
+        default: op
       vchest.cmd.max:
-        description:       VirtualChest command - max
-        default:           op
+        description: VirtualChest command - max
+        default: op
       vchest.cmd.default:
-        description:       VirtualChest command - default
-        default:           op
+        description: VirtualChest command - default
+        default: op
       vchest.cmd.set:
-        description:       VirtualChest command - set
-        default:           op
+        description: VirtualChest command - set
+        default: op
       vchest.cmd.view:
-        description:       VirtualChest command - view
-        default:           op
+        description: VirtualChest command - view
+        default: op
 ...
