@@ -11,7 +11,11 @@ use kim\present\virtualchest\command\{
 use pocketmine\command\CommandSender;
 
 class PriceSubCommand extends SubCommand{
-
+	/**
+	 * PriceSubCommand constructor.
+	 *
+	 * @param PoolCommand $owner
+	 */
 	public function __construct(PoolCommand $owner){
 		parent::__construct($owner, 'price');
 	}

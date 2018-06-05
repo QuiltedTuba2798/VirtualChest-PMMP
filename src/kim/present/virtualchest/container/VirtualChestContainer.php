@@ -12,14 +12,24 @@ use pocketmine\nbt\tag\{
 };
 
 class VirtualChestContainer{
-
-	/** @var VirtualChestContainer[] */
+	/**
+	 * @var VirtualChestContainer[]
+	 */
 	private static $containers = [];
-	/** @var string */
+
+	/**
+	 * @var string
+	 */
 	private $playerName;
-	/** @var int */
+
+	/**
+	 * @var int
+	 */
 	private $count;
-	/** @var VirtualChestInventory[] */
+
+	/**
+	 * @var VirtualChestInventory[]
+	 */
 	private $chests = [];
 
 	/**
@@ -35,12 +45,16 @@ class VirtualChestContainer{
 		$this->chests = $chests;
 	}
 
-	/** @return VirtualChestContainer[] */
+	/**
+	 * @return VirtualChestContainer[]
+	 */
 	public static function getContainers() : array{
 		return self::$containers;
 	}
 
-	/** @param VirtualChestContainer[] $container */
+	/**
+	 * @param VirtualChestContainer[] $container
+	 */
 	public static function setContainers(array $container) : void{
 		self::$containers = $container;
 	}
@@ -97,22 +111,30 @@ class VirtualChestContainer{
 		$this->chests[$index] = $chest;
 	}
 
-	/** @return string */
+	/**
+	 * @return string
+	 */
 	public function getPlayerName() : string{
 		return $this->playerName;
 	}
 
-	/** @param string $playerName */
+	/**
+	 * @param string $playerName
+	 */
 	public function setPlayerName(string $playerName) : void{
 		$this->playerName = $playerName;
 	}
 
-	/** @return int */
+	/**
+	 * @return int
+	 */
 	public function getCount() : int{
 		return $this->count;
 	}
 
-	/** @param int $count */
+	/**
+	 * @param int $count
+	 */
 	public function setCount(int $count) : void{
 		if($this->count > $count){
 			for($i = $count; $i < $this->count; ++$i){
@@ -127,12 +149,16 @@ class VirtualChestContainer{
 		$this->count = $count;
 	}
 
-	/** @return VirtualChestInventory[] */
+	/**
+	 * @return VirtualChestInventory[]
+	 */
 	public function getChests() : array{
 		return $this->chests;
 	}
 
-	/** @param VirtualChestInventory[] $chests */
+	/**
+	 * @param VirtualChestInventory[] $chests
+	 */
 	public function setChests(array $chests) : void{
 		$this->chests = $chests;
 	}

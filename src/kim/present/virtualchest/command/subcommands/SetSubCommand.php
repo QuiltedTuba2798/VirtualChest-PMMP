@@ -12,7 +12,11 @@ use pocketmine\command\CommandSender;
 use pocketmine\Server;
 
 class SetSubCommand extends SubCommand{
-
+	/**
+	 * SetSubCommand constructor.
+	 *
+	 * @param PoolCommand $owner
+	 */
 	public function __construct(PoolCommand $owner){
 		parent::__construct($owner, 'set');
 	}

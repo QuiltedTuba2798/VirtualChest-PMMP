@@ -4,17 +4,20 @@ declare(strict_types=1);
 
 namespace kim\present\virtualchest\command;
 
-
 use kim\present\virtualchest\VirtualChest;
 use pocketmine\command\{
 	Command, CommandExecutor, CommandSender, ConsoleCommandSender, PluginCommand
 };
 
 class PoolCommand extends PluginCommand implements CommandExecutor{
-
-	/** @var string */
+	/**
+	 * @var string
+	 */
 	public $uname;
-	/** @var SubCommand[] */
+
+	/**
+	 * @var SubCommand[]
+	 */
 	protected $subCommands = [];
 
 	/**
@@ -54,7 +57,10 @@ class PoolCommand extends PluginCommand implements CommandExecutor{
 					$subCommands[] = $subCommand->getLabel();
 				}
 			}
-			return $this->getPlugin()->getLanguage()->translate("commands.{$this->uname}.usage", [implode($this->getPlugin()->getLanguage()->translate("commands.{$this->uname}.usage.separator"), $subCommands)]);
+			/** @var VirtualChest $plugin */
+			$plugin = $this->getPlugin();
+			$lang = $plugin->getLanguage();
+			return $lang->translate("commands.{$this->uname}.usage", [implode($lang->translate("commands.{$this->uname}.usage.separator"), $subCommands)]);
 		}
 	}
 
@@ -80,17 +86,23 @@ class PoolCommand extends PluginCommand implements CommandExecutor{
 		return true;
 	}
 
-	/** @return SubCommand[] */
+	/**
+	 * @return SubCommand[]
+	 */
 	public function getSubCommands() : array{
 		return $this->subCommands;
 	}
 
-	/** @param SubCommand[] $subCommands */
+	/**
+	 * @param SubCommand[] $subCommands
+	 */
 	public function setSubCommands(SubCommand ...$subCommands) : void{
 		$this->subCommands = $subCommands;
 	}
 
-	/** @param SubCommand::class $subCommandClass */
+	/**
+	 * @param SubCommand::class $subCommandClass
+	 */
 	public function createSubCommand($subCommandClass) : void{
 		$this->subCommands[] = new $subCommandClass($this);
 	}

@@ -14,10 +14,16 @@ use pocketmine\command\CommandSender;
 use pocketmine\Player;
 
 class BuySubCommand extends SubCommand{
-
-	/** @var int[] */
+	/**
+	 * @var int[]
+	 */
 	private $checked = [];
 
+	/**
+	 * BuySubCommand constructor.
+	 *
+	 * @param PoolCommand $owner
+	 */
 	public function __construct(PoolCommand $owner){
 		parent::__construct($owner, 'buy');
 	}

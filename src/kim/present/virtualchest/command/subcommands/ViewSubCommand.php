@@ -13,7 +13,11 @@ use pocketmine\Player;
 use pocketmine\Server;
 
 class ViewSubCommand extends SubCommand{
-
+	/**
+	 * ViewSubCommand constructor.
+	 *
+	 * @param PoolCommand $owner
+	 */
 	public function __construct(PoolCommand $owner){
 		parent::__construct($owner, 'view');
 	}

@@ -26,11 +26,14 @@ use pocketmine\Player;
 use pocketmine\tile\Spawnable;
 
 class VirtualChestInventory extends CustomInventory{
-
-	/** CompoundTag */
+	/**
+	 * @var CompoundTag
+	 */
 	private $nbt;
 
-	/** Vector3[] */
+	/**
+	 * @var Vector3[]
+	 */
 	private $vectors = [];
 
 	/**
@@ -72,7 +75,9 @@ class VirtualChestInventory extends CustomInventory{
 		return $inventory;
 	}
 
-	/** @param Player $who */
+	/**
+	 * @param Player $who
+	 */
 	public function onOpen(Player $who) : void{
 		BaseInventory::onOpen($who);
 
@@ -134,17 +139,23 @@ class VirtualChestInventory extends CustomInventory{
 		unset($this->vectors[$key]);
 	}
 
-	/** @return string */
+	/**
+	 * @return string
+	 */
 	public function getName() : string{
 		return "VirtualChestInventory";
 	}
 
-	/** @return int */
+	/**
+	 * @return int
+	 */
 	public function getDefaultSize() : int{
 		return 27;
 	}
 
-	/** @return int */
+	/**
+	 * @return int
+	 */
 	public function getNetworkType() : int{
 		return WindowTypes::CONTAINER;
 	}

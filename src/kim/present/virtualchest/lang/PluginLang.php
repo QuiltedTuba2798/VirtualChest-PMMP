@@ -7,11 +7,10 @@ namespace kim\present\virtualchest\lang;
 use kim\present\virtualchest\VirtualChest;
 
 class PluginLang{
-
 	public const FALLBACK_LANGUAGE = "eng";
 
 	/**
-	 * @var DustBin
+	 * @var VirtualChest
 	 */
 	protected $plugin;
 
@@ -25,6 +24,11 @@ class PluginLang{
 	 */
 	protected $fallbackLang = [];
 
+	/**
+	 * PluginLang constructor.
+	 *
+	 * @param VirtualChest $plugin
+	 */
 	public function __construct(VirtualChest $plugin){
 		$this->plugin = $plugin;
 
@@ -67,9 +71,9 @@ class PluginLang{
 	}
 
 	/**
-	 * @return DustBin
+	 * @return VirtualChest
 	 */
-	public function getPlugin() : DustBin{
+	public function getPlugin() : VirtualChest{
 		return $this->plugin;
 	}
 

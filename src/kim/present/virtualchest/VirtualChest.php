@@ -16,15 +16,24 @@ use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\plugin\PluginBase;
 
 class VirtualChest extends PluginBase{
+	/**
+	 * @var VirtualChest
+	 */
+	private static $instance;
 
-	/** @var VirtualChest */
-	private static $instance = null;
-	/** @var PoolCommand */
+	/**
+	 * @var PoolCommand
+	 */
 	private $command;
-	/** @var PluginLang */
+
+	/**
+	 * @var PluginLang
+	 */
 	private $language;
 
-	/** @return VirtualChest */
+	/**
+	 * @return VirtualChest
+	 */
 	public static function getInstance() : VirtualChest{
 		return self::$instance;
 	}

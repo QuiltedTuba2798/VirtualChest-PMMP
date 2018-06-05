@@ -10,7 +10,11 @@ use kim\present\virtualchest\command\{
 use pocketmine\command\CommandSender;
 
 class MaxSubCommand extends SubCommand{
-
+	/**
+	 * MaxSubCommand constructor.
+	 *
+	 * @param PoolCommand $owner
+	 */
 	public function __construct(PoolCommand $owner){
 		parent::__construct($owner, 'max');
 	}
