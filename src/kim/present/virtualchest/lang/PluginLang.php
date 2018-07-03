@@ -9,19 +9,13 @@ use kim\present\virtualchest\VirtualChest;
 class PluginLang{
 	public const FALLBACK_LANGUAGE = "eng";
 
-	/**
-	 * @var VirtualChest
-	 */
+	/** @var VirtualChest */
 	protected $plugin;
 
-	/**
-	 * @var string[]
-	 */
+	/** @var string[] */
 	protected $lang = [];
 
-	/**
-	 * @var string[]
-	 */
+	/** @var string[] */
 	protected $fallbackLang = [];
 
 	/**

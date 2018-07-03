@@ -26,14 +26,10 @@ use pocketmine\Player;
 use pocketmine\tile\Spawnable;
 
 class VirtualChestInventory extends CustomInventory{
-	/**
-	 * @var CompoundTag
-	 */
+	/** @var CompoundTag */
 	private $nbt;
 
-	/**
-	 * @var Vector3[]
-	 */
+	/** @var Vector3[] */
 	private $vectors = [];
 
 	/**

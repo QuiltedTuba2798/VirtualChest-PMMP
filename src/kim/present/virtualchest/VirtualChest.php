@@ -16,19 +16,13 @@ use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\plugin\PluginBase;
 
 class VirtualChest extends PluginBase{
-	/**
-	 * @var VirtualChest
-	 */
+	/** @var VirtualChest */
 	private static $instance;
 
-	/**
-	 * @var PoolCommand
-	 */
+	/** @var PoolCommand */
 	private $command;
 
-	/**
-	 * @var PluginLang
-	 */
+	/** @var PluginLang */
 	private $language;
 
 	/**
