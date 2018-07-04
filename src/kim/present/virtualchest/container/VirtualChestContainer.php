@@ -12,24 +12,16 @@ use pocketmine\nbt\tag\{
 };
 
 class VirtualChestContainer{
-	/**
-	 * @var VirtualChestContainer[]
-	 */
+	/** @var VirtualChestContainer[] */
 	private static $containers = [];
 
-	/**
-	 * @var string
-	 */
+	/** @var string */
 	private $playerName;
 
-	/**
-	 * @var int
-	 */
+	/** @var int */
 	private $count;
 
-	/**
-	 * @var VirtualChestInventory[]
-	 */
+	/** @var VirtualChestInventory[] */
 	private $chests = [];
 
 	/**

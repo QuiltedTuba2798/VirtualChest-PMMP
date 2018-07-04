@@ -10,39 +10,25 @@ use pocketmine\command\CommandSender;
 use pocketmine\Server;
 
 abstract class SubCommand{
-	/**
-	 * @var PoolCommand
-	 */
+	/** @var PoolCommand */
 	protected $owner;
 
-	/**
-	 * @var VirtualChest
-	 */
+	/** @var VirtualChest */
 	protected $plugin;
 
-	/**
-	 * @var string
-	 */
+	/** @var string */
 	protected $strId;
 
-	/**
-	 * @var string
-	 */
+	/** @var string */
 	protected $permission;
 
-	/**
-	 * @var string
-	 */
+	/** @var string */
 	protected $label;
 
-	/**
-	 * @var string[]
-	 */
+	/** @var string[] */
 	protected $aliases;
 
-	/**
-	 * @var string
-	 */
+	/** @var string */
 	protected $usage;
 
 	/**

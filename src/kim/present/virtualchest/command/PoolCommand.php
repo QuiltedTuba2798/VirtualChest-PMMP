@@ -10,14 +10,10 @@ use pocketmine\command\{
 };
 
 class PoolCommand extends PluginCommand implements CommandExecutor{
-	/**
-	 * @var string
-	 */
+	/** @var string */
 	public $uname;
 
-	/**
-	 * @var SubCommand[]
-	 */
+	/** @var SubCommand[] */
 	protected $subCommands = [];
 
 	/**
