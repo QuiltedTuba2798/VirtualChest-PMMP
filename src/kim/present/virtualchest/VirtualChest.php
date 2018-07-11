@@ -116,15 +116,6 @@ class VirtualChest extends PluginBase{
 	}
 
 	/**
-	 * @param string $name = ''
-	 *
-	 * @return PoolCommand
-	 */
-	public function getCommand(string $name = '') : PoolCommand{
-		return $this->command;
-	}
-
-	/**
 	 * @param string $playerName
 	 *
 	 * @return null|VirtualChestContainer
@@ -152,17 +143,5 @@ class VirtualChest extends PluginBase{
 	 */
 	public function getLanguage() : PluginLang{
 		return $this->language;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getSourceFolder() : string{
-		$pharPath = \Phar::running();
-		if(empty($pharPath)){
-			return dirname(__FILE__, 5) . DIRECTORY_SEPARATOR;
-		}else{
-			return $pharPath . DIRECTORY_SEPARATOR;
-		}
 	}
 }
