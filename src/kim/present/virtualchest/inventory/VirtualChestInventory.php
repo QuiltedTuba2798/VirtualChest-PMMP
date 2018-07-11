@@ -70,7 +70,7 @@ class VirtualChestInventory extends CustomInventory{
 			new IntTag('x', 0),
 			new IntTag('y', 0),
 			new IntTag('z', 0),
-			new StringTag('CustomName', VirtualChest::getInstance()->getLanguage()->translate('vchest.name', [
+			new StringTag('CustomName', VirtualChest::getInstance()->getLanguage()->translateString('vchest.name', [
 				$ownerName,
 				$num,
 			])),

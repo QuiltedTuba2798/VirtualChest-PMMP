@@ -71,7 +71,7 @@ class OpenSubCommand extends SubCommand{
 				$sender->addWindow($container->getChest($number - 1));
 			}
 		}else{
-			$sender->sendMessage($this->plugin->getLanguage()->translate('commands.generic.onlyPlayer'));
+			$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.generic.onlyPlayer'));
 		}
 		return true;
 	}

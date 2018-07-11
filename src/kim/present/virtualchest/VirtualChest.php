@@ -65,15 +65,18 @@ class VirtualChest extends PluginBase{
 	 * Called when the plugin is enabled
 	 */
 	public function onEnable() : void{
-		$dataFolder = $this->getDataFolder();
-		if(!file_exists($dataFolder)){
-			mkdir($dataFolder, 0777, true);
-		}
-		if(!file_exists($playerDataFolder = "{$dataFolder}players/")){
-			mkdir($playerDataFolder, 0777, true);
-		}
-		$this->language = new PluginLang($this);
+		//Save default resources
+		$this->saveResource("lang/eng/lang.ini", false);
+		$this->saveResource("lang/kor/lang.ini", false);
+		$this->saveResource("lang/language.list", false);
+
+		//Load config file
+		$this->saveDefaultConfig();
 		$this->reloadConfig();
+
+		//Load language file
+		$this->language = new PluginLang($this, PluginLang::FALLBACK_LANGUAGE);
+		$this->getLogger()->info($this->language->translateString("language.selected", [$this->language->getName(), $this->language->getLang()]));
 
 		if($this->command == null){
 			$this->command = new PoolCommand($this, 'vchest');

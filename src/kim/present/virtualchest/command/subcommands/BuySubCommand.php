@@ -89,7 +89,7 @@ class BuySubCommand extends SubCommand{
 				}
 			}
 		}else{
-			$sender->sendMessage($this->plugin->getLanguage()->translate('commands.generic.onlyPlayer'));
+			$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.generic.onlyPlayer'));
 		}
 		return true;
 	}

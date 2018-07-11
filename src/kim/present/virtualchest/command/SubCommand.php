@@ -66,7 +66,7 @@ abstract class SubCommand{
 		$this->strId = "commands.{$owner->uname}.{$label}";
 		$this->permission = "{$owner->uname}.cmd.{$label}";
 
-		$this->label = $this->plugin->getLanguage()->translate($this->strId);
+		$this->label = $this->plugin->getLanguage()->translateString($this->strId);
 		$this->aliases = $this->plugin->getLanguage()->getArray("{$this->strId}.aliases");
 		$this->usage = $this->translate('usage');
 	}
@@ -78,7 +78,7 @@ abstract class SubCommand{
 	 * @return string
 	 */
 	public function translate(string $tag, string ...$params) : string{
-		return $this->plugin->getLanguage()->translate("{$this->strId}.{$tag}", $params);
+		return $this->plugin->getLanguage()->translateString("{$this->strId}.{$tag}", $params);
 	}
 
 	/**
@@ -87,7 +87,7 @@ abstract class SubCommand{
 	 */
 	public function execute(CommandSender $sender, array $args) : void{
 		if(!$this->checkPermission($sender)){
-			$sender->sendMessage($this->plugin->getLanguage()->translate('commands.generic.permission'));
+			$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.generic.permission'));
 		}elseif(!$this->onCommand($sender, $args)){
 			$sender->sendMessage(Server::getInstance()->getLanguage()->translateString("commands.generic.usage", [$this->usage]));
 		}

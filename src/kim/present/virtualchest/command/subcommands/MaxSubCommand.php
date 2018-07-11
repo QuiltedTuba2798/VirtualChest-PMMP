@@ -50,11 +50,11 @@ class MaxSubCommand extends SubCommand{
 	public function onCommand(CommandSender $sender, array $args) : bool{
 		if(isset($args[0])){
 			if(!is_numeric($args[0])){
-				$sender->sendMessage($this->plugin->getLanguage()->translate('commands.generic.num.notNumber', [$args[0]]));
+				$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.generic.num.notNumber', [$args[0]]));
 			}else{
 				$count = (int) $args[0];
 				if($count < 0){
-					$sender->sendMessage($this->plugin->getLanguage()->translate('commands.generic.num.tooSmall', [$args[0], 0]));
+					$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.generic.num.tooSmall', [$args[0], "0"]));
 				}else{
 					$this->plugin->getConfig()->set('max-count', $count);
 					$sender->sendMessage($this->translate('success', (string) $count));

@@ -71,7 +71,7 @@ class ViewSubCommand extends SubCommand{
 					}
 				}
 				if($container === null){
-					$sender->sendMessage($this->plugin->getLanguage()->translate('commands.generic.player.notFound', [$args[0]]));
+					$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.generic.player.notFound', [$args[0]]));
 				}else{
 					$number = isset($args[1]) ? strtolower($args[1]) : 1;
 					$count = $container->getCount();
@@ -86,7 +86,7 @@ class ViewSubCommand extends SubCommand{
 				return false;
 			}
 		}else{
-			$sender->sendMessage($this->plugin->getLanguage()->translate('commands.generic.onlyPlayer'));
+			$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.generic.onlyPlayer'));
 		}
 		return true;
 	}
