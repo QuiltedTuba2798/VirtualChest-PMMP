@@ -26,19 +26,20 @@ declare(strict_types=1);
 
 namespace kim\present\virtualchest\command\subcommands;
 
+use kim\present\mathparser\MathParser;
 use kim\present\virtualchest\command\{
-	PoolCommand, SubCommand
+	PoolCommand, Subcommand
 };
 use pocketmine\command\CommandSender;
 
-class DefaultSubCommand extends SubCommand{
+class PriceSubcommand extends Subcommand{
 	/**
-	 * DefaultSubCommand constructor.
+	 * PriceSubcommand constructor.
 	 *
 	 * @param PoolCommand $owner
 	 */
 	public function __construct(PoolCommand $owner){
-		parent::__construct($owner, 'default');
+		parent::__construct($owner, 'price');
 	}
 
 	/**
@@ -49,19 +50,35 @@ class DefaultSubCommand extends SubCommand{
 	 */
 	public function onCommand(CommandSender $sender, array $args) : bool{
 		if(isset($args[0])){
-			if(!is_numeric($args[0])){
-				$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.generic.num.notNumber', [$args[0]]));
+			$price = null;
+			if(class_exists(MathParser::class)){
+				try{
+					$price = implode(' ', $args);
+					MathParser::parse($price, [
+						'c' => 1, //count
+						'm' => 1  //money
+					]);
+				}catch(\Exception $exception){
+					$this->plugin->getLogger()->critical("{$exception->getMessage()}. Call in price sub command");
+				}
 			}else{
-				$count = (int) $args[0];
-				if($count < 0){
-					$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.generic.num.tooSmall', [$args[0], "0"]));
+				if(!is_numeric($args[0])){
+					$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.generic.num.notNumber', [$args[0]]));
+				}elseif(((int) $args[0]) < -1){
+					$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.generic.num.tooSmall', [$args[0], "-1"]));
 				}else{
-					$this->plugin->getConfig()->set('default-count', $count);
-					$sender->sendMessage($this->translate('success', (string) $count));
+					$price = (string) ((int) $args[0]);
 				}
 			}
+			if($price === null){
+				$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.generic.num.notNumber', [$args[0]]));
+			}else{
+				$this->plugin->getConfig()->set('price', $price);
+				$sender->sendMessage($this->translate('success', (string) $price));
+			}
 			return true;
+		}else{
+			return false;
 		}
-		return false;
 	}
 }

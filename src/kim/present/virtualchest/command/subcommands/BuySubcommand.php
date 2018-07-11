@@ -28,19 +28,19 @@ namespace kim\present\virtualchest\command\subcommands;
 
 use kim\present\mathparser\MathParser;
 use kim\present\virtualchest\command\{
-	PoolCommand, SubCommand
+	PoolCommand, Subcommand
 };
 use kim\present\virtualchest\container\VirtualChestContainer;
 use onebone\economyapi\EconomyAPI;
 use pocketmine\command\CommandSender;
 use pocketmine\Player;
 
-class BuySubCommand extends SubCommand{
+class BuySubcommand extends Subcommand{
 	/** @var int[] */
 	private $checked = [];
 
 	/**
-	 * BuySubCommand constructor.
+	 * BuySubcommand constructor.
 	 *
 	 * @param PoolCommand $owner
 	 */

@@ -35,15 +35,15 @@ class PoolCommand extends PluginCommand implements CommandExecutor{
 	/** @var string */
 	public $uname;
 
-	/** @var SubCommand[] */
+	/** @var Subcommand[] */
 	protected $subCommands = [];
 
 	/**
 	 * @param VirtualChest $owner
 	 * @param string       $name
-	 * @param SubCommand[] $subCommands
+	 * @param Subcommand[] $subCommands
 	 */
-	public function __construct(VirtualChest $owner, string $name, SubCommand ...$subCommands){
+	public function __construct(VirtualChest $owner, string $name, Subcommand ...$subCommands){
 		parent::__construct($owner->getLanguage()->translateString("commands.{$name}"), $owner);
 		$this->setExecutor($this);
 
@@ -105,21 +105,21 @@ class PoolCommand extends PluginCommand implements CommandExecutor{
 	}
 
 	/**
-	 * @return SubCommand[]
+	 * @return Subcommand[]
 	 */
 	public function getSubCommands() : array{
 		return $this->subCommands;
 	}
 
 	/**
-	 * @param SubCommand[] $subCommands
+	 * @param Subcommand[] $subCommands
 	 */
-	public function setSubCommands(SubCommand ...$subCommands) : void{
+	public function setSubCommands(Subcommand ...$subCommands) : void{
 		$this->subCommands = $subCommands;
 	}
 
 	/**
-	 * @param SubCommand::class $subCommandClass
+	 * @param Subcommand::class $subCommandClass
 	 */
 	public function createSubCommand($subCommandClass) : void{
 		$this->subCommands[] = new $subCommandClass($this);

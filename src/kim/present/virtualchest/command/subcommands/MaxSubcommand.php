@@ -27,20 +27,18 @@ declare(strict_types=1);
 namespace kim\present\virtualchest\command\subcommands;
 
 use kim\present\virtualchest\command\{
-	PoolCommand, SubCommand
+	PoolCommand, Subcommand
 };
-use kim\present\virtualchest\container\VirtualChestContainer;
 use pocketmine\command\CommandSender;
-use pocketmine\Server;
 
-class SetSubCommand extends SubCommand{
+class MaxSubcommand extends Subcommand{
 	/**
-	 * SetSubCommand constructor.
+	 * MaxSubcommand constructor.
 	 *
 	 * @param PoolCommand $owner
 	 */
 	public function __construct(PoolCommand $owner){
-		parent::__construct($owner, 'set');
+		parent::__construct($owner, 'max');
 	}
 
 	/**
@@ -50,25 +48,16 @@ class SetSubCommand extends SubCommand{
 	 * @return bool
 	 */
 	public function onCommand(CommandSender $sender, array $args) : bool{
-		if(isset($args[1])){
-			$container = VirtualChestContainer::getContainer($playerName = strtolower($args[0]), true);
-			if($container === null){
-				$player = Server::getInstance()->getPlayer($playerName);
-				if($player !== null){
-					$container = VirtualChestContainer::getContainer($playerName = $player->getLowerCaseName(), true);
-				}
-			}
-			if($container === null){
-				$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.generic.player.notFound', [$args[0]]));
-			}elseif(!is_numeric($args[1])){
-				$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.generic.num.notNumber', [$args[1]]));
+		if(isset($args[0])){
+			if(!is_numeric($args[0])){
+				$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.generic.num.notNumber', [$args[0]]));
 			}else{
-				$count = (int) $args[1];
+				$count = (int) $args[0];
 				if($count < 0){
-					$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.generic.num.tooSmall', [$args[1], "0"]));
+					$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.generic.num.tooSmall', [$args[0], "0"]));
 				}else{
-					$container->setCount($count);
-					$sender->sendMessage($this->translate('success', $playerName, (string) $count));
+					$this->plugin->getConfig()->set('max-count', $count);
+					$sender->sendMessage($this->translate('success', (string) $count));
 				}
 			}
 			return true;

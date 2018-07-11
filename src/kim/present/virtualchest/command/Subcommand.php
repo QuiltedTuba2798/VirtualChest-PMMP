@@ -31,7 +31,7 @@ use kim\present\virtualchest\VirtualChest;
 use pocketmine\command\CommandSender;
 use pocketmine\Server;
 
-abstract class SubCommand{
+abstract class Subcommand{
 	/** @var PoolCommand */
 	protected $owner;
 
@@ -54,7 +54,7 @@ abstract class SubCommand{
 	protected $usage;
 
 	/**
-	 * SubCommand constructor.
+	 * Subcommand constructor.
 	 *
 	 * @param PoolCommand $owner
 	 * @param string      $label

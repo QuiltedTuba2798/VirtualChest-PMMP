@@ -28,7 +28,7 @@ namespace kim\present\virtualchest;
 
 use kim\present\virtualchest\command\PoolCommand;
 use kim\present\virtualchest\command\subcommands\{
-	BuySubCommand, DefaultSubCommand, MaxSubCommand, OpenSubCommand, PriceSubCommand, SetSubCommand, ViewSubCommand
+	BuySubcommand, DefaultSubcommand, MaxSubcommand, OpenSubcommand, PriceSubcommand, SetSubcommand, ViewSubcommand
 };
 use kim\present\virtualchest\container\VirtualChestContainer;
 use kim\present\virtualchest\lang\PluginLang;
@@ -80,15 +80,15 @@ class VirtualChest extends PluginBase{
 
 		if($this->command == null){
 			$this->command = new PoolCommand($this, 'vchest');
-			$this->command->createSubCommand(OpenSubCommand::class);
+			$this->command->createSubcommand(OpenSubcommand::class);
 			if(class_exists(EconomyAPI::class)){
-				$this->command->createSubCommand(BuySubCommand::class);
-				$this->command->createSubCommand(PriceSubCommand::class);
-				$this->command->createSubCommand(MaxSubCommand::class);
+				$this->command->createSubcommand(BuySubcommand::class);
+				$this->command->createSubcommand(PriceSubcommand::class);
+				$this->command->createSubcommand(MaxSubcommand::class);
 			}
-			$this->command->createSubCommand(DefaultSubCommand::class);
-			$this->command->createSubCommand(SetSubCommand::class);
-			$this->command->createSubCommand(ViewSubCommand::class);
+			$this->command->createSubcommand(DefaultSubcommand::class);
+			$this->command->createSubcommand(SetSubcommand::class);
+			$this->command->createSubcommand(ViewSubcommand::class);
 		}
 		if($this->command->isRegistered()){
 			$this->getServer()->getCommandMap()->unregister($this->command);

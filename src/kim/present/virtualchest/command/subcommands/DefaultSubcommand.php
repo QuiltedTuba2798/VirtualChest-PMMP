@@ -27,20 +27,18 @@ declare(strict_types=1);
 namespace kim\present\virtualchest\command\subcommands;
 
 use kim\present\virtualchest\command\{
-	PoolCommand, SubCommand
+	PoolCommand, Subcommand
 };
-use kim\present\virtualchest\container\VirtualChestContainer;
 use pocketmine\command\CommandSender;
-use pocketmine\Player;
 
-class OpenSubCommand extends SubCommand{
+class DefaultSubcommand extends Subcommand{
 	/**
-	 * OpenSubCommand constructor.
+	 * DefaultSubcommand constructor.
 	 *
 	 * @param PoolCommand $owner
 	 */
 	public function __construct(PoolCommand $owner){
-		parent::__construct($owner, 'open');
+		parent::__construct($owner, 'default');
 	}
 
 	/**
@@ -50,29 +48,20 @@ class OpenSubCommand extends SubCommand{
 	 * @return bool
 	 */
 	public function onCommand(CommandSender $sender, array $args) : bool{
-		if($sender instanceof Player){
-			$container = VirtualChestContainer::getContainer($playerName = $sender->getLowerCaseName(), true);
-			if($container === null){
-				$defaultCount = (int) $this->plugin->getConfig()->get('default-count');
-				if($defaultCount < 1){
-					$sender->sendMessage($this->translate('failure.none'));
-					return true;
+		if(isset($args[0])){
+			if(!is_numeric($args[0])){
+				$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.generic.num.notNumber', [$args[0]]));
+			}else{
+				$count = (int) $args[0];
+				if($count < 0){
+					$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.generic.num.tooSmall', [$args[0], "0"]));
 				}else{
-					$container = new VirtualChestContainer($playerName, $defaultCount);
-					VirtualChestContainer::setContainer($playerName, $container);
+					$this->plugin->getConfig()->set('default-count', $count);
+					$sender->sendMessage($this->translate('success', (string) $count));
 				}
 			}
-			$number = isset($args[0]) ? strtolower($args[0]) : 1;
-			$count = $container->getCount();
-			if(!is_numeric($number) || $number > $count){
-				$sender->sendMessage($this->translate('failure.invalid', $number));
-				$sender->sendMessage($this->translate('count', (string) $count));
-			}else{
-				$sender->addWindow($container->getChest($number - 1));
-			}
-		}else{
-			$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.generic.onlyPlayer'));
+			return true;
 		}
-		return true;
+		return false;
 	}
 }
