@@ -41,18 +41,18 @@ class VirtualChest extends PluginBase{
 	/** @var VirtualChest */
 	private static $instance;
 
-	/** @var PoolCommand */
-	private $command;
-
-	/** @var PluginLang */
-	private $language;
-
 	/**
 	 * @return VirtualChest
 	 */
 	public static function getInstance() : VirtualChest{
 		return self::$instance;
 	}
+
+	/** @var PluginLang */
+	private $language;
+
+	/** @var PoolCommand */
+	private $command;
 
 	/**
 	 * Called when the plugin is loaded, before calling onEnable()
@@ -116,6 +116,15 @@ class VirtualChest extends PluginBase{
 	}
 
 	/**
+	 * @param string $name = ''
+	 *
+	 * @return PoolCommand
+	 */
+	public function getCommand(string $name = '') : PoolCommand{
+		return $this->command;
+	}
+
+	/**
 	 * @param string $playerName
 	 *
 	 * @return null|VirtualChestContainer
@@ -136,15 +145,6 @@ class VirtualChest extends PluginBase{
 			}
 		}
 		return null;
-	}
-
-	/**
-	 * @param string $name = ''
-	 *
-	 * @return PoolCommand
-	 */
-	public function getCommand(string $name = '') : PoolCommand{
-		return $this->command;
 	}
 
 	/**
