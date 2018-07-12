@@ -78,22 +78,6 @@ class VirtualChestInventory extends CustomInventory{
 	}
 
 	/**
-	 * @param string  $playerName
-	 * @param int     $num
-	 * @param ListTag $tag
-	 *
-	 * @return VirtualChestInventory
-	 */
-	public static function nbtDeserialize(string $playerName, int $num, ListTag $tag) : VirtualChestInventory{
-		$inventory = new VirtualChestInventory($playerName, $num);
-		/** @var CompoundTag $itemTag */
-		foreach($tag as $i => $itemTag){
-			$inventory->setItem($itemTag->getByte("Slot"), Item::nbtDeserialize($itemTag));
-		}
-		return $inventory;
-	}
-
-	/**
 	 * @param Player $who
 	 */
 	public function onOpen(Player $who) : void{
@@ -195,5 +179,21 @@ class VirtualChestInventory extends CustomInventory{
 			}
 		}
 		return $tag;
+	}
+
+	/**
+	 * @param string  $playerName
+	 * @param int     $num
+	 * @param ListTag $tag
+	 *
+	 * @return VirtualChestInventory
+	 */
+	public static function nbtDeserialize(string $playerName, int $num, ListTag $tag) : VirtualChestInventory{
+		$inventory = new VirtualChestInventory($playerName, $num);
+		/** @var CompoundTag $itemTag */
+		foreach($tag as $i => $itemTag){
+			$inventory->setItem($itemTag->getByte("Slot"), Item::nbtDeserialize($itemTag));
+		}
+		return $inventory;
 	}
 }

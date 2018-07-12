@@ -37,28 +37,6 @@ class VirtualChestContainer{
 	/** @var VirtualChestContainer[] */
 	private static $containers = [];
 
-	/** @var string */
-	private $playerName;
-
-	/** @var int */
-	private $count;
-
-	/** @var VirtualChestInventory[] */
-	private $chests = [];
-
-	/**
-	 * VirtualChestContainer constructor.
-	 *
-	 * @param string                  $playerName
-	 * @param int                     $count
-	 * @param VirtualChestInventory[] $chests
-	 */
-	public function __construct(string $playerName, int $count, array $chests = []){
-		$this->playerName = $playerName;
-		$this->count = $count;
-		$this->chests = $chests;
-	}
-
 	/**
 	 * @return VirtualChestContainer[]
 	 */
@@ -97,32 +75,26 @@ class VirtualChestContainer{
 		self::$containers[$playerName] = $container;
 	}
 
-	/**
-	 * @param string      $playerName
-	 * @param CompoundTag $tag
-	 *
-	 * @return VirtualChestContainer
-	 */
-	public static function nbtDeserialize(string $playerName, CompoundTag $tag) : VirtualChestContainer{
-		$container = new VirtualChestContainer($playerName, $tag->getInt('Count'));
-		/** @var ListTag $chestTag */
-		foreach($tag->getListTag('Chests') as $i => $chestTag){
-			$container->setChest($i, VirtualChestInventory::nbtDeserialize($playerName, $i, $chestTag));
-		}
-		return $container;
-	}
+	/** @var string */
+	private $playerName;
+
+	/** @var int */
+	private $count;
+
+	/** @var VirtualChestInventory[] */
+	private $chests = [];
 
 	/**
-	 * @param int                   $index
-	 * @param VirtualChestInventory $chest
+	 * VirtualChestContainer constructor.
+	 *
+	 * @param string                  $playerName
+	 * @param int                     $count
+	 * @param VirtualChestInventory[] $chests
 	 */
-	public function setChest(int $index, VirtualChestInventory $chest) : void{
-		if(isset($this->chests[$index])){
-			foreach($this->chests[$index]->getViewers() as $key => $who){
-				$this->chests[$index]->close($who);
-			}
-		}
-		$this->chests[$index] = $chest;
+	public function __construct(string $playerName, int $count, array $chests = []){
+		$this->playerName = $playerName;
+		$this->count = $count;
+		$this->chests = $chests;
 	}
 
 	/**
@@ -194,6 +166,19 @@ class VirtualChestContainer{
 	}
 
 	/**
+	 * @param int                   $index
+	 * @param VirtualChestInventory $chest
+	 */
+	public function setChest(int $index, VirtualChestInventory $chest) : void{
+		if(isset($this->chests[$index])){
+			foreach($this->chests[$index]->getViewers() as $key => $who){
+				$this->chests[$index]->close($who);
+			}
+		}
+		$this->chests[$index] = $chest;
+	}
+
+	/**
 	 * @param string $tagName
 	 *
 	 * @return CompoundTag
@@ -207,5 +192,20 @@ class VirtualChestContainer{
 			new IntTag('Count', $this->count),
 			$chestsTag,
 		]);
+	}
+
+	/**
+	 * @param string      $playerName
+	 * @param CompoundTag $tag
+	 *
+	 * @return VirtualChestContainer
+	 */
+	public static function nbtDeserialize(string $playerName, CompoundTag $tag) : VirtualChestContainer{
+		$container = new VirtualChestContainer($playerName, $tag->getInt('Count'));
+		/** @var ListTag $chestTag */
+		foreach($tag->getListTag('Chests') as $i => $chestTag){
+			$container->setChest($i, VirtualChestInventory::nbtDeserialize($playerName, $i, $chestTag));
+		}
+		return $container;
 	}
 }

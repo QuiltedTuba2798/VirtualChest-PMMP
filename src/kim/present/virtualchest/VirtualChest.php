@@ -210,6 +210,13 @@ class VirtualChest extends PluginBase{
 	}
 
 	/**
+	 * @return PluginLang
+	 */
+	public function getLanguage() : PluginLang{
+		return $this->language;
+	}
+
+	/**
 	 * @param string $playerName
 	 *
 	 * @return null|VirtualChestContainer
@@ -230,12 +237,5 @@ class VirtualChest extends PluginBase{
 			}
 		}
 		return null;
-	}
-
-	/**
-	 * @return PluginLang
-	 */
-	public function getLanguage() : PluginLang{
-		return $this->language;
 	}
 }
