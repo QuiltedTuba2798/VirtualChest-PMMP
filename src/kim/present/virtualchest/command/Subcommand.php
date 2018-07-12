@@ -49,7 +49,7 @@ abstract class Subcommand{
 	 * Subcommand constructor.
 	 *
 	 * @param VirtualChest $plugin
-	 * @param string $label
+	 * @param string       $label
 	 */
 	public function __construct(VirtualChest $plugin, string $label){
 		$this->plugin = $plugin;
@@ -60,7 +60,6 @@ abstract class Subcommand{
 		$this->aliases = $config->getNested("command.children.{$label}.aliases");
 		$this->permission = "virtualchest.cmd.{$label}";
 	}
-
 
 	/**
 	 * @param string $label
