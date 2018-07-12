@@ -1,29 +1,56 @@
 <?php
 
+/*
+ *
+ *  ____                           _   _  ___
+ * |  _ \ _ __ ___  ___  ___ _ __ | |_| |/ (_)_ __ ___
+ * | |_) | '__/ _ \/ __|/ _ \ '_ \| __| ' /| | '_ ` _ \
+ * |  __/| | |  __/\__ \  __/ | | | |_| . \| | | | | | |
+ * |_|   |_|  \___||___/\___|_| |_|\__|_|\_\_|_| |_| |_|
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * @author  PresentKim (debe3721@gmail.com)
+ * @link    https://github.com/PresentKim
+ * @license https://www.gnu.org/licenses/agpl-3.0.html AGPL-3.0.0
+ *
+ *   (\ /)
+ *  ( . .) ♥
+ *  c(")(")
+ */
+
 declare(strict_types=1);
 
 namespace kim\present\virtualchest;
 
-use kim\present\virtualchest\command\PoolCommand;
-use kim\present\virtualchest\command\subcommands\{
-	BuySubCommand, DefaultSubCommand, MaxSubCommand, OpenSubCommand, PriceSubCommand, SetSubCommand, ViewSubCommand
+use kim\present\virtualchest\command\{
+	BuySubcommand, DefaultSubcommand, MaxSubcommand, OpenSubcommand, PriceSubcommand, SetSubcommand, Subcommand, ViewSubcommand
 };
 use kim\present\virtualchest\container\VirtualChestContainer;
 use kim\present\virtualchest\lang\PluginLang;
 use onebone\economyapi\EconomyAPI;
+use pocketmine\command\Command;
+use pocketmine\command\CommandSender;
+use pocketmine\command\PluginCommand;
 use pocketmine\nbt\BigEndianNBTStream;
 use pocketmine\nbt\tag\CompoundTag;
+use pocketmine\permission\Permission;
 use pocketmine\plugin\PluginBase;
 
 class VirtualChest extends PluginBase{
+	public const SUBCOMMAND_OPEN = 0;
+	public const SUBCOMMAND_BUY = 1;
+	public const SUBCOMMAND_PRICE = 2;
+	public const SUBCOMMAND_MAX = 3;
+	public const SUBCOMMAND_DEFAULT = 4;
+	public const SUBCOMMAND_SET = 5;
+	public const SUBCOMMAND_VIEW = 6;
+
 	/** @var VirtualChest */
 	private static $instance;
-
-	/** @var PoolCommand */
-	private $command;
-
-	/** @var PluginLang */
-	private $language;
 
 	/**
 	 * @return VirtualChest
@@ -31,6 +58,15 @@ class VirtualChest extends PluginBase{
 	public static function getInstance() : VirtualChest{
 		return self::$instance;
 	}
+
+	/** @var PluginLang */
+	private $language;
+
+	/** @var PluginCommand */
+	private $command;
+
+	/** @var Subcommand[] */
+	private $subcommands;
 
 	/**
 	 * Called when the plugin is loaded, before calling onEnable()
@@ -43,32 +79,55 @@ class VirtualChest extends PluginBase{
 	 * Called when the plugin is enabled
 	 */
 	public function onEnable() : void{
-		$dataFolder = $this->getDataFolder();
-		if(!file_exists($dataFolder)){
-			mkdir($dataFolder, 0777, true);
-		}
-		if(!file_exists($playerDataFolder = "{$dataFolder}players/")){
-			mkdir($playerDataFolder, 0777, true);
-		}
-		$this->language = new PluginLang($this);
-		$this->reloadConfig();
+		//Save default resources
+		$this->saveResource("lang/eng/lang.ini", false);
+		$this->saveResource("lang/kor/lang.ini", false);
+		$this->saveResource("lang/language.list", false);
 
-		if($this->command == null){
-			$this->command = new PoolCommand($this, 'vchest');
-			$this->command->createSubCommand(OpenSubCommand::class);
-			if(class_exists(EconomyAPI::class)){
-				$this->command->createSubCommand(BuySubCommand::class);
-				$this->command->createSubCommand(PriceSubCommand::class);
-				$this->command->createSubCommand(MaxSubCommand::class);
+		//Load config file
+		$this->saveDefaultConfig();
+		$this->reloadConfig();
+		$config = $this->getConfig();
+
+		//Load language file
+		$this->language = new PluginLang($this, $config->getNested("settings.language"));
+		$this->getLogger()->info($this->language->translateString("language.selected", [$this->language->getName(), $this->language->getLang()]));
+
+		//Register main command
+		$this->command = new PluginCommand($config->getNested("command.name"), $this);
+		$this->command->setPermission("vchest.cmd");
+		$this->command->setAliases($config->getNested("command.aliases"));
+		$this->command->setUsage($this->language->translateString("commands.vchest.usage"));
+		$this->command->setDescription($this->language->translateString("commands.vchest.description"));
+		$this->getServer()->getCommandMap()->register($this->getName(), $this->command);
+
+		//Register subcommands
+		$this->subcommands = [
+			self::SUBCOMMAND_OPEN => new OpenSubcommand($this),
+			self::SUBCOMMAND_DEFAULT => new DefaultSubcommand($this),
+			self::SUBCOMMAND_SET => new SetSubcommand($this),
+			self::SUBCOMMAND_VIEW => new ViewSubcommand($this)
+		];
+		if(class_exists(EconomyAPI::class)){
+			$this->subcommands[self::SUBCOMMAND_PRICE] = new PriceSubCommand($this);
+			$this->subcommands[self::SUBCOMMAND_BUY] = new BuySubCommand($this);
+			$this->subcommands[self::SUBCOMMAND_PRICE] = new PriceSubCommand($this);
+			$this->subcommands[self::SUBCOMMAND_MAX] = new MaxSubCommand($this);
+		}
+
+		//Load permission's default value from config
+		$permissions = $this->getServer()->getPluginManager()->getPermissions();
+		$defaultValue = $config->getNested("permission.main");
+		if($defaultValue !== null){
+			$permissions["vchest.cmd"]->setDefault(Permission::getByName($config->getNested("permission.main")));
+		}
+		foreach($this->subcommands as $key => $subcommand){
+			$label = $subcommand->getLabel();
+			$defaultValue = $config->getNested("permission.children.{$label}");
+			if($defaultValue !== null){
+				$permissions["vchest.cmd.{$label}"]->setDefault(Permission::getByName($defaultValue));
 			}
-			$this->command->createSubCommand(DefaultSubCommand::class);
-			$this->command->createSubCommand(SetSubCommand::class);
-			$this->command->createSubCommand(ViewSubCommand::class);
 		}
-		if($this->command->isRegistered()){
-			$this->getServer()->getCommandMap()->unregister($this->command);
-		}
-		$this->getServer()->getCommandMap()->register(strtolower($this->getName()), $this->command);
 	}
 
 	/**
@@ -88,6 +147,60 @@ class VirtualChest extends PluginBase{
 		foreach(VirtualChestContainer::getContainers() as $playerName => $container){
 			file_put_contents($file = "{$playerDataFolder}{$playerName}.dat", (new BigEndianNBTStream())->writeCompressed($container->nbtSerialize($playerName)));
 		}
+	}
+
+	/**
+	 * @param CommandSender $sender
+	 * @param Command       $command
+	 * @param string        $label
+	 * @param string[]      $args
+	 *
+	 * @return bool
+	 */
+	public function onCommand(CommandSender $sender, Command $command, string $label, array $args) : bool{
+		if(empty($args[0])){
+			$targetSubcommand = null;
+			foreach($this->subcommands as $key => $subcommand){
+				if($sender->hasPermission($subcommand->getPermission())){
+					if($targetSubcommand === null){
+						$targetSubcommand = $subcommand;
+					}else{
+						//Filter out cases where more than two command has permission
+						return false;
+					}
+				}
+			}
+			$targetSubcommand->handle($sender);
+		}else{
+			$label = array_shift($args);
+			foreach($this->subcommands as $key => $subcommand){
+				if($subcommand->checkLabel($label)){
+					$subcommand->handle($sender, $args);
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * @Override for multilingual support of the config file
+	 *
+	 * @return bool
+	 */
+	public function saveDefaultConfig() : bool{
+		$resource = $this->getResource("lang/{$this->getServer()->getLanguage()->getLang()}/config.yml");
+		if($resource === null){
+			$resource = $this->getResource("lang/" . PluginLang::FALLBACK_LANGUAGE . "/config.yml");
+		}
+
+		if(!file_exists($configFile = $this->getDataFolder() . "config.yml")){
+			$ret = stream_copy_to_stream($resource, $fp = fopen($configFile, "wb")) > 0;
+			fclose($fp);
+			fclose($resource);
+			return $ret;
+		}
+		return false;
 	}
 
 	/**
@@ -114,30 +227,9 @@ class VirtualChest extends PluginBase{
 	}
 
 	/**
-	 * @param string $name = ''
-	 *
-	 * @return PoolCommand
-	 */
-	public function getCommand(string $name = '') : PoolCommand{
-		return $this->command;
-	}
-
-	/**
 	 * @return PluginLang
 	 */
 	public function getLanguage() : PluginLang{
 		return $this->language;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getSourceFolder() : string{
-		$pharPath = \Phar::running();
-		if(empty($pharPath)){
-			return dirname(__FILE__, 5) . DIRECTORY_SEPARATOR;
-		}else{
-			return $pharPath . DIRECTORY_SEPARATOR;
-		}
 	}
 }

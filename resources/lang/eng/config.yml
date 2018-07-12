@@ -1,0 +1,60 @@
+# Advanced configuration file for VirtualChest plugin
+# Some of these settings are safe, others can break your server if modified incorrectly
+# New settings/defaults won't appear automatically on this file when upgrading
+
+settings:
+  #Multi-language setting
+  #Available: eng, kor
+  language: "eng"
+
+
+command:
+  #Name of main command
+  #You can change this to be what you want
+  name: "vchest"
+
+  #Aliases of main command
+  #You can add, replace, or remove them as you like
+  aliases: ["vc", "virtualchest"]
+
+  children:
+    #Setting of subcommands
+    #Same as main command setting
+    open:
+      name: "Open"
+      aliases: ["o"]
+    buy:
+      name: "Buy"
+      aliases: ["b"]
+    price:
+      name: "Price"
+      aliases: ["p"]
+    max:
+      name: "Max"
+      aliases: ["m"]
+    default:
+      name: "Default"
+      aliases: ["d"]
+    set:
+      name: "Set"
+      aliases: ["s"]
+    view:
+      name: "View"
+      aliases: ["v"]
+
+
+permission:
+  #Permission of main command
+  #You can change this to be what you want
+  main: "true"
+
+  children:
+    #Permission of subcommands
+    #Same as Permission of main command setting
+      open: "true"
+      buy: "true"
+      price: "op"
+      max: "op"
+      default: "op"
+      set: "op"
+      view: "op"
