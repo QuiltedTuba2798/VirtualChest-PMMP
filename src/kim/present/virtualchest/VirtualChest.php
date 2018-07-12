@@ -101,10 +101,10 @@ class VirtualChest extends PluginBase{
 
 		//Register main command
 		$this->command = new PluginCommand($config->getNested("command.name"), $this);
-		$this->command->setPermission("vchest.cmd");
+		$this->command->setPermission("virtualchest.cmd");
 		$this->command->setAliases($config->getNested("command.aliases"));
-		$this->command->setUsage($this->language->translateString("commands.vchest.usage"));
-		$this->command->setDescription($this->language->translateString("commands.vchest.description"));
+		$this->command->setUsage($this->language->translateString("commands.virtualchest.usage"));
+		$this->command->setDescription($this->language->translateString("commands.virtualchest.description"));
 		$this->getServer()->getCommandMap()->register($this->getName(), $this->command);
 
 		//Register subcommands
@@ -125,13 +125,13 @@ class VirtualChest extends PluginBase{
 		$permissions = $this->getServer()->getPluginManager()->getPermissions();
 		$defaultValue = $config->getNested("permission.main");
 		if($defaultValue !== null){
-			$permissions["vchest.cmd"]->setDefault(Permission::getByName($config->getNested("permission.main")));
+			$permissions["virtualchest.cmd"]->setDefault(Permission::getByName($config->getNested("permission.main")));
 		}
 		foreach($this->subcommands as $key => $subcommand){
 			$label = $subcommand->getLabel();
 			$defaultValue = $config->getNested("permission.children.{$label}");
 			if($defaultValue !== null){
-				$permissions["vchest.cmd.{$label}"]->setDefault(Permission::getByName($defaultValue));
+				$permissions["virtualchest.cmd.{$label}"]->setDefault(Permission::getByName($defaultValue));
 			}
 		}
 	}

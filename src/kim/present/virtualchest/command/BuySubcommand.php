@@ -58,22 +58,22 @@ class BuySubcommand extends Subcommand{
 			$container = VirtualChestContainer::getContainer($playerName = $sender->getLowerCaseName(), true);
 			$count = $container === null ? $config->get('default-count') : $container->getCount();
 			if($count >= (int) $config->get('max-count')){
-				$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.vchest.buy.failure.max'));
+				$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.virtualchest.buy.failure.max'));
 				return true;
 			}else{
 				$economyAPI = EconomyAPI::getInstance();
 				$myMoney = (int) $economyAPI->myMoney($playerName);
 				$price = $this->getPrice($count, $myMoney);
 				if($price === null){
-					$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.vchest.buy.failure.prevent'));
+					$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.virtualchest.buy.failure.prevent'));
 					return true;
 				}elseif(!isset($this->checked[$playerName]) || (time() - $this->checked[$playerName]) > 10){
 					$this->checked[$playerName] = time();
-					$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.vchest.buy.check', [(string) $price]));
+					$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.virtualchest.buy.check', [(string) $price]));
 				}else{
 					unset($this->checked[$playerName]);
 					if($myMoney < $price){
-						$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.vchest.buy.failure.money', [(string) $myMoney]));
+						$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.virtualchest.buy.failure.money', [(string) $myMoney]));
 					}else{
 						$economyAPI->reduceMoney($playerName, $price);
 						if($container === null){
@@ -82,7 +82,7 @@ class BuySubcommand extends Subcommand{
 						}else{
 							$container->setCount($count + 1);
 						}
-						$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.vchest.buy.success', [(string) ($myMoney - $price)]));
+						$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.virtualchest.buy.success', [(string) ($myMoney - $price)]));
 					}
 				}
 			}

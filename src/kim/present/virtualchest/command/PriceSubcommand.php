@@ -72,7 +72,7 @@ class PriceSubcommand extends Subcommand{
 				$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.generic.num.notNumber', [$args[0]]));
 			}else{
 				$this->plugin->getConfig()->set('price', $price);
-				$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.vchest.price.success', [(string) $price]));
+				$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.virtualchest.price.success', [(string) $price]));
 			}
 			return true;
 		}else{

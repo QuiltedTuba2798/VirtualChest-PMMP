@@ -9,29 +9,29 @@ description: Give virtual chest to player
 softdepend: [EconomyAPI, MathParserLib]
 
 permissions:
-  vchest.cmd:
+  virtualchest.cmd:
     description: VirtualChest command
     default: true
     children:
-      vchest.cmd.open:
+      virtualchest.cmd.open:
         description: VirtualChest command - open
         default: true
-      vchest.cmd.buy:
+      virtualchest.cmd.buy:
         description: VirtualChest command - buy
         default: true
-      vchest.cmd.price:
+      virtualchest.cmd.price:
         description: VirtualChest command - price
         default: op
-      vchest.cmd.max:
+      virtualchest.cmd.max:
         description: VirtualChest command - max
         default: op
-      vchest.cmd.default:
+      virtualchest.cmd.default:
         description: VirtualChest command - default
         default: op
-      vchest.cmd.set:
+      virtualchest.cmd.set:
         description: VirtualChest command - set
         default: op
-      vchest.cmd.view:
+      virtualchest.cmd.view:
         description: VirtualChest command - view
         default: op
 ...

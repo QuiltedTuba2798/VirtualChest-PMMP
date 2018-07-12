@@ -55,7 +55,7 @@ class DefaultSubcommand extends Subcommand{
 					$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.generic.num.tooSmall', [$args[0], "0"]));
 				}else{
 					$this->plugin->getConfig()->set('default-count', $count);
-					$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.vchest.default.success', [(string) $count]));
+					$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.virtualchest.default.success', [(string) $count]));
 				}
 			}
 			return true;

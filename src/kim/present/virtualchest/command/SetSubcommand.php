@@ -66,7 +66,7 @@ class SetSubcommand extends Subcommand{
 					$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.generic.num.tooSmall', [$args[1], "0"]));
 				}else{
 					$container->setCount($count);
-					$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.vchest.set.success', $playerName, (string) $count));
+					$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.virtualchest.set.success', $playerName, (string) $count));
 				}
 			}
 			return true;

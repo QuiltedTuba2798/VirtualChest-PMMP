@@ -58,7 +58,7 @@ abstract class Subcommand{
 		$config = $plugin->getConfig();
 		$this->name = $config->getNested("command.children.{$label}.name");
 		$this->aliases = $config->getNested("command.children.{$label}.aliases");
-		$this->permission = "vchest.cmd.{$label}";
+		$this->permission = "virtualchest.cmd.{$label}";
 	}
 
 
@@ -78,7 +78,7 @@ abstract class Subcommand{
 	public function handle(CommandSender $sender, array $args = []) : void{
 		if($sender->hasPermission($this->permission)){
 			if(!$this->execute($sender, $args)){
-				$sender->sendMessage($this->plugin->getLanguage()->translateString("commands.vchest.{$this->label}.usage"));
+				$sender->sendMessage($this->plugin->getLanguage()->translateString("commands.virtualchest.{$this->label}.usage"));
 			}
 		}else{
 			$sender->sendMessage($this->plugin->getLanguage()->translateString("commands.generic.permission"));

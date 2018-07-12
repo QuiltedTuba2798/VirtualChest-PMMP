@@ -13,11 +13,11 @@ settings:
 command:
   #Name of main command
   #You can change this to be what you want
-  name: "vchest"
+  name: "virtualchest"
 
   #Aliases of main command
   #You can add, replace, or remove them as you like
-  aliases: ["vc", "virtualchest"]
+  aliases: ["vc", "vchest"]
 
   children:
     #Setting of subcommands
