@@ -33,9 +33,9 @@ use kim\present\virtualchest\container\VirtualChestContainer;
 use kim\present\virtualchest\lang\PluginLang;
 use kim\present\virtualchest\task\CheckUpdateAsyncTask;
 use onebone\economyapi\EconomyAPI;
-use pocketmine\command\Command;
-use pocketmine\command\CommandSender;
-use pocketmine\command\PluginCommand;
+use pocketmine\command\{
+	Command, CommandSender, PluginCommand
+};
 use pocketmine\nbt\BigEndianNBTStream;
 use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\permission\Permission;

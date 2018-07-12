@@ -28,9 +28,10 @@ namespace kim\present\virtualchest\command;
 
 use kim\present\virtualchest\container\VirtualChestContainer;
 use kim\present\virtualchest\VirtualChest;
+use pocketmine\{
+	Player, Server
+};
 use pocketmine\command\CommandSender;
-use pocketmine\Player;
-use pocketmine\Server;
 
 class ViewSubcommand extends Subcommand{
 	/**
