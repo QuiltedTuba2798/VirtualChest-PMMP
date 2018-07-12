@@ -137,6 +137,9 @@ class VirtualChestInventory extends CustomInventory{
 		$this->sendContents($who);
 	}
 
+	/**
+	 * @param Player $who
+	 */
 	public function onClose(Player $who) : void{
 		BaseInventory::onClose($who);
 
