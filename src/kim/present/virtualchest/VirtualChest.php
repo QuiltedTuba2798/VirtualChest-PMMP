@@ -38,6 +38,8 @@ use pocketmine\command\{
 };
 use pocketmine\nbt\BigEndianNBTStream;
 use pocketmine\nbt\tag\CompoundTag;
+use pocketmine\nbt\tag\IntTag;
+use pocketmine\nbt\tag\StringTag;
 use pocketmine\permission\Permission;
 use pocketmine\plugin\PluginBase;
 
@@ -49,6 +51,10 @@ class VirtualChest extends PluginBase{
 	public const SUBCOMMAND_DEFAULT = 4;
 	public const SUBCOMMAND_SET = 5;
 	public const SUBCOMMAND_VIEW = 6;
+
+	public const MAX_COUNT_TAG = "MaxCount";
+	public const DEFAULT_COUNT_TAG = "DefaultCount";
+	public const PRICE_TAG = "Price";
 
 	/** @var VirtualChest */
 	private static $instance;
@@ -68,6 +74,12 @@ class VirtualChest extends PluginBase{
 
 	/** @var Subcommand[] */
 	private $subcommands;
+
+	/** @var int */
+	private $maxCount, $defaultCount;
+
+	/** @var string */
+	private $price;
 
 	/**
 	 * Called when the plugin is loaded, before calling onEnable()
@@ -98,6 +110,22 @@ class VirtualChest extends PluginBase{
 		//Load language file
 		$this->language = new PluginLang($this, $config->getNested("settings.language"));
 		$this->getLogger()->info($this->language->translateString("language.selected", [$this->language->getName(), $this->language->getLang()]));
+
+		//Load virtual chest settings data
+		if(file_exists($file = "{$this->getDataFolder()}Settings.dat")){
+			$namedTag = (new BigEndianNBTStream())->readCompressed(file_get_contents($file));
+			if($namedTag instanceof CompoundTag){
+				$this->defaultCount = $namedTag->getInt(self::DEFAULT_COUNT_TAG, 0);
+				$this->maxCount = $namedTag->getInt(self::MAX_COUNT_TAG, -1);
+				$this->price = $namedTag->getString(self::PRICE_TAG, "-1");
+			}else{
+				$this->getLogger()->error("The file is not in the NBT-CompoundTag format : $file");
+			}
+		}else{
+			$this->defaultCount = 0;
+			$this->maxCount = -1;
+			$this->price = "-1";
+		}
 
 		//Register main command
 		$this->command = new PluginCommand($config->getNested("command.name"), $this);
@@ -145,14 +173,20 @@ class VirtualChest extends PluginBase{
 		if(!file_exists($dataFolder)){
 			mkdir($dataFolder, 0777, true);
 		}
-		$this->saveConfig();
-
 		if(!file_exists($playerDataFolder = "{$dataFolder}players/")){
 			mkdir($playerDataFolder, 0777, true);
 		}
 		foreach(VirtualChestContainer::getContainers() as $playerName => $container){
 			file_put_contents($file = "{$playerDataFolder}{$playerName}.dat", (new BigEndianNBTStream())->writeCompressed($container->nbtSerialize($playerName)));
 		}
+
+		//Save hot-time reward data
+		$namedTag = new CompoundTag("", [
+			new IntTag(self::DEFAULT_COUNT_TAG, $this->defaultCount),
+			new IntTag(self::MAX_COUNT_TAG, $this->maxCount),
+			new StringTag(self::PRICE_TAG, $this->price)
+		]);
+		file_put_contents("{$this->getDataFolder()}Settings.dat", (new BigEndianNBTStream())->writeCompressed($namedTag));
 	}
 
 	/**
@@ -214,6 +248,55 @@ class VirtualChest extends PluginBase{
 	 */
 	public function getLanguage() : PluginLang{
 		return $this->language;
+	}
+
+	/**
+	 * @return Subcommand[]
+	 */
+	public function getSubcommands() : array{
+		return $this->subcommands;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getMaxCount() : int{
+		return $this->maxCount;
+	}
+
+	/**
+	 * @param int $maxCount
+	 */
+	public function setMaxCount(int $maxCount) : void{
+		$this->maxCount = $maxCount;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getDefaultCount() : int{
+		return $this->defaultCount;
+	}
+
+	/**
+	 * @param int $defaultCount
+	 */
+	public function setDefaultCount(int $defaultCount) : void{
+		$this->defaultCount = $defaultCount;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getPrice() : string{
+		return $this->price;
+	}
+
+	/**
+	 * @param string $price
+	 */
+	public function setPrice(string $price) : void{
+		$this->price = $price;
 	}
 
 	/**

@@ -54,10 +54,9 @@ class BuySubcommand extends Subcommand{
 	 */
 	public function execute(CommandSender $sender, array $args = []) : bool{
 		if($sender instanceof Player){
-			$config = $this->plugin->getConfig();
 			$container = VirtualChestContainer::getContainer($playerName = $sender->getLowerCaseName(), true);
-			$count = $container === null ? $config->get('default-count') : $container->getCount();
-			if($count >= (int) $config->get('max-count')){
+			$count = $container === null ? $this->plugin->getDefaultCount() : $container->getCount();
+			if($count >= $this->plugin->getMaxCount()){
 				$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.virtualchest.buy.failure.max'));
 				return true;
 			}else{
@@ -99,7 +98,7 @@ class BuySubcommand extends Subcommand{
 	 * @return int|null
 	 */
 	public function getPrice(int $count, int $money) : ?int{
-		$price = $this->plugin->getConfig()->get('price');
+		$price = $this->plugin->getPrice();
 		if(class_exists(MathParser::class)){
 			try{
 				$price = MathParser::parse($price, [

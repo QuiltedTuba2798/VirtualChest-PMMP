@@ -54,7 +54,7 @@ class MaxSubcommand extends Subcommand{
 				if($count < 0){
 					$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.generic.num.tooSmall', [$args[0], "0"]));
 				}else{
-					$this->plugin->getConfig()->set('max-count', $count);
+					$this->plugin->setMaxCount($count);
 					$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.virtualchest.max.success', [(string) $count]));
 				}
 			}

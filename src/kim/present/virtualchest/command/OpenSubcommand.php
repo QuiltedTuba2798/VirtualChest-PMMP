@@ -51,7 +51,7 @@ class OpenSubcommand extends Subcommand{
 		if($sender instanceof Player){
 			$container = VirtualChestContainer::getContainer($playerName = $sender->getLowerCaseName(), true);
 			if($container === null){
-				$defaultCount = (int) $this->plugin->getConfig()->get('default-count');
+				$defaultCount = $this->plugin->getDefaultCount();
 				if($defaultCount < 1){
 					$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.virtualchest.open.failure.none'));
 					return true;

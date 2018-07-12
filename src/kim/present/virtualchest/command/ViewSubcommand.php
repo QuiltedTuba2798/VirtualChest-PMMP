@@ -60,7 +60,7 @@ class ViewSubcommand extends Subcommand{
 					}
 				}
 				if($container === null){
-					$defaultCount = (int) $this->plugin->getConfig()->get('default-count');
+					$defaultCount = $this->plugin->getDefaultCount();
 					if($defaultCount < 1){
 						$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.virtualchest.view.failure.none'));
 						return true;
