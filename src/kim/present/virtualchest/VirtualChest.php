@@ -169,18 +169,23 @@ class VirtualChest extends PluginBase{
 	 * Use this to free open things and finish actions
 	 */
 	public function onDisable() : void{
-		$dataFolder = $this->getDataFolder();
-		if(!file_exists($dataFolder)){
-			mkdir($dataFolder, 0777, true);
-		}
-		if(!file_exists($playerDataFolder = "{$dataFolder}players/")){
-			mkdir($playerDataFolder, 0777, true);
-		}
+		//Save players data
 		foreach(VirtualChestContainer::getContainers() as $playerName => $container){
-			file_put_contents($file = "{$playerDataFolder}{$playerName}.dat", (new BigEndianNBTStream())->writeCompressed($container->nbtSerialize($playerName)));
+			$player = $this->getServer()->getPlayerExact($playerName);
+			if($player === null){
+				$namedTag = $this->getServer()->getOfflinePlayerData($playerName);
+				if($namedTag instanceof CompoundTag){
+					$namedTag->setTag($container->nbtSerialize("VirtualChest"));
+					$this->getServer()->saveOfflinePlayerData($playerName, $namedTag);
+				}else{
+					$this->getLogger()->critical("Invalid data found in \"{$playerName}.dat\", expected " . CompoundTag::class . ", got " . (is_object($namedTag) ? get_class($namedTag) : gettype($namedTag)));
+				}
+			}else{
+				$player->namedtag->setTag($container->nbtSerialize("VirtualChest"));
+			}
 		}
 
-		//Save hot-time reward data
+		//Save virtual chest settings data
 		$namedTag = new CompoundTag("", [
 			new IntTag(self::DEFAULT_COUNT_TAG, $this->defaultCount),
 			new IntTag(self::MAX_COUNT_TAG, $this->maxCount),
@@ -305,13 +310,16 @@ class VirtualChest extends PluginBase{
 	 * @return null|VirtualChestContainer
 	 */
 	public function loadPlayerData(string $playerName) : ?VirtualChestContainer{
-		if(file_exists($file = "{$this->getDataFolder()}players/{$playerName}.dat")){
+		if(file_exists($file = "{$this->getServer()->getDataPath()}players/{$playerName}.dat")){
 			try{
-				$namedTag = (new BigEndianNBTStream())->readCompressed(file_get_contents($file));
-				if($namedTag instanceof CompoundTag){
-					$container = VirtualChestContainer::nbtDeserialize($playerName, $namedTag);
-					VirtualChestContainer::setContainer($playerName, $container);
-					return $container;
+				$nbt = (new BigEndianNBTStream())->readCompressed(file_get_contents($file));
+				if($nbt instanceof CompoundTag){
+					$namedTag = $nbt->getCompoundTag("VirtualChest");
+					if($nbt instanceof CompoundTag){
+						$container = VirtualChestContainer::nbtDeserialize($playerName, $namedTag);
+						VirtualChestContainer::setContainer($playerName, $container);
+						return $container;
+					}
 				}else{
 					$this->getLogger()->critical("Invalid data found in \"{$playerName}.dat\", expected " . CompoundTag::class . ", got " . (is_object($namedTag) ? get_class($namedTag) : gettype($namedTag)));
 				}
