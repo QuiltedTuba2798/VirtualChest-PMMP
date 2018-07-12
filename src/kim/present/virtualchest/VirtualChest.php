@@ -31,6 +31,7 @@ use kim\present\virtualchest\command\{
 };
 use kim\present\virtualchest\container\VirtualChestContainer;
 use kim\present\virtualchest\lang\PluginLang;
+use kim\present\virtualchest\listener\PlayerEventListener;
 use kim\present\virtualchest\task\CheckUpdateAsyncTask;
 use onebone\economyapi\EconomyAPI;
 use pocketmine\command\{
@@ -162,6 +163,9 @@ class VirtualChest extends PluginBase{
 				$permissions["virtualchest.cmd.{$label}"]->setDefault(Permission::getByName($defaultValue));
 			}
 		}
+
+		//Register event listeners
+		$this->getServer()->getPluginManager()->registerEvents(new PlayerEventListener(), $this);
 	}
 
 	/**
