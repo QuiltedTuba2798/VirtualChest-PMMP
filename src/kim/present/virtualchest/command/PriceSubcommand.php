@@ -24,31 +24,29 @@
 
 declare(strict_types=1);
 
-namespace kim\present\virtualchest\command\subcommands;
+namespace kim\present\virtualchest\command;
 
 use kim\present\mathparser\MathParser;
-use kim\present\virtualchest\command\{
-	PoolCommand, Subcommand
-};
+use kim\present\virtualchest\VirtualChest;
 use pocketmine\command\CommandSender;
 
 class PriceSubcommand extends Subcommand{
 	/**
 	 * PriceSubcommand constructor.
 	 *
-	 * @param PoolCommand $owner
+	 * @param VirtualChest $plugin
 	 */
-	public function __construct(PoolCommand $owner){
-		parent::__construct($owner, 'price');
+	public function __construct(VirtualChest $plugin){
+		parent::__construct($plugin, 'price');
 	}
 
 	/**
 	 * @param CommandSender $sender
-	 * @param String[]      $args
+	 * @param String[]      $args = []
 	 *
 	 * @return bool
 	 */
-	public function onCommand(CommandSender $sender, array $args) : bool{
+	public function execute(CommandSender $sender, array $args = []) : bool{
 		if(isset($args[0])){
 			$price = null;
 			if(class_exists(MathParser::class)){
@@ -74,7 +72,7 @@ class PriceSubcommand extends Subcommand{
 				$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.generic.num.notNumber', [$args[0]]));
 			}else{
 				$this->plugin->getConfig()->set('price', $price);
-				$sender->sendMessage($this->translate('success', (string) $price));
+				$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.vchest.price.success', [(string) $price]));
 			}
 			return true;
 		}else{

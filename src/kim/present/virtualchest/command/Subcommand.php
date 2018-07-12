@@ -26,93 +26,41 @@ declare(strict_types=1);
 
 namespace kim\present\virtualchest\command;
 
-use kim\present\virtualchest\util\Utils;
 use kim\present\virtualchest\VirtualChest;
 use pocketmine\command\CommandSender;
-use pocketmine\Server;
 
 abstract class Subcommand{
-	/** @var PoolCommand */
-	protected $owner;
-
 	/** @var VirtualChest */
 	protected $plugin;
 
 	/** @var string */
-	protected $strId;
-
-	/** @var string */
-	protected $permission;
-
-	/** @var string */
 	protected $label;
 
+	/** @var string */
+	private $name;
+
 	/** @var string[] */
-	protected $aliases;
+	private $aliases;
 
 	/** @var string */
-	protected $usage;
+	private $permission;
 
 	/**
 	 * Subcommand constructor.
 	 *
-	 * @param PoolCommand $owner
-	 * @param string      $label
+	 * @param VirtualChest $plugin
+	 * @param string $label
 	 */
-	public function __construct(PoolCommand $owner, string $label){
-		$this->owner = $owner;
-		$this->plugin = $owner->getPlugin();
+	public function __construct(VirtualChest $plugin, string $label){
+		$this->plugin = $plugin;
+		$this->label = $label;
 
-		$this->strId = "commands.{$owner->uname}.{$label}";
-		$this->permission = "{$owner->uname}.cmd.{$label}";
-
-		$this->label = $this->plugin->getLanguage()->translateString($this->strId);
-		$this->aliases = $this->plugin->getLanguage()->getArray("{$this->strId}.aliases");
-		$this->usage = $this->translate('usage');
+		$config = $plugin->getConfig();
+		$this->name = $config->getNested("command.children.{$label}.name");
+		$this->aliases = $config->getNested("command.children.{$label}.aliases");
+		$this->permission = "vchest.cmd.{$label}";
 	}
 
-	/**
-	 * @param string   $tag
-	 * @param string[] $params
-	 *
-	 * @return string
-	 */
-	public function translate(string $tag, string ...$params) : string{
-		return $this->plugin->getLanguage()->translateString("{$this->strId}.{$tag}", $params);
-	}
-
-	/**
-	 * @param CommandSender $sender
-	 * @param String[]      $args
-	 */
-	public function execute(CommandSender $sender, array $args) : void{
-		if(!$this->checkPermission($sender)){
-			$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.generic.permission'));
-		}elseif(!$this->onCommand($sender, $args)){
-			$sender->sendMessage(Server::getInstance()->getLanguage()->translateString("commands.generic.usage", [$this->usage]));
-		}
-	}
-
-	/**
-	 * @param CommandSender $target
-	 *
-	 * @return bool
-	 */
-	public function checkPermission(CommandSender $target) : bool{
-		if($this->permission === null){
-			return true;
-		}else{
-			return $target->hasPermission($this->permission);
-		}
-	}
-
-	/**
-	 * @param CommandSender $sender
-	 * @param String[]      $args
-	 *
-	 * @return bool
-	 */
-	abstract public function onCommand(CommandSender $sender, array $args) : bool;
 
 	/**
 	 * @param string $label
@@ -120,8 +68,30 @@ abstract class Subcommand{
 	 * @return bool
 	 */
 	public function checkLabel(string $label) : bool{
-		return strcasecmp($label, $this->label) === 0 || $this->aliases && Utils::in_arrayi($label, $this->aliases);
+		return strcasecmp($label, $this->name) === 0 || in_array($label, $this->aliases);
 	}
+
+	/**
+	 * @param CommandSender $sender
+	 * @param string[]      $args = []
+	 */
+	public function handle(CommandSender $sender, array $args = []) : void{
+		if($sender->hasPermission($this->permission)){
+			if(!$this->execute($sender, $args)){
+				$sender->sendMessage($this->plugin->getLanguage()->translateString("commands.vchest.{$this->label}.usage"));
+			}
+		}else{
+			$sender->sendMessage($this->plugin->getLanguage()->translateString("commands.generic.permission"));
+		}
+	}
+
+	/**
+	 * @param CommandSender $sender
+	 * @param string[]      $args = []
+	 *
+	 * @return bool
+	 */
+	public abstract function execute(CommandSender $sender, array $args = []) : bool;
 
 	/**
 	 * @return string
@@ -131,10 +101,17 @@ abstract class Subcommand{
 	}
 
 	/**
-	 * @param string $label
+	 * @return string
 	 */
-	public function setLabel(string $label) : void{
-		$this->label = $label;
+	public function getName() : string{
+		return $this->name;
+	}
+
+	/**
+	 * @param string $name
+	 */
+	public function setName(string $name) : void{
+		$this->name = $name;
 	}
 
 	/**
@@ -154,14 +131,14 @@ abstract class Subcommand{
 	/**
 	 * @return string
 	 */
-	public function getUsage() : string{
-		return $this->usage;
+	public function getPermission() : string{
+		return $this->permission;
 	}
 
 	/**
-	 * @param string $usage
+	 * @param string $permission
 	 */
-	public function setUsage(string $usage) : void{
-		$this->usage = $usage;
+	public function setPermission(string $permission) : void{
+		$this->permission = $permission;
 	}
 }

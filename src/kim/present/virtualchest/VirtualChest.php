@@ -26,18 +26,29 @@ declare(strict_types=1);
 
 namespace kim\present\virtualchest;
 
-use kim\present\virtualchest\command\PoolCommand;
-use kim\present\virtualchest\command\subcommands\{
-	BuySubcommand, DefaultSubcommand, MaxSubcommand, OpenSubcommand, PriceSubcommand, SetSubcommand, ViewSubcommand
+use kim\present\virtualchest\command\{
+	BuySubcommand, DefaultSubcommand, MaxSubcommand, OpenSubcommand, PriceSubcommand, SetSubcommand, Subcommand, ViewSubcommand
 };
 use kim\present\virtualchest\container\VirtualChestContainer;
 use kim\present\virtualchest\lang\PluginLang;
 use onebone\economyapi\EconomyAPI;
+use pocketmine\command\Command;
+use pocketmine\command\CommandSender;
+use pocketmine\command\PluginCommand;
 use pocketmine\nbt\BigEndianNBTStream;
 use pocketmine\nbt\tag\CompoundTag;
+use pocketmine\permission\Permission;
 use pocketmine\plugin\PluginBase;
 
 class VirtualChest extends PluginBase{
+	public const SUBCOMMAND_OPEN = 0;
+	public const SUBCOMMAND_BUY = 1;
+	public const SUBCOMMAND_PRICE = 2;
+	public const SUBCOMMAND_MAX = 3;
+	public const SUBCOMMAND_DEFAULT = 4;
+	public const SUBCOMMAND_SET = 5;
+	public const SUBCOMMAND_VIEW = 6;
+
 	/** @var VirtualChest */
 	private static $instance;
 
@@ -51,8 +62,11 @@ class VirtualChest extends PluginBase{
 	/** @var PluginLang */
 	private $language;
 
-	/** @var PoolCommand */
+	/** @var PluginCommand */
 	private $command;
+
+	/** @var Subcommand[] */
+	private $subcommands;
 
 	/**
 	 * Called when the plugin is loaded, before calling onEnable()
@@ -73,27 +87,47 @@ class VirtualChest extends PluginBase{
 		//Load config file
 		$this->saveDefaultConfig();
 		$this->reloadConfig();
+		$config = $this->getConfig();
 
 		//Load language file
-		$this->language = new PluginLang($this, PluginLang::FALLBACK_LANGUAGE);
+		$this->language = new PluginLang($this, $config->getNested("settings.language"));
 		$this->getLogger()->info($this->language->translateString("language.selected", [$this->language->getName(), $this->language->getLang()]));
 
-		if($this->command == null){
-			$this->command = new PoolCommand($this, 'vchest');
-			$this->command->createSubcommand(OpenSubcommand::class);
-			if(class_exists(EconomyAPI::class)){
-				$this->command->createSubcommand(BuySubcommand::class);
-				$this->command->createSubcommand(PriceSubcommand::class);
-				$this->command->createSubcommand(MaxSubcommand::class);
+		//Register main command
+		$this->command = new PluginCommand($config->getNested("command.name"), $this);
+		$this->command->setPermission("vchest.cmd");
+		$this->command->setAliases($config->getNested("command.aliases"));
+		$this->command->setUsage($this->language->translateString("commands.vchest.usage"));
+		$this->command->setDescription($this->language->translateString("commands.vchest.description"));
+		$this->getServer()->getCommandMap()->register($this->getName(), $this->command);
+
+		//Register subcommands
+		$this->subcommands = [
+			self::SUBCOMMAND_OPEN => new OpenSubcommand($this),
+			self::SUBCOMMAND_DEFAULT => new DefaultSubcommand($this),
+			self::SUBCOMMAND_SET => new SetSubcommand($this),
+			self::SUBCOMMAND_VIEW => new ViewSubcommand($this)
+		];
+		if(class_exists(EconomyAPI::class)){
+			$this->subcommands[self::SUBCOMMAND_PRICE] = new PriceSubCommand($this);
+			$this->subcommands[self::SUBCOMMAND_BUY] = new BuySubCommand($this);
+			$this->subcommands[self::SUBCOMMAND_PRICE] = new PriceSubCommand($this);
+			$this->subcommands[self::SUBCOMMAND_MAX] = new MaxSubCommand($this);
+		}
+
+		//Load permission's default value from config
+		$permissions = $this->getServer()->getPluginManager()->getPermissions();
+		$defaultValue = $config->getNested("permission.main");
+		if($defaultValue !== null){
+			$permissions["vchest.cmd"]->setDefault(Permission::getByName($config->getNested("permission.main")));
+		}
+		foreach($this->subcommands as $key => $subcommand){
+			$label = $subcommand->getLabel();
+			$defaultValue = $config->getNested("permission.children.{$label}");
+			if($defaultValue !== null){
+				$permissions["vchest.cmd.{$label}"]->setDefault(Permission::getByName($defaultValue));
 			}
-			$this->command->createSubcommand(DefaultSubcommand::class);
-			$this->command->createSubcommand(SetSubcommand::class);
-			$this->command->createSubcommand(ViewSubcommand::class);
 		}
-		if($this->command->isRegistered()){
-			$this->getServer()->getCommandMap()->unregister($this->command);
-		}
-		$this->getServer()->getCommandMap()->register(strtolower($this->getName()), $this->command);
 	}
 
 	/**
@@ -113,6 +147,60 @@ class VirtualChest extends PluginBase{
 		foreach(VirtualChestContainer::getContainers() as $playerName => $container){
 			file_put_contents($file = "{$playerDataFolder}{$playerName}.dat", (new BigEndianNBTStream())->writeCompressed($container->nbtSerialize($playerName)));
 		}
+	}
+
+	/**
+	 * @param CommandSender $sender
+	 * @param Command       $command
+	 * @param string        $label
+	 * @param string[]      $args
+	 *
+	 * @return bool
+	 */
+	public function onCommand(CommandSender $sender, Command $command, string $label, array $args) : bool{
+		if(empty($args[0])){
+			$targetSubcommand = null;
+			foreach($this->subcommands as $key => $subcommand){
+				if($sender->hasPermission($subcommand->getPermission())){
+					if($targetSubcommand === null){
+						$targetSubcommand = $subcommand;
+					}else{
+						//Filter out cases where more than two command has permission
+						return false;
+					}
+				}
+			}
+			$targetSubcommand->handle($sender);
+		}else{
+			$label = array_shift($args);
+			foreach($this->subcommands as $key => $subcommand){
+				if($subcommand->checkLabel($label)){
+					$subcommand->handle($sender, $args);
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * @Override for multilingual support of the config file
+	 *
+	 * @return bool
+	 */
+	public function saveDefaultConfig() : bool{
+		$resource = $this->getResource("lang/{$this->getServer()->getLanguage()->getLang()}/config.yml");
+		if($resource === null){
+			$resource = $this->getResource("lang/" . PluginLang::FALLBACK_LANGUAGE . "/config.yml");
+		}
+
+		if(!file_exists($configFile = $this->getDataFolder() . "config.yml")){
+			$ret = stream_copy_to_stream($resource, $fp = fopen($configFile, "wb")) > 0;
+			fclose($fp);
+			fclose($resource);
+			return $ret;
+		}
+		return false;
 	}
 
 	/**

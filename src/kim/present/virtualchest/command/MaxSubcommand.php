@@ -24,30 +24,28 @@
 
 declare(strict_types=1);
 
-namespace kim\present\virtualchest\command\subcommands;
+namespace kim\present\virtualchest\command;
 
-use kim\present\virtualchest\command\{
-	PoolCommand, Subcommand
-};
+use kim\present\virtualchest\VirtualChest;
 use pocketmine\command\CommandSender;
 
 class MaxSubcommand extends Subcommand{
 	/**
 	 * MaxSubcommand constructor.
 	 *
-	 * @param PoolCommand $owner
+	 * @param VirtualChest $plugin
 	 */
-	public function __construct(PoolCommand $owner){
-		parent::__construct($owner, 'max');
+	public function __construct(VirtualChest $plugin){
+		parent::__construct($plugin, 'max');
 	}
 
 	/**
 	 * @param CommandSender $sender
-	 * @param String[]      $args
+	 * @param String[]      $args = []
 	 *
 	 * @return bool
 	 */
-	public function onCommand(CommandSender $sender, array $args) : bool{
+	public function execute(CommandSender $sender, array $args = []) : bool{
 		if(isset($args[0])){
 			if(!is_numeric($args[0])){
 				$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.generic.num.notNumber', [$args[0]]));
@@ -57,7 +55,7 @@ class MaxSubcommand extends Subcommand{
 					$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.generic.num.tooSmall', [$args[0], "0"]));
 				}else{
 					$this->plugin->getConfig()->set('max-count', $count);
-					$sender->sendMessage($this->translate('success', (string) $count));
+					$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.vchest.max.success', [(string) $count]));
 				}
 			}
 			return true;

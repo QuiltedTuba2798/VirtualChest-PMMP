@@ -24,13 +24,11 @@
 
 declare(strict_types=1);
 
-namespace kim\present\virtualchest\command\subcommands;
+namespace kim\present\virtualchest\command;
 
 use kim\present\mathparser\MathParser;
-use kim\present\virtualchest\command\{
-	PoolCommand, Subcommand
-};
 use kim\present\virtualchest\container\VirtualChestContainer;
+use kim\present\virtualchest\VirtualChest;
 use onebone\economyapi\EconomyAPI;
 use pocketmine\command\CommandSender;
 use pocketmine\Player;
@@ -42,40 +40,40 @@ class BuySubcommand extends Subcommand{
 	/**
 	 * BuySubcommand constructor.
 	 *
-	 * @param PoolCommand $owner
+	 * @param VirtualChest $plugin
 	 */
-	public function __construct(PoolCommand $owner){
-		parent::__construct($owner, 'buy');
+	public function __construct(VirtualChest $plugin){
+		parent::__construct($plugin, 'buy');
 	}
 
 	/**
 	 * @param CommandSender $sender
-	 * @param String[]      $args
+	 * @param String[]      $args = []
 	 *
 	 * @return bool
 	 */
-	public function onCommand(CommandSender $sender, array $args) : bool{
+	public function execute(CommandSender $sender, array $args = []) : bool{
 		if($sender instanceof Player){
 			$config = $this->plugin->getConfig();
 			$container = VirtualChestContainer::getContainer($playerName = $sender->getLowerCaseName(), true);
 			$count = $container === null ? $config->get('default-count') : $container->getCount();
 			if($count >= (int) $config->get('max-count')){
-				$sender->sendMessage($this->translate('failure.max'));
+				$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.vchest.buy.failure.max'));
 				return true;
 			}else{
 				$economyAPI = EconomyAPI::getInstance();
 				$myMoney = (int) $economyAPI->myMoney($playerName);
 				$price = $this->getPrice($count, $myMoney);
 				if($price === null){
-					$sender->sendMessage($this->translate('failure.prevent'));
+					$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.vchest.buy.failure.prevent'));
 					return true;
 				}elseif(!isset($this->checked[$playerName]) || (time() - $this->checked[$playerName]) > 10){
 					$this->checked[$playerName] = time();
-					$sender->sendMessage($this->translate('check', (string) $price));
+					$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.vchest.buy.check', [(string) $price]));
 				}else{
 					unset($this->checked[$playerName]);
 					if($myMoney < $price){
-						$sender->sendMessage($this->translate('failure.money', (string) $myMoney));
+						$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.vchest.buy.failure.money', [(string) $myMoney]));
 					}else{
 						$economyAPI->reduceMoney($playerName, $price);
 						if($container === null){
@@ -84,7 +82,7 @@ class BuySubcommand extends Subcommand{
 						}else{
 							$container->setCount($count + 1);
 						}
-						$sender->sendMessage($this->translate('success', (string) ($myMoney - $price)));
+						$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.vchest.buy.success', [(string) ($myMoney - $price)]));
 					}
 				}
 			}

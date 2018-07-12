@@ -24,12 +24,10 @@
 
 declare(strict_types=1);
 
-namespace kim\present\virtualchest\command\subcommands;
+namespace kim\present\virtualchest\command;
 
-use kim\present\virtualchest\command\{
-	PoolCommand, Subcommand
-};
 use kim\present\virtualchest\container\VirtualChestContainer;
+use kim\present\virtualchest\VirtualChest;
 use pocketmine\command\CommandSender;
 use pocketmine\Server;
 
@@ -37,19 +35,19 @@ class SetSubcommand extends Subcommand{
 	/**
 	 * SetSubcommand constructor.
 	 *
-	 * @param PoolCommand $owner
+	 * @param VirtualChest $plugin
 	 */
-	public function __construct(PoolCommand $owner){
-		parent::__construct($owner, 'set');
+	public function __construct(VirtualChest $plugin){
+		parent::__construct($plugin, 'set');
 	}
 
 	/**
 	 * @param CommandSender $sender
-	 * @param String[]      $args
+	 * @param String[]      $args = []
 	 *
 	 * @return bool
 	 */
-	public function onCommand(CommandSender $sender, array $args) : bool{
+	public function execute(CommandSender $sender, array $args = []) : bool{
 		if(isset($args[1])){
 			$container = VirtualChestContainer::getContainer($playerName = strtolower($args[0]), true);
 			if($container === null){
@@ -68,7 +66,7 @@ class SetSubcommand extends Subcommand{
 					$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.generic.num.tooSmall', [$args[1], "0"]));
 				}else{
 					$container->setCount($count);
-					$sender->sendMessage($this->translate('success', $playerName, (string) $count));
+					$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.vchest.set.success', $playerName, (string) $count));
 				}
 			}
 			return true;

@@ -1,4 +1,4 @@
-# Advanced configuration file for HotBox plugin
+# Advanced configuration file for VirtualChest plugin
 # Some of these settings are safe, others can break your server if modified incorrectly
 # New settings/defaults won't appear automatically on this file when upgrading
 
@@ -7,20 +7,15 @@ settings:
   #Available: eng, kor
   language: "eng"
 
-  update-check: "false"
-
-  #Choose whether to allow open the reward box one time
-  onetime-reward: "false"
-
 
 command:
   #Name of main command
   #You can change this to be what you want
-  name: "hotbox"
+  name: "vchest"
 
   #Aliases of main command
   #You can add, replace, or remove them as you like
-  aliases: ["hb", "hottimebox"]
+  aliases: ["vc", "virtualchest"]
 
   children:
     #Setting of subcommands
@@ -28,15 +23,24 @@ command:
     open:
       name: "Open"
       aliases: ["o"]
-    edit:
-      name: "Edit"
-      aliases: ["e"]
-    enable:
-      name: "Enable"
-      aliases: ["on", "start"]
-    disable:
-      name: "Disable"
-      aliases: ["off", "stop"]
+    buy:
+      name: "Buy"
+      aliases: ["b"]
+    price:
+      name: "Price"
+      aliases: ["p"]
+    max:
+      name: "Max"
+      aliases: ["m"]
+    default:
+      name: "Default"
+      aliases: ["d"]
+    set:
+      name: "Set"
+      aliases: ["s"]
+    view:
+      name: "View"
+      aliases: ["v"]
 
 
 permission:
@@ -47,7 +51,10 @@ permission:
   children:
     #Permission of subcommands
     #Same as Permission of main command setting
-    open: "true"
-    edit: "op"
-    enable: "op"
-    disable: "op"
+      open: "true"
+      buy: "true"
+      price: "op"
+      max: "op"
+      default: "op"
+      set: "op"
+      view: "op"
