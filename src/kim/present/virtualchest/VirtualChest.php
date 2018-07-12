@@ -31,6 +31,7 @@ use kim\present\virtualchest\command\{
 };
 use kim\present\virtualchest\container\VirtualChestContainer;
 use kim\present\virtualchest\lang\PluginLang;
+use kim\present\virtualchest\task\CheckUpdateAsyncTask;
 use onebone\economyapi\EconomyAPI;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
@@ -88,6 +89,11 @@ class VirtualChest extends PluginBase{
 		$this->saveDefaultConfig();
 		$this->reloadConfig();
 		$config = $this->getConfig();
+
+		//Check latest version
+		if($config->getNested("settings.update-check", false)){
+			$this->getServer()->getAsyncPool()->submitTask(new CheckUpdateAsyncTask());
+		}
 
 		//Load language file
 		$this->language = new PluginLang($this, $config->getNested("settings.language"));
