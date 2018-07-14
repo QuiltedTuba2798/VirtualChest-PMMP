@@ -186,7 +186,7 @@ class VirtualChestContainer{
 	public function nbtSerialize(string $tagName = 'Container') : CompoundTag{
 		$chestsTag = new ListTag('Chests', [], NBT::TAG_List);
 		foreach($this->chests as $index => $chest){
-			$chestsTag->push($chest->nbtSerialize($index));
+			$chestsTag->push($chest->nbtSerialize((string) $index));
 		}
 		return new CompoundTag($tagName, [
 			new IntTag('Count', $this->count),
