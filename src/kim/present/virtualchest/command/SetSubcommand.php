@@ -54,6 +54,10 @@ class SetSubcommand extends Subcommand{
 				$player = Server::getInstance()->getPlayer($playerName);
 				if($player !== null){
 					$container = VirtualChestContainer::getContainer($playerName = $player->getLowerCaseName(), true);
+					if($container === null){
+						$container = new VirtualChestContainer($playerName, $this->plugin->getDefaultCount());
+						VirtualChestContainer::setContainer($playerName, $container);
+					}
 				}
 			}
 			if($container === null){
