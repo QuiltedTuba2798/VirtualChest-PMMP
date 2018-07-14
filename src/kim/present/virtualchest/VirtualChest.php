@@ -319,7 +319,7 @@ class VirtualChest extends PluginBase{
 				$nbt = (new BigEndianNBTStream())->readCompressed(file_get_contents($file));
 				if($nbt instanceof CompoundTag){
 					$namedTag = $nbt->getCompoundTag("VirtualChest");
-					if($nbt instanceof CompoundTag){
+					if($namedTag instanceof CompoundTag){
 						$container = VirtualChestContainer::nbtDeserialize($playerName, $namedTag);
 						VirtualChestContainer::setContainer($playerName, $container);
 						return $container;
