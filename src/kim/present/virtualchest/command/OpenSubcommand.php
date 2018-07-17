@@ -27,19 +27,11 @@ declare(strict_types=1);
 namespace kim\present\virtualchest\command;
 
 use kim\present\virtualchest\container\VirtualChestContainer;
-use kim\present\virtualchest\VirtualChest;
 use pocketmine\command\CommandSender;
 use pocketmine\Player;
 
 class OpenSubcommand extends Subcommand{
-	/**
-	 * OpenSubcommand constructor.
-	 *
-	 * @param VirtualChest $plugin
-	 */
-	public function __construct(VirtualChest $plugin){
-		parent::__construct($plugin, "open");
-	}
+	public const LABEL = "open";
 
 	/**
 	 * @param CommandSender $sender

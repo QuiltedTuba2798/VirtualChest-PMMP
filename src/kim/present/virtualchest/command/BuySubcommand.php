@@ -28,23 +28,12 @@ namespace kim\present\virtualchest\command;
 
 use kim\present\mathparser\MathParser;
 use kim\present\virtualchest\container\VirtualChestContainer;
-use kim\present\virtualchest\VirtualChest;
 use onebone\economyapi\EconomyAPI;
 use pocketmine\command\CommandSender;
 use pocketmine\Player;
 
 class BuySubcommand extends Subcommand{
-	/** @var int[] */
-	private $checked = [];
-
-	/**
-	 * BuySubcommand constructor.
-	 *
-	 * @param VirtualChest $plugin
-	 */
-	public function __construct(VirtualChest $plugin){
-		parent::__construct($plugin, "buy");
-	}
+	public const LABEL = "buy";
 
 	/**
 	 * @param CommandSender $sender

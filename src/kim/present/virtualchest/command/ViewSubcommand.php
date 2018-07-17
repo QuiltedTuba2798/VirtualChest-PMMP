@@ -27,21 +27,13 @@ declare(strict_types=1);
 namespace kim\present\virtualchest\command;
 
 use kim\present\virtualchest\container\VirtualChestContainer;
-use kim\present\virtualchest\VirtualChest;
 use pocketmine\{
 	Player, Server
 };
 use pocketmine\command\CommandSender;
 
 class ViewSubcommand extends Subcommand{
-	/**
-	 * ViewSubcommand constructor.
-	 *
-	 * @param VirtualChest $plugin
-	 */
-	public function __construct(VirtualChest $plugin){
-		parent::__construct($plugin, "view");
-	}
+	public const LABEL = "view";
 
 	/**
 	 * @param CommandSender $sender

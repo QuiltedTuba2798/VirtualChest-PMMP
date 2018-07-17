@@ -26,18 +26,10 @@ declare(strict_types=1);
 
 namespace kim\present\virtualchest\command;
 
-use kim\present\virtualchest\VirtualChest;
 use pocketmine\command\CommandSender;
 
 class DefaultSubcommand extends Subcommand{
-	/**
-	 * DefaultSubcommand constructor.
-	 *
-	 * @param VirtualChest $plugin
-	 */
-	public function __construct(VirtualChest $plugin){
-		parent::__construct($plugin, "default");
-	}
+	public const LABEL = "default";
 
 	/**
 	 * @param CommandSender $sender

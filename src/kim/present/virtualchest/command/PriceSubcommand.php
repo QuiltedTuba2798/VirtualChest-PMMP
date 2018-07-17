@@ -27,18 +27,10 @@ declare(strict_types=1);
 namespace kim\present\virtualchest\command;
 
 use kim\present\mathparser\MathParser;
-use kim\present\virtualchest\VirtualChest;
 use pocketmine\command\CommandSender;
 
 class PriceSubcommand extends Subcommand{
-	/**
-	 * PriceSubcommand constructor.
-	 *
-	 * @param VirtualChest $plugin
-	 */
-	public function __construct(VirtualChest $plugin){
-		parent::__construct($plugin, "price");
-	}
+	public const LABEL = "price";
 
 	/**
 	 * @param CommandSender $sender

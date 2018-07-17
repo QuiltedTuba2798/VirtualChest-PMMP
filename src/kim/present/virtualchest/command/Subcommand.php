@@ -30,11 +30,10 @@ use kim\present\virtualchest\VirtualChest;
 use pocketmine\command\CommandSender;
 
 abstract class Subcommand{
+	public const LABEL = "";
+
 	/** @var VirtualChest */
 	protected $plugin;
-
-	/** @var string */
-	protected $label;
 
 	/** @var string */
 	private $name;
@@ -49,12 +48,11 @@ abstract class Subcommand{
 	 * Subcommand constructor.
 	 *
 	 * @param VirtualChest $plugin
-	 * @param string       $label
 	 */
-	public function __construct(VirtualChest $plugin, string $label){
+	public function __construct(VirtualChest $plugin){
 		$this->plugin = $plugin;
-		$this->label = $label;
 
+		$label = $this->getLabel();
 		$config = $plugin->getConfig();
 		$this->name = $config->getNested("command.children.{$label}.name");
 		$this->aliases = $config->getNested("command.children.{$label}.aliases");
@@ -96,7 +94,7 @@ abstract class Subcommand{
 	 * @return string
 	 */
 	public function getLabel() : string{
-		return $this->label;
+		return $this::LABEL;
 	}
 
 	/**
