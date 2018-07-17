@@ -36,7 +36,7 @@ class DefaultSubcommand extends Subcommand{
 	 * @param VirtualChest $plugin
 	 */
 	public function __construct(VirtualChest $plugin){
-		parent::__construct($plugin, 'default');
+		parent::__construct($plugin, "default");
 	}
 
 	/**
@@ -48,14 +48,14 @@ class DefaultSubcommand extends Subcommand{
 	public function execute(CommandSender $sender, array $args = []) : bool{
 		if(isset($args[0])){
 			if(!is_numeric($args[0])){
-				$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.generic.num.notNumber', [$args[0]]));
+				$sender->sendMessage($this->plugin->getLanguage()->translateString("commands.generic.num.notNumber", [$args[0]]));
 			}else{
 				$count = (int) $args[0];
 				if($count < 0){
-					$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.generic.num.tooSmall', [$args[0], "0"]));
+					$sender->sendMessage($this->plugin->getLanguage()->translateString("commands.generic.num.tooSmall", [$args[0], "0"]));
 				}else{
 					$this->plugin->setDefaultCount($count);
-					$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.virtualchest.default.success', [(string) $count]));
+					$sender->sendMessage($this->plugin->getLanguage()->translateString("commands.virtualchest.default.success", [(string) $count]));
 				}
 			}
 			return true;

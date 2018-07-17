@@ -65,12 +65,12 @@ class VirtualChestInventory extends CustomInventory{
 	public function __construct(string $ownerName, int $num = 0, $items = [], string $title = null){
 		parent::__construct(new Vector3(0, 0, 0), $items, 27, $title);
 
-		$this->nbt = new CompoundTag('', [
-			new StringTag('id', 'Chest'),
-			new IntTag('x', 0),
-			new IntTag('y', 0),
-			new IntTag('z', 0),
-			new StringTag('CustomName', VirtualChest::getInstance()->getLanguage()->translateString('virtualchest.name', [
+		$this->nbt = new CompoundTag("", [
+			new StringTag("id", "Chest"),
+			new IntTag("x", 0),
+			new IntTag("y", 0),
+			new IntTag("z", 0),
+			new StringTag("CustomName", VirtualChest::getInstance()->getLanguage()->translateString("virtualchest.name", [
 				$ownerName,
 				$num,
 			])),
@@ -97,9 +97,9 @@ class VirtualChestInventory extends CustomInventory{
 		$who->sendDataPacket($pk);
 
 
-		$this->nbt->setInt('x', $this->vectors[$key]->x);
-		$this->nbt->setInt('y', $this->vectors[$key]->y);
-		$this->nbt->setInt('z', $this->vectors[$key]->z);
+		$this->nbt->setInt("x", $this->vectors[$key]->x);
+		$this->nbt->setInt("y", $this->vectors[$key]->y);
+		$this->nbt->setInt("z", $this->vectors[$key]->z);
 
 		$pk = new BlockEntityDataPacket();
 		$pk->x = $this->vectors[$key]->x;
@@ -170,7 +170,7 @@ class VirtualChestInventory extends CustomInventory{
 	 *
 	 * @return ListTag
 	 */
-	public function nbtSerialize(string $tagName = 'Inventory') : ListTag{
+	public function nbtSerialize(string $tagName = "Inventory") : ListTag{
 		$tag = new ListTag($tagName, [], NBT::TAG_Compound);
 		for($slot = 0; $slot < 27; ++$slot){
 			$item = $this->getItem($slot);

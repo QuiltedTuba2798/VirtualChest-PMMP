@@ -40,7 +40,7 @@ class ViewSubcommand extends Subcommand{
 	 * @param VirtualChest $plugin
 	 */
 	public function __construct(VirtualChest $plugin){
-		parent::__construct($plugin, 'view');
+		parent::__construct($plugin, "view");
 	}
 
 	/**
@@ -62,7 +62,7 @@ class ViewSubcommand extends Subcommand{
 				if($container === null){
 					$defaultCount = $this->plugin->getDefaultCount();
 					if($defaultCount < 1){
-						$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.virtualchest.view.failure.none'));
+						$sender->sendMessage($this->plugin->getLanguage()->translateString("commands.virtualchest.view.failure.none"));
 						return true;
 					}else{
 						$container = new VirtualChestContainer($playerName, $defaultCount);
@@ -70,13 +70,13 @@ class ViewSubcommand extends Subcommand{
 					}
 				}
 				if($container === null){
-					$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.generic.player.notFound', [$args[0]]));
+					$sender->sendMessage($this->plugin->getLanguage()->translateString("commands.generic.player.notFound", [$args[0]]));
 				}else{
 					$number = isset($args[1]) ? strtolower($args[1]) : 1;
 					$count = $container->getCount();
 					if(!is_numeric($number) || $number > $count){
-						$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.virtualchest.view.failure.invalid', $number));
-						$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.virtualchest.view.count', $playerName, (string) $count));
+						$sender->sendMessage($this->plugin->getLanguage()->translateString("commands.virtualchest.view.failure.invalid", $number));
+						$sender->sendMessage($this->plugin->getLanguage()->translateString("commands.virtualchest.view.count", $playerName, (string) $count));
 					}else{
 						$sender->addWindow($container->getChest($number - 1));
 					}
@@ -85,7 +85,7 @@ class ViewSubcommand extends Subcommand{
 				return false;
 			}
 		}else{
-			$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.generic.onlyPlayer'));
+			$sender->sendMessage($this->plugin->getLanguage()->translateString("commands.generic.onlyPlayer"));
 		}
 		return true;
 	}

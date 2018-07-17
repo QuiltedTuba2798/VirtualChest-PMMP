@@ -43,7 +43,7 @@ class BuySubcommand extends Subcommand{
 	 * @param VirtualChest $plugin
 	 */
 	public function __construct(VirtualChest $plugin){
-		parent::__construct($plugin, 'buy');
+		parent::__construct($plugin, "buy");
 	}
 
 	/**
@@ -57,22 +57,22 @@ class BuySubcommand extends Subcommand{
 			$container = VirtualChestContainer::getContainer($playerName = $sender->getLowerCaseName(), true);
 			$count = $container === null ? $this->plugin->getDefaultCount() : $container->getCount();
 			if($count >= $this->plugin->getMaxCount()){
-				$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.virtualchest.buy.failure.max'));
+				$sender->sendMessage($this->plugin->getLanguage()->translateString("commands.virtualchest.buy.failure.max"));
 				return true;
 			}else{
 				$economyAPI = EconomyAPI::getInstance();
 				$myMoney = (int) $economyAPI->myMoney($playerName);
 				$price = $this->getPrice($count, $myMoney);
 				if($price === null){
-					$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.virtualchest.buy.failure.prevent'));
+					$sender->sendMessage($this->plugin->getLanguage()->translateString("commands.virtualchest.buy.failure.prevent"));
 					return true;
 				}elseif(!isset($this->checked[$playerName]) || (time() - $this->checked[$playerName]) > 10){
 					$this->checked[$playerName] = time();
-					$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.virtualchest.buy.check', [(string) $price]));
+					$sender->sendMessage($this->plugin->getLanguage()->translateString("commands.virtualchest.buy.check", [(string) $price]));
 				}else{
 					unset($this->checked[$playerName]);
 					if($myMoney < $price){
-						$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.virtualchest.buy.failure.money', [(string) $myMoney]));
+						$sender->sendMessage($this->plugin->getLanguage()->translateString("commands.virtualchest.buy.failure.money", [(string) $myMoney]));
 					}else{
 						$economyAPI->reduceMoney($playerName, $price);
 						if($container === null){
@@ -81,12 +81,12 @@ class BuySubcommand extends Subcommand{
 						}else{
 							$container->setCount($count + 1);
 						}
-						$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.virtualchest.buy.success', [(string) ($myMoney - $price)]));
+						$sender->sendMessage($this->plugin->getLanguage()->translateString("commands.virtualchest.buy.success", [(string) ($myMoney - $price)]));
 					}
 				}
 			}
 		}else{
-			$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.generic.onlyPlayer'));
+			$sender->sendMessage($this->plugin->getLanguage()->translateString("commands.generic.onlyPlayer"));
 		}
 		return true;
 	}
@@ -102,8 +102,8 @@ class BuySubcommand extends Subcommand{
 		if(class_exists(MathParser::class)){
 			try{
 				$price = MathParser::parse($price, [
-					'c' => $count,
-					'm' => $money,
+					"c" => $count,
+					"m" => $money,
 				]);
 			}catch(\Exception $exception){
 				$this->plugin->getLogger()->critical("{$exception->getMessage()}. Call in buy sub command");

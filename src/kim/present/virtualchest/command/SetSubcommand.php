@@ -38,7 +38,7 @@ class SetSubcommand extends Subcommand{
 	 * @param VirtualChest $plugin
 	 */
 	public function __construct(VirtualChest $plugin){
-		parent::__construct($plugin, 'set');
+		parent::__construct($plugin, "set");
 	}
 
 	/**
@@ -61,16 +61,16 @@ class SetSubcommand extends Subcommand{
 				}
 			}
 			if($container === null){
-				$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.generic.player.notFound', [$args[0]]));
+				$sender->sendMessage($this->plugin->getLanguage()->translateString("commands.generic.player.notFound", [$args[0]]));
 			}elseif(!is_numeric($args[1])){
-				$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.generic.num.notNumber', [$args[1]]));
+				$sender->sendMessage($this->plugin->getLanguage()->translateString("commands.generic.num.notNumber", [$args[1]]));
 			}else{
 				$count = (int) $args[1];
 				if($count < 0){
-					$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.generic.num.tooSmall', [$args[1], "0"]));
+					$sender->sendMessage($this->plugin->getLanguage()->translateString("commands.generic.num.tooSmall", [$args[1], "0"]));
 				}else{
 					$container->setCount($count);
-					$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.virtualchest.set.success', [$playerName, (string) $count]));
+					$sender->sendMessage($this->plugin->getLanguage()->translateString("commands.virtualchest.set.success", [$playerName, (string) $count]));
 				}
 			}
 			return true;

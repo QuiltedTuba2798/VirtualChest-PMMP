@@ -37,7 +37,7 @@ class PriceSubcommand extends Subcommand{
 	 * @param VirtualChest $plugin
 	 */
 	public function __construct(VirtualChest $plugin){
-		parent::__construct($plugin, 'price');
+		parent::__construct($plugin, "price");
 	}
 
 	/**
@@ -51,28 +51,28 @@ class PriceSubcommand extends Subcommand{
 			$price = null;
 			if(class_exists(MathParser::class)){
 				try{
-					$price = implode(' ', $args);
+					$price = implode(" ", $args);
 					MathParser::parse($price, [
-						'c' => 1, //count
-						'm' => 1  //money
+						"c" => 1, //count
+						"m" => 1  //money
 					]);
 				}catch(\Exception $exception){
 					$this->plugin->getLogger()->critical("{$exception->getMessage()}. Call in price sub command");
 				}
 			}else{
 				if(!is_numeric($args[0])){
-					$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.generic.num.notNumber', [$args[0]]));
+					$sender->sendMessage($this->plugin->getLanguage()->translateString("commands.generic.num.notNumber", [$args[0]]));
 				}elseif(((int) $args[0]) < -1){
-					$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.generic.num.tooSmall', [$args[0], "-1"]));
+					$sender->sendMessage($this->plugin->getLanguage()->translateString("commands.generic.num.tooSmall", [$args[0], "-1"]));
 				}else{
 					$price = (string) ((int) $args[0]);
 				}
 			}
 			if($price === null){
-				$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.generic.num.notNumber', [$args[0]]));
+				$sender->sendMessage($this->plugin->getLanguage()->translateString("commands.generic.num.notNumber", [$args[0]]));
 			}else{
 				$this->plugin->setPrice($price);
-				$sender->sendMessage($this->plugin->getLanguage()->translateString('commands.virtualchest.price.success', [$price]));
+				$sender->sendMessage($this->plugin->getLanguage()->translateString("commands.virtualchest.price.success", [$price]));
 			}
 			return true;
 		}else{
